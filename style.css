@@ -1,76 +1,266 @@
-
 /* ==========================================
+
    CONFIGURACIÓN GENERAL
+
    ========================================== */
+
 * {
+
     margin: 0;
+
     padding: 0;
-    box-sizing: border-box; 
+
+    box-sizing: border-box;
+
 }
+
+
 
 html {
-    scroll-behavior: smooth; /* Permite que el desplazamiento sea suave */
+
+    scroll-behavior: smooth;
+
 }
+
+
 
 body {
+
     font-family: 'HostGrotesk', sans-serif;
+
     background: #f5f5f5;
+
     color: #333;
+
+    cursor: none; /* Oculta el cursor nativo del sistema para usar el personalizado */
+
 }
+
+
 
 /* ==========================================
+
    PORTADA (HERO) - CATAPULTAZO
+
    ========================================== */
-.hero { 
+
+.hero {
+
     height: 100vh;
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
     background-image: url("assets/home1.png");
+
     background-size: cover;
+
     background-position: center;
+
     padding: 0 40px;
+
 }
 
-.hero-content { 
+
+
+.hero-content { /*Segunda parte del scroll */
+
     width: 100%;
+
     max-width: 1440px;
-    text-align: center; /* Centra todo el bloque en pantalla */
+
+    text-align: center;
+
 }
 
-/* Título principal */
+
+
 .hero h1 {
-    font-size: 12rem; /* Tu tamaño de letra gigante */
-    color: rgb(255, 255, 255); 
-    display: inline-block; /* Permite que el contenido fluya horizontalmente */
+
+    font-size: 12rem;
+
+    color: rgb(255, 255, 255);
+
+    display: inline-block;
+
 }
 
-/* BOTÓN MIGRADO A ELEMENTO DE TEXTO */
+
+
 .btn {
-    display: inline-block; /* Se comporta como una letra más */
-    font-size: 10rem; /* Tamaño del botón */
-    color: #c3d208; 
+
+    display: inline-block;
+
+    font-size: 10rem;
+
+    color: #c3d208;
+
     text-decoration: none;
+
     line-height: 1;
-    margin-left: 30px; /* Separación sutil después del título */
+
+    margin-left: 30px;
+
     cursor: pointer;
-    
-    /* Estado inicial para la animación de JavaScript */
-    opacity: 0; 
-    transform: scale(0.8); /* Aparecerá creciendo sutilmente */
+
+    opacity: 0;
+
+    transform: scale(0.8);
+
     transition: transform 0.5s, color 0.5s, opacity 0.8s;
-    pointer-events: none; 
+
+    pointer-events: none;
+
 }
 
-/* Clase que activa JavaScript al terminar el tipeo */
+
+
 .btn.mostrar {
+
     opacity: 1;
+
     transform: scale(1);
-    pointer-events: auto; 
+
+    pointer-events: auto;
+
 }
 
-/* Efecto Hover para el botón */
+
+
 .btn:hover {
-    color: #b8b1d8; /* Tu color lila tipográfico */
-    transform: scale(1.1); /* Crece un poquito flotando visualmente */
+
+    color: #b8b1d8;
+
+    transform: scale(1.1);
+
 }
+
+
+
+/* ==========================================
+
+   SOBRE EL JUEGO - DOS COLUMNAS
+
+   ========================================== */
+
+.presentacion-seccion {
+
+    background-color: #ffffff;
+
+    padding: 100px 40px;
+
+    display: flex;
+
+    justify-content: center;
+
+}
+
+
+
+.presentacion-contenedor {
+
+    width: 100%;
+
+    max-width: 1200px;
+
+    display: flex;
+
+    flex-direction: row;
+
+    align-items: center;
+
+    gap: 80px;
+
+}
+
+
+
+.columna-imagen,
+
+.columna-texto {
+
+    flex: 1;
+
+}
+
+
+
+.imagen-adaptativa {
+
+    width: 100%;
+
+    height: auto;
+
+    border-radius: 12px;
+
+    display: block;
+
+}
+
+
+
+.subtitulo {
+
+    font-size: 3rem;
+
+    font-weight: 800;
+
+    color: #e71d84; /* Tu rosa/magenta para contraste */
+
+    margin-bottom: 24px;
+
+}
+
+
+
+.parrafo {
+
+    font-size: 1.15rem;
+
+    line-height: 1.6;
+
+    color: #444444;
+
+    margin-bottom: 20px;
+
+}
+
+
+
+/* ==========================================
+
+   CURSOR PERSONALIZADO
+
+   ========================================== */
+
+.custom-cursor {
+
+    width: 24px;
+
+    height: 24px;
+
+    background-color: #ffffff;
+
+    border-radius: 50%;
+
+    position: fixed; /* Se mantiene estático respecto a la pantalla */
+
+    top: 0;
+
+    left: 0;
+
+    pointer-events: none; /* Permite hacer click a través del elemento */
+
+    mix-blend-mode: difference; /* Invierte colores al pasar sobre textos o fondos */
+
+    z-index: 9999; /* Se posiciona sobre cualquier otra sección */
+
+    transform: translate(-50%, -50%); /* Centra el círculo sobre la punta real del mouse */
+
+    transition: transform 0.1s ease-out; /* Suaviza sutilmente el movimiento */
+
+} 
+
