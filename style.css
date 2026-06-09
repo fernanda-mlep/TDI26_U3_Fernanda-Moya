@@ -1,13 +1,15 @@
-@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@100..900&display=swap');
 
-html {
-    scroll-behavior: smooth; /*permite que el desplazamiento sea suave*/
-}
-
-* {  /**llama a todos los elementos */
+/* ==========================================
+   CONFIGURACIÓN GENERAL
+   ========================================== */
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box; 
+}
+
+html {
+    scroll-behavior: smooth; /* Permite que el desplazamiento sea suave */
 }
 
 body {
@@ -17,84 +19,58 @@ body {
 }
 
 /* ==========================================
-   PORTADA (HERO) CON ANIMACIONES
+   PORTADA (HERO) - CATAPULTAZO
    ========================================== */
-
 .hero { 
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    color: rgb(255, 255, 255); /*titulo Catapultazo*/
     background-image: url("assets/home1.png");
     background-size: cover;
     background-position: center;
+    padding: 0 40px;
 }
 
 .hero-content { 
-    max-width: 900px;
-    padding: 20px;
+    width: 100%;
+    max-width: 1440px;
+    text-align: center; /* Centra todo el bloque en pantalla */
 }
 
-/* título principal */
+/* Título principal */
 .hero h1 {
-    font-size: 10rem; /*tamaño titulo Catapultazo*/
-    margin-bottom: 20px;
+    font-size: 12rem; /* Tu tamaño de letra gigante */
+    color: rgb(255, 255, 255); 
+    display: inline-block; /* Permite que el contenido fluya horizontalmente */
 }
 
-/* botón de cuéntame más */
+/* BOTÓN MIGRADO A ELEMENTO DE TEXTO */
 .btn {
-    display: inline-block;
-    padding: 15px 30px;
-    background: #ffffff;
-    color: #e71d84;
+    display: inline-block; /* Se comporta como una letra más */
+    font-size: 10rem; /* Tamaño del botón */
+    color: #c3d208; 
     text-decoration: none;
-    margin-top: 120px;
-    border-radius: 50px;
-    font-weight: bold;
-    font-size: 1.2rem;
-    box-shadow: 0 4px 15px #c3d208;
-    transition: .3s;
+    line-height: 1;
+    margin-left: 30px; /* Separación sutil después del título */
+    cursor: pointer;
     
-    /* Conectar la animación al botón */
-    opacity: 0; /* Empieza invisible */
-    animation: aparecerBoton 1s ease-out 1.5s forwards; /* El '1.5s' del final es el retraso */
+    /* Estado inicial para la animación de JavaScript */
+    opacity: 0; 
+    transform: scale(0.8); /* Aparecerá creciendo sutilmente */
+    transition: transform 0.5s, color 0.5s, opacity 0.8s;
+    pointer-events: none; 
+}
+
+/* Clase que activa JavaScript al terminar el tipeo */
+.btn.mostrar {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto; 
 }
 
 /* Efecto Hover para el botón */
 .btn:hover {
-    transform: translateY(-3px);
-    background-color: #b8b1d8;
-    color: white;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
-}
-
-
-/* ==========================================
-   LAS REGLAS DE LA ANIMACIÓN (KEYFRAMES)
-   ========================================== */
-
-/* El título aparece desde abajo y se aclara */
-@keyframes aparecerTitulo {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* El botón espera oculto y luego aparece suavemente */
-@keyframes aparecerBoton {
-    from {
-        opacity: 0;
-        transform: translateY(10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+    color: #b8b1d8; /* Tu color lila tipográfico */
+    transform: scale(1.1); /* Crece un poquito flotando visualmente */
 }
