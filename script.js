@@ -36,11 +36,10 @@ window.addEventListener("DOMContentLoaded", () => {
 const navbar = document.getElementById("main-navbar");
 
 window.addEventListener("scroll", () => {
-    // Si el usuario bajó más de 200 píxeles, muestra la cabecera compacta
-    if (window.scrollY > 200) {
-        navbar.classList.add("visible");
+    // Umbral de tolerancia (80px): define el momento exacto donde el estado cambia
+    if (window.scrollY > 80) {
+        navbar.classList.add("contraido"); // Inyección del estado de navegación fija
     } else {
-        // Si vuelve arriba del todo, la esconde de nuevo
-        navbar.classList.remove("visible");
+        navbar.classList.remove("contraido"); // Retorno al estado de presentación inicial
     }
 });
