@@ -1,266 +1,201 @@
-/* ==========================================
-
-   CONFIGURACIÓN GENERAL
-
-   ========================================== */
-
+/* CONFIGURACIÓN GENERAL */
 * {
-
     margin: 0;
-
     padding: 0;
-
     box-sizing: border-box;
-
 }
-
-
 
 html {
-
     scroll-behavior: smooth;
-
 }
-
 
 
 body {
-
     font-family: 'HostGrotesk', sans-serif;
-
     background: #f5f5f5;
-
     color: #333;
-
-    cursor: none; /* Oculta el cursor nativo del sistema para usar el personalizado */
-
+    cursor: auto; /* cursor predeterminado */
 }
 
 
 
-/* ==========================================
-
-   PORTADA (HERO) - CATAPULTAZO
-
-   ========================================== */
-
+/* PORTADA (HERO) - CATAPULTAZO */
 .hero {
-
     height: 100vh;
-
     display: flex;
-
     justify-content: center;
-
     align-items: center;
-
     background-image: url("assets/home1.png");
-
     background-size: cover;
-
     background-position: center;
-
     padding: 0 40px;
-
 }
-
 
 
 .hero-content { /*Segunda parte del scroll */
-
     width: 100%;
-
     max-width: 1440px;
-
     text-align: center;
-
 }
-
 
 
 .hero h1 {
-
     font-size: 12rem;
-
     color: rgb(255, 255, 255);
-
     display: inline-block;
-
 }
 
 
-
-.btn {
-
+.btn {  
     display: inline-block;
-
     font-size: 10rem;
-
     color: #c3d208;
-
     text-decoration: none;
-
     line-height: 1;
-
     margin-left: 30px;
-
     cursor: pointer;
-
     opacity: 0;
-
     transform: scale(0.8);
-
     transition: transform 0.5s, color 0.5s, opacity 0.8s;
-
     pointer-events: none;
-
 }
-
 
 
 .btn.mostrar {
-
     opacity: 1;
-
     transform: scale(1);
-
     pointer-events: auto;
-
 }
-
 
 
 .btn:hover {
-
     color: #b8b1d8;
-
     transform: scale(1.1);
-
 }
 
 
-
-/* ==========================================
-
-   SOBRE EL JUEGO - DOS COLUMNAS
-
-   ========================================== */
-
+/* SOBRE EL JUEGO - DOS COLUMNAS */
 .presentacion-seccion {
-
     background-color: #ffffff;
-
     padding: 100px 40px;
-
     display: flex;
-
     justify-content: center;
-
 }
-
 
 
 .presentacion-contenedor {
-
     width: 100%;
-
     max-width: 1200px;
-
     display: flex;
-
     flex-direction: row;
-
     align-items: center;
-
     gap: 80px;
-
 }
-
-
-
-.columna-imagen,
 
 .columna-texto {
-
     flex: 1;
-
 }
-
 
 
 .imagen-adaptativa {
-
     width: 100%;
-
     height: auto;
-
     border-radius: 12px;
-
     display: block;
-
 }
-
 
 
 .subtitulo {
-
     font-size: 3rem;
-
     font-weight: 800;
-
     color: #e71d84; /* Tu rosa/magenta para contraste */
-
     margin-bottom: 24px;
-
 }
-
 
 
 .parrafo {
-
     font-size: 1.15rem;
-
     line-height: 1.6;
-
     color: #444444;
-
     margin-bottom: 20px;
+}
 
+#typer {
+    transition: all 0.1s ease-out; /* Suaviza el cambio de ancho cuando entra una nueva letra */
 }
 
 
+/* ==========================================
+   CABECERA despues de hacer scrolling / NAVBAR (NUEVO)
+   ========================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco sutilmente translúcido */
+    backdrop-filter: blur(10px); /* Desenfoque de fondo premium estilo Apple/Google */
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+    z-index: 1000;
+    padding: 15px 40px;
+    
+    /* Estado inicial: Escondida arriba fuera de la pantalla */
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+/* Clase que se activará mediante JavaScript al hacer scroll */
+.navbar.visible {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.navbar-content {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between; /* Título a la izquierda, botones a la derecha */
+    align-items: center;
+}
+
+.navbar-logo {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #333;
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.navbar-menu {
+    display: flex;
+    gap: 30px; /* Separación entre botones del índice */
+}
+
+.nav-item {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #666;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    position: relative;
+}
+
+/* Efecto hover interactivo para el menú */
+.nav-item:hover {
+    color: #e71d84; /* Cambia a tu color rosa de énfasis */
+}
+
 
 /* ==========================================
-
-   CURSOR PERSONALIZADO
-
+   SOBRE EL JUEGO - DOS COLUMNAS (MODIFICADO)
    ========================================== */
+.presentacion-seccion {
+    background-color: #f5f5f5; /* Gris para contrastar la tarjeta */
+    padding: 140px 40px 100px 40px; /* Añadimos más margen arriba para que la navbar no tape el título */
+    display: flex;
+    justify-content: center;
+}
 
-.custom-cursor {
-
-    width: 24px;
-
-    height: 24px;
-
-    background-color: #ffffff;
-
-    border-radius: 50%;
-
-    position: fixed; /* Se mantiene estático respecto a la pantalla */
-
-    top: 0;
-
-    left: 0;
-
-    pointer-events: none; /* Permite hacer click a través del elemento */
-
-    mix-blend-mode: difference; /* Invierte colores al pasar sobre textos o fondos */
-
-    z-index: 9999; /* Se posiciona sobre cualquier otra sección */
-
-    transform: translate(-50%, -50%); /* Centra el círculo sobre la punta real del mouse */
-
-    transition: transform 0.1s ease-out; /* Suaviza sutilmente el movimiento */
-
-} 
-
+/* Conserva aquí abajo tus estilos existentes de .presentacion-contenedor, .tarjeta-imagen, etc. */

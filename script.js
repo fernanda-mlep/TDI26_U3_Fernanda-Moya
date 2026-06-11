@@ -1,6 +1,5 @@
 // Configuración del efecto máquina de escribir
 const textoEscribir = "Catapultazo";
-const velocidadEscritura = 175; 
 
 let indiceActual = 0;
 const contenedorTexto = document.getElementById("typer");
@@ -8,25 +7,40 @@ const boton = document.getElementById("btn-comenzar");
 
 function escribirLetra() {
     if (indiceActual < textoEscribir.length) {
+        // 1. Agrega la siguiente letra
         contenedorTexto.textContent += textoEscribir.charAt(indiceActual);
         indiceActual++;
-        setTimeout(escribirLetra, velocidadEscritura);
+        
+        // código de fluidez de la letra
+    const velocidadFluida = Math.floor(Math.random() * (220 - 120 + 1)) + 120;
+        
+        // 3. Llama a la función con el nuevo retraso variable
+        setTimeout(escribirLetra, velocidadFluida);
     } else {
+        // Al terminar de escribir, muestra el botón '+' tras una breve pausa de 300ms
         setTimeout(() => {
             boton.classList.add("mostrar");
         }, 300); 
     }
 }
 
+// Iniciar la animación automáticamente con un retraso de 1 segundo (1000ms) al abrir el sitio web
 window.addEventListener("DOMContentLoaded", () => {
     setTimeout(escribirLetra, 1000); 
 });
 
 
- // Cursor personalizado 
-const cursorEspecial = document.querySelector(".custom-cursor");
+// ==========================================
+// DETECTOR DE SCROLL PARA LA CABECERA
+// ==========================================
+const navbar = document.getElementById("main-navbar");
 
-window.addEventListener("mousemove", (e) => {
-    cursorEspecial.style.left = e.clientX + "px";
-    cursorEspecial.style.top = e.clientY + "px";
+window.addEventListener("scroll", () => {
+    // Si el usuario bajó más de 200 píxeles, muestra la cabecera compacta
+    if (window.scrollY > 200) {
+        navbar.classList.add("visible");
+    } else {
+        // Si vuelve arriba del todo, la esconde de nuevo
+        navbar.classList.remove("visible");
+    }
 });
