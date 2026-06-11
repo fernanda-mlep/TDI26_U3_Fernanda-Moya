@@ -245,4 +245,64 @@ body {
     justify-content: center;
 }
 
-/* Conserva aquí abajo tus estilos existentes de .presentacion-contenedor, .tarjeta-imagen, etc. */
+/* ==========================================
+   colofónnnnnn
+   ========================================== */
+.colofon {
+    background-color: #000000; /* Volvemos al negro para cerrar la experiencia */
+    padding: 6rem 2rem 4rem 2rem;
+    position: relative;
+    z-index: 5; /* Asegura que quede por encima del fondo scrollable */
+}
+
+.colofon-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+}
+
+/* Contenedor de enlaces */
+.colofon-links {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+/* Estilo de los links (Bajada de página) */
+.colofon-links a {
+    color: #ffffff;
+    font-family: monospace; /* Estilo técnico/minimalista */
+    font-size: 0.9rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+}
+
+/* Interacción sutil en los links */
+.colofon-links a:hover {
+    color: #e71d84; /* Cambia a Fucsia */
+    transform: translateY(-2px); /* Pequeño salto visual */
+}
+
+/* Detalle geométrico final (Línea de la paleta) */
+.colofon-accent {
+    width: 40px;
+    height: 2px;
+    background-color: #b8b1d8; /* Violeta */
+    margin-top: 1rem;
+    opacity: 0.5;
+}
+
+/* Ajuste Responsivo para pantallas pequeñas */
+@media (max-width: 600px) {
+    .colofon-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+    }
+}
