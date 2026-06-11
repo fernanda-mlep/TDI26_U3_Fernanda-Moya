@@ -187,6 +187,53 @@ body {
     color: #e71d84; /* Cambia a tu color rosa de énfasis */
 }
 
+/* Añadido de prueba*/
+
+.seccion-base {
+    padding: 100px 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh; /* Asegura que tengan una buena altura de despliegue */
+    
+    /* TRUCO CLAVE: Evita que la navbar fija tape tus títulos al clickear el menú */
+    scroll-margin-top: 75px; 
+}
+
+/* Contenedor estándar para mantener la alineación limpia de la página */
+.bloque-contenedor {
+    width: 100%;
+    max-width: 1200px;
+}
+
+/* Ritmo visual alternado de fondos */
+.seccion-clara {
+    background-color: #ffffff;
+}
+
+.seccion-oscura {
+    background-color: #f5f5f5;
+}
+
+/* ==========================================
+   BOTÓN RESALTADO EN EL MENÚ (OPCIONAL)
+   ========================================== */
+.btn-nav-jugar {
+    background-color: #e71d84; /* Tu rosa magenta */
+    color: white !important;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    transition: transform 0.3s ease, background-color 0.3s ease !important;
+}
+
+.btn-nav-jugar:hover {
+    background-color: #c3d208; /* Cambia a tu llamativo color verde */
+    color: #333 !important;
+    transform: scale(1.05);
+}
+
+
 
 /* ==========================================
    SOBRE EL JUEGO - DOS COLUMNAS (MODIFICADO)
