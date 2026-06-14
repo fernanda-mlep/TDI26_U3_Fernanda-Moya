@@ -6,13 +6,13 @@
     <title>Catapultazo</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
    <header class="navbar" id="main-navbar">
     <div class="navbar-content">
         <h1 class="navbar-logo">Catapultazo</h1>
-        
-        <nav class="navbar-menu" aria-label="Navegación principal">
+            <nav class="navbar-menu" aria-label="Navegación principal">
             <a href="#sobre-el-juego" class="nav-item">Sobre el juego</a>
             <a href="#como-jugar" class="nav-item">¿Cómo jugar?</a>
             <a href="#componentes" class="nav-item">Partes del juego</a>
@@ -20,9 +20,9 @@
             <a href="uipage.html" class="nav-item btn-nav-jugar">Jugar</a>
         </nav>
     </div>
-</header>
+    </header>
 
-    <section class="hero"> 
+    <section class="hero">
         <div class="hero-content">
             <h1>
                 <span id="typer"></span>
@@ -31,18 +31,42 @@
         </div>
     </section>
 
+<section class="contenedor-marquesina">
+    <div class="marquesina-ondulante">
+        <div class="grupo-pictogramas">
+            <img src="assets/pic1_pozo.png" alt="Pictograma 1" class="picto">
+            <img src="assets/pic2_caidalibre.png" alt="Pictograma 2" class="picto">
+            <img src="assets/pic3_catapulta.png" alt="Pictograma 3" class="picto">
+            <img src="assets/pic4_base.png" alt="Pictograma 4" class="picto">
+            <img src="assets/pic5_guerra.png" alt="Pictograma 1" class="picto">
+            <img src="assets/pic6_congelado.png" alt="Pictograma 2" class="picto">
+            <img src="assets/pic7_equilibrio.png" alt="Pictograma 3" class="picto">
+            <img src="assets/pic8_muevelo.png" alt="Pictograma 4" class="picto">
+            <img src="assets/pic9_rescate.png" alt="Pictograma 4" class="picto">
+        </div>
+        <div class="grupo-pictogramas" aria-hidden="true">
+        <img src="assets/pic1_pozo.png" alt="Pictograma 1" class="picto">
+            <img src="assets/pic2_caidalibre.png" alt="Pictograma 2" class="picto">
+            <img src="assets/pic3_catapulta.png" alt="Pictograma 3" class="picto">
+            <img src="assets/pic4_base.png" alt="Pictograma 4" class="picto">
+            <img src="assets/pic5_guerra.png" alt="Pictograma 1" class="picto">
+            <img src="assets/pic6_congelado.png" alt="Pictograma 2" class="picto">
+            <img src="assets/pic7_equilibrio.png" alt="Pictograma 3" class="picto">
+            <img src="assets/pic8_muevelo.png" alt="Pictograma 4" class="picto">
+            <img src="assets/pic9_rescate.png" alt="Pictograma 4" class="picto">    
+        </div>
+    </div>
+</section>
+
+
+
     <section id="sobre-el-juego" class="presentacion-seccion">
         <div class="presentacion-contenedor">
-            <div class="columna-imagen">
-                <div class="tarjeta-imagen"> 
-                    <img src="assets/detalle-juego.png" alt="Detalle del juego Catapultazo" class="imagen-adaptativa">
-                </div>
-            </div>
-            
+                 
             <div class="columna-texto">
-                <h2 class="subtitulo">Sobre el juego</h2>
+        
                 <p class="parrafo">
-                    Catapultazo es un juego de mesa que combina el azar, la estrategia, la precisión y la competencia. Necesitas reunir de 3 a 4 personas para iniciar una partida, el objetivo es simple: ser la primera persona en alcanzar la meta, situada en lo más alto del tablero. Para avanzar, los jugadores deben sacar una carta al inicio de cada partida, aplicar su movimiento y devolver la carta a un mazo de descarte. El tablero contiene casillas con efectos dinámicos que se activan al caer en ellas, estas alteran el curso del juego, añadiendo un toque de imprevisibilidad a cada turno. Además, cada jugador puede acceder a una catapulta que puede usar para lanzar municiones al tablero, el desafío se encuentra en lograr la precisión necesaria para impactar en los peones de tus compañeros, y evitar hacer caer el peón propio, puesto que cada peón que cae del tablero, vuelve a iniciar su recorrido. 
+                    Catapultazo es un juego de mesa que combina el azar, la estrategia, la precisión y la competencia. Necesitas reunir de 3 a 4 personas para iniciar una partida, el objetivo es simple: ser la primera persona en alcanzar la meta, situada en lo más alto del tablero. Para avanzar, los jugadores deben sacar una carta al inicio de cada partida, aplicar su movimiento y devolver la carta a un mazo de descarte. El tablero contiene casillas con efectos dinámicos que se activan al caer en ellas, estas alteran el curso del juego, añadiendo un toque de imprevisibilidad a cada turno. Además, cada jugador puede acceder a una catapulta que puede usar para lanzar municiones al tablero, el desafío se encuentra en lograr la precisión necesaria para impactar en los peones de tus compañeros, y evitar hacer caer el peón propio, puesto que cada peón que cae del tablero, vuelve a iniciar su recorrido.
                 </p>
             </div>
         </div>
@@ -61,6 +85,21 @@
         </div>
     </section>
 
+<section id="marquesina-introduccion" class="marquesina-texto-contenedor">
+    <div class="marquesina-texto-cinta">
+        <!-- Grupo 1 -->
+        <div class="grupo-texto">
+            <span>Catapultazo es un juego de mesa que combina el azar, la estrategia, la precisión y la competencia.</span>
+        </div>
+        <!-- Grupo 2 (Espejo para el bucle infinito) -->
+        <div class="grupo-texto" aria-hidden="true">
+            <span>Catapultazo es un juego de mesa que combina el azar, la estrategia, la precisión y la competencia.</span>
+        </div>
+    </div>
+</section>
+
+
+
     <section id="componentes" class="seccion-base seccion-clara">
         <div class="bloque-contenedor">
             <h2 class="subtitulo">Partitura PIX</h2>
@@ -68,12 +107,17 @@
         </div>
     </section>
 
+
+
+
     <section id="galeria" class="seccion-base seccion-oscura">
         <div class="bloque-contenedor">
             <h2 class="subtitulo">Galería</h2>
-        
         </div>
     </section>
+
+
+
 
 
     <section id="fundamento" class="seccion-base seccion-clara">
@@ -84,6 +128,7 @@
         </div>
     </section>
 
+
 <footer class="colofon">
         <div class="colofon-container">
             <div class="colofon-links">
@@ -92,10 +137,13 @@
                 <a href="https://wiki.ead.pucv.cl/Fernanda_Moya" target="_blank" rel="noopener">Fernanda Moya: WikiCasiopea</a>
                 <a href="https://www.figma.com/design/nTqEyoacCiUXv7XnHDXtpG/Taller-IxD-26?node-id=0-1&p=f&t=LSjrIlEgZg02zNSD-0" target="_blank" rel="noopener">Figma</a>
             </div>
-            
-        </div>
+
+            </div>
     </footer>
 
 <script src="script.js"></script>
+
 </body>
+
 </html>
+
