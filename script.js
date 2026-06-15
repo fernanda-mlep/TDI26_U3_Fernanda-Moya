@@ -133,3 +133,134 @@ window.addEventListener("scroll", () => {
         }
     });
 });
+
+
+// ==========================================
+// 4. MOTOR CINEMÁTICO: CARRUSEL INFINITO ESTILO MARQUESINA (MOUSE MOVE)
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+    const contenedorGaleria = document.querySelector(".galeria-interactiva-contenedor");
+    const tiraImagenes = document.querySelector(".carrusel-tira-imagenes");
+
+    if (!contenedorGaleria || !tiraImagenes) return;
+
+    // 1. CLONACIÓN STRUCTURAL: Clonamos las cartas para rellenar los extremos falsos
+    const cartasOriginales = Array.from(tiraImagenes.children);
+    
+    // Clonamos al final
+    cartasOriginales.forEach(carta => {
+        const clon = carta.cloneNode(true);
+        tiraImagenes.appendChild(clon);
+    });
+    // Clonamos al inicio (para cuando muevan el mouse al revés)
+    cartasOriginales.reverse().forEach(carta => {
+        const clon = carta.cloneNode(true);
+        tiraImagenes.insertBefore(clon, tiraImagenes.firstChild);
+    });
+
+    // 2. CÁLCULO DE MEDIDAS MATEMÁTICAS
+    // Cada carta mide 320px + 40px de gap = 360px de bloque total
+    const anchoUnaCarta = 320 + 40; 
+    const cantidadOriginales = cartasOriginales.length;
+    
+    // El "ancho real" es lo que miden las cartas antes de ser clonadas
+    const anchoOriginalTotal = cantidadOriginales * anchoUnaCarta;
+
+    // Posición inicial: Desplazamos la tira exactamente el ancho de los clones iniciales
+    let posicionActualX = -anchoOriginalTotal;
+    tiraImagenes.style.transform = `translateX(${posicionActualX}px)`;
+
+    // Variables para suavizar el movimiento (Efecto Inercia/Ease)
+    let posicionDestinoX = -anchoOriginalTotal;
+    
+    contenedorGaleria.addEventListener("mousemove", (e) => {
+        const anchoContenedor = contenedorGaleria.offsetWidth;
+        
+        // Posición del mouse de 0 a 1
+        const mouseX = e.clientX - contenedorGaleria.getBoundingClientRect().left;
+        const porcentajeMouseX = mouseX / anchoContenedor;
+
+        // Factor de velocidad: Mientras más al borde esté el mouse, más rápido corre la marquesina
+        // Centro (0.5) = Quieto. Extremo derecho (1) = Camina a la izquierda. Extremo izquierdo (0) = Camina a la derecha.
+        const velocidad = (porcentajeMouseX - 0.5) * 55; 
+        
+        // Restamos la velocidad para actualizar el destino
+        posicionDestinoX -= velocidad;
+    });
+
+    // 3. BUCLE DE RENDERIZADO (Animación fluida cuadro por cuadro)
+    function animarCarrusel() {
+        // Suavizado cinético (Interpolación lineal)
+        posicionActualX += (posicionDestinoX - posicionActualX) * 0.1;
+
+        // 🚨 EL TRUCO INVISIBLE: Control de fronteras matemáticas
+        // Si caminó tanto a la izquierda que pasó el set original, reseteamos al centro
+        if (posicionActualX <= -(anchoOriginalTotal * 2)) {
+            posicionActualX += anchoOriginalTotal;
+            posicionDestinoX += anchoOriginalTotal;
+        }
+        // Si caminó tanto a la derecha que se iba a acabar, saltamos al set clonado
+        if (posicionActualX >= 0) {
+            posicionActualX -= anchoOriginalTotal;
+            posicionDestinoX -= anchoOriginalTotal;
+        }
+
+        // Aplicamos el movimiento en la pantalla
+        tiraImagenes.style.transform = `translateX(${posicionActualX}px)`;
+
+        // Volvemos a ejecutar en el siguiente cuadro de la pantalla (60fps / 120fps)
+        requestAnimationFrame(animarCarrusel);
+    }
+
+    // Encendemos el motor de renderizado
+    animarCarrusel();
+});
+
+
+// ==========================================
+// 🚨 5. INTERACCIÓN LIGHTBOX: AMPLIAR IMÁGENES AL HACER CLICK
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+    const modal = document.getElementById("modal-visor");
+    const imagenGrande = document.getElementById("img-grande");
+    const botonCerrar = document.querySelector(".btn-cerrar-modal");
+    
+    // Selecciona todas las imágenes de las cartas que viven en las tarjetas flotantes
+    const imagenesCartas = document.querySelectorAll(".tarjeta-flotante img");
+
+    if (!modal || !imagenGrande || !botonCerrar) return;
+
+    // 1. Escuchar el click en cada carta para clonarla en el visor gigante
+    imagenesCartas.forEach(img => {
+        img.style.cursor = "zoom-in"; // Cambia el cursor para avisar la acción
+
+        img.addEventListener("click", () => {
+            modal.style.display = "flex";
+            imagenGrande.src = img.src; // Pasa la ruta de la carta clickeada
+            imagenGrande.alt = img.alt;
+        });
+    });
+
+    // 2. Función unificada para cerrar la vista ampliada
+    const cerrarModal = () => {
+        modal.style.display = "none";
+        imagenGrande.src = ""; // Limpia la memoria del visor
+    };
+
+    // Cerrar al pulsar el botón X
+    botonCerrar.addEventListener("click", cerrarModal);
+
+    // Cerrar de forma intuitiva haciendo click en el espacio oscuro de fondo
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            cerrarModal();
+        }
+    });
+
+    // Cerrar mediante la tecla física de Escape (ESC)
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.style.display === "flex") {
+            cerrarModal();
+        }
+    });
+});

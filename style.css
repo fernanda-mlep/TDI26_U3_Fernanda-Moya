@@ -460,3 +460,101 @@ body {
     color: #e71d84; 
     font-weight: bold;
 }
+
+/* ==========================================
+   GALERÍA CARRUSEL FLOTANTE (MOUSE MOVE)
+   ========================================== */
+
+.galeria-interactiva-contenedor {
+    width: 100%;
+    height: 60vh;             /* Altura ergonómica para la galería en el monitor */
+    overflow: hidden;         /* Esconde el exceso de imágenes que se salen de la pantalla */
+    background-color: #ffffff;/* Fondo gris claro para contrastar las tarjetas blancas */
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: ew-resize;        /* Cambia el cursor a flechas laterales indicando interacción */
+}
+
+.carrusel-tira-imagenes {
+    display: flex;
+    gap: 40px;                /* Separación entre tarjetas */
+    padding: 0px;         /* Colchón de seguridad en los extremos */
+    width: max-content;       /* Obliga a la tira a medir la suma total de sus hijos */
+    will-change: transform; 
+}
+
+.tarjeta-flotante {
+    width: 320px;             /* Ancho fijo para mantener la proporción de las fotos */
+    height: 420px;
+    background-color: #ffffff;
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(0);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.tarjeta-flotante img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;        /* Corta la imagen proporcionalmente para rellenar la tarjeta */
+    display: block;
+    border-radius: 12px;
+}
+
+.tarjeta-flotante:hover {
+    transform: translateY(-15px) scale(1.02); /* Se eleva 15px y se agranda un 2% */
+    box-shadow: 0 20px 40px #b8b1d8; 
+}
+
+/* ==========================================
+    VISOR MODAL / LIGHTBOX 
+   ========================================== */
+
+#modal-visor {
+    display: none;             /* Nace oculto por defecto */
+    position: fixed;           /* Se congela sobre toda la pantalla */
+    z-index: 9999;             /* Capa superior absoluta por encima de todo */
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: rgba(26, 26, 26, 0.95); /* Fondo oscuro mate translúcido */
+    align-items: center;
+    justify-content: center;
+}
+
+.imagen-ampliada {
+    margin: auto;
+    display: block;
+    max-width: 85%;            /* Evita que toque los bordes físicos del monitor */
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 16px;
+    animation: zoomEfecto 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes zoomEfecto {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.btn-cerrar-modal {
+    position: absolute;
+    top: 30px;
+    right: 45px;
+    color: #f5f5f5;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.btn-cerrar-modal:hover {
+    color: #e71d84;            /* Cambia al fucsia de Catapultazo al pasar el cursor */
+}
