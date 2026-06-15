@@ -84,14 +84,14 @@ window.addEventListener("scroll", () => {
 
     // Evaluación matemática del vector de movimiento (Dirección del scroll)
     if (posicionActualScroll > ultimaPosicionScroll) {
-        // El usuario baja: Ocultar barra fucsia
-        navbar.classList.remove("scroll-arriba");
+        // El usuario baja: REVELAR barra fucsia (🚨 CAMBIADO)
+         navbar.classList.remove("scroll-abajo");
+         navbar.classList.add("scroll-arriba");
+         } else {
+         // El usuario sube: OCULTAR barra fucsia (🚨 CAMBIADO)
+         navbar.classList.remove("scroll-arriba");
         navbar.classList.add("scroll-abajo");
-    } else {
-        // El usuario sube: Revelar barra fucsia
-        navbar.classList.remove("scroll-abajo");
-        navbar.classList.add("scroll-arriba");
-    }
+        }
 
     // Actualización del punto de referencia para el siguiente cuadro de renderizado
     ultimaPosicionScroll = posicionActualScroll;
