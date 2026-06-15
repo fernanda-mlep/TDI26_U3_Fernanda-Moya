@@ -82,13 +82,13 @@ window.addEventListener("scroll", () => {
         return; 
     }
 
-    // Evaluación matemática del vector de movimiento (Dirección del scroll)
+    // Evaluation matemática del vector de movimiento (Dirección del scroll)
     if (posicionActualScroll > ultimaPosicionScroll) {
-        // El usuario baja: REVELAR barra fucsia (🚨 CAMBIADO)
+        // El usuario baja: REVELAR barra fucsia
          navbar.classList.remove("scroll-abajo");
          navbar.classList.add("scroll-arriba");
          } else {
-         // El usuario sube: OCULTAR barra fucsia (🚨 CAMBIADO)
+         // El usuario sube: OCULTAR barra fucsia
          navbar.classList.remove("scroll-arriba");
         navbar.classList.add("scroll-abajo");
         }
@@ -98,11 +98,33 @@ window.addEventListener("scroll", () => {
 });
 
 
+// 🚨🚨 AÑADIDO NUEVO: 2.5 RESET AL INICIO CON EL LOGO DE LA NAVBAR 🚨🚨
+document.addEventListener("DOMContentLoaded", () => {
+    const logoNav = document.getElementById("logo-nav");
+    
+    if (logoNav) {
+        logoNav.addEventListener("click", function(event) {
+            event.preventDefault(); // Detiene el salto tosco de ancla nativo
+            
+            // Sube al monitor con suavidad cinemática
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+            // Resetea visualmente los estados de la navbar para que vuelva a su fase oculta inicial
+            if (navbar) {
+                navbar.classList.remove("scroll-arriba", "activada", "forced-visible");
+                navbar.classList.add("scroll-abajo");
+            }
+        });
+    }
+});
+
+
 // ==========================================
 // 3. CONTROL VINCULADO: SUBRAYADO DINÁMICO (UP & DOWN)
 // ==========================================
-/* 🚨 EDICIÓN: Se eliminó el antiguo IntersectionObserver fijo y se reemplazó
-   por este motor matemático que escucha el scroll en vivo dentro del viewport */
 window.addEventListener("scroll", () => {
     // Si la navegación inicial no está permitida por el botón (+), congelamos la ejecución
     if (!navegacionPermitida) return;
@@ -139,10 +161,14 @@ window.addEventListener("scroll", () => {
 // 4. MOTOR CINEMÁTICO: CARRUSEL INFINITO ESTILO MARQUESINA (MOUSE MOVE)
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
-    const contenedorGaleria = document.querySelector(".galeria-interactiva-contenedor");
-    const tiraImagenes = document.querySelector(".carrusel-tira-imagenes");
-
-    if (!contenedorGaleria || !tiraImagenes) return;
+    // 🚨 ADAPTACIÓN: Seleccionamos el contenedor excluyendo explícitamente la nueva "version-centrada"
+    const contenedorGaleria = document.querySelector(".galeria-interactiva-contenedor:not(.version-centrada)");
+    
+    // Si no existe un carrusel móvil activo en la página actual, salimos del código limpiamente
+    if (!contenedorGaleria) return;
+    
+    const tiraImagenes = contenedorGaleria.querySelector(".carrusel-tira-imagenes");
+    if (!tiraImagenes) return;
 
     // 1. CLONACIÓN STRUCTURAL: Clonamos las cartas para rellenar los extremos falsos
     const cartasOriginales = Array.from(tiraImagenes.children);
@@ -159,11 +185,8 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // 2. CÁLCULO DE MEDIDAS MATEMÁTICAS
-    // Cada carta mide 320px + 40px de gap = 360px de bloque total
     const anchoUnaCarta = 320 + 40; 
     const cantidadOriginales = cartasOriginales.length;
-    
-    // El "ancho real" es lo que miden las cartas antes de ser clonadas
     const anchoOriginalTotal = cantidadOriginales * anchoUnaCarta;
 
     // Posición inicial: Desplazamos la tira exactamente el ancho de los clones iniciales
@@ -175,50 +198,38 @@ document.addEventListener("DOMContentLoaded", () => {
     
     contenedorGaleria.addEventListener("mousemove", (e) => {
         const anchoContenedor = contenedorGaleria.offsetWidth;
-        
-        // Posición del mouse de 0 a 1
         const mouseX = e.clientX - contenedorGaleria.getBoundingClientRect().left;
         const porcentajeMouseX = mouseX / anchoContenedor;
 
         // Factor de velocidad: Mientras más al borde esté el mouse, más rápido corre la marquesina
-        // Centro (0.5) = Quieto. Extremo derecho (1) = Camina a la izquierda. Extremo izquierdo (0) = Camina a la derecha.
         const velocidad = (porcentajeMouseX - 0.5) * 55; 
-        
-        // Restamos la velocidad para actualizar el destino
         posicionDestinoX -= velocidad;
     });
 
     // 3. BUCLE DE RENDERIZADO (Animación fluida cuadro por cuadro)
     function animarCarrusel() {
-        // Suavizado cinético (Interpolación lineal)
         posicionActualX += (posicionDestinoX - posicionActualX) * 0.1;
 
-        // 🚨 EL TRUCO INVISIBLE: Control de fronteras matemáticas
-        // Si caminó tanto a la izquierda que pasó el set original, reseteamos al centro
+        // Control de fronteras matemáticas
         if (posicionActualX <= -(anchoOriginalTotal * 2)) {
             posicionActualX += anchoOriginalTotal;
             posicionDestinoX += anchoOriginalTotal;
         }
-        // Si caminó tanto a la derecha que se iba a acabar, saltamos al set clonado
         if (posicionActualX >= 0) {
             posicionActualX -= anchoOriginalTotal;
             posicionDestinoX -= anchoOriginalTotal;
         }
 
-        // Aplicamos el movimiento en la pantalla
         tiraImagenes.style.transform = `translateX(${posicionActualX}px)`;
-
-        // Volvemos a ejecutar en el siguiente cuadro de la pantalla (60fps / 120fps)
         requestAnimationFrame(animarCarrusel);
     }
 
-    // Encendemos el motor de renderizado
     animarCarrusel();
 });
 
 
 // ==========================================
-// 🚨 5. INTERACCIÓN LIGHTBOX: AMPLIAR IMÁGENES AL HACER CLICK
+// 5. INTERACCIÓN LIGHTBOX: AMPLIAR IMÁGENES AL HACER CLICK
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById("modal-visor");
@@ -264,4 +275,3 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
-
