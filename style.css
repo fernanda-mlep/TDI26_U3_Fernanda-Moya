@@ -9,7 +9,6 @@ html {
     scroll-behavior: smooth;
 }
 
-
 body {
     font-family: 'HostGrotesk', sans-serif;
     background: #f5f5f5;
@@ -17,11 +16,11 @@ body {
     cursor: auto; /* cursor predeterminado */
 }
 
-
-
 /* PORTADA (HERO) - CATAPULTAZO */
 .hero {
     height: 100vh;
+    width: 100%;    
+    margin: 0; 
     display: flex;
     justify-content: center;
     align-items: center;
@@ -37,13 +36,18 @@ body {
     text-align: center;
 }
 
-
 .hero h1 {
     font-size: 12rem;
     color: rgb(255, 255, 255);
     display: inline-block;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    will-change: transform, opacity;
 }
 
+.hero.encoger-titulo h1 {
+    transform: scale(0.3); /* Reduce de tamaño el texto del hero */
+    opacity: 0;            /* Lo desvanece mientras la navbar se activa */
+}
 
 .btn {  
     display: inline-block;
@@ -59,115 +63,167 @@ body {
     pointer-events: none;
 }
 
-
 .btn.mostrar {
     opacity: 1;
     transform: scale(1);
     pointer-events: auto;
 }
 
-
-
 .btn:hover {
     color: #b8b1d8;
     transform: scale(1.1);
 }
 
-
 /* SOBRE EL JUEGO - DOS COLUMNAS */
 .presentacion-seccion {
     background-color: #ffffff;
-    padding: 100px 40px;
+    min-height: 80vh; 
+    padding: 30px 40px 40px 40px; /* arriba, derecha, abajo, izq*/
     display: flex;
     justify-content: center;
-}
-
-
+    align-items: center;
+    scroll-margin-top: 80px;
+}  
 
 .presentacion-contenedor {
     width: 100%;
     max-width: 1200px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    gap: 80px;
+    gap: 40px;
 }
 
 .columna-texto {
-    flex: 1;
+    width: 100%; 
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
 }
-
 
 .subtitulo {
     font-size: 3rem;
     font-weight: 800;
-    color: #e71d84; /* Tu rosa/magenta para contraste */
+    color: #e71d84; 
     margin-bottom: 24px;
 }
 
-
-
 .parrafo {
-    font-size: 1.15rem;
+    font-size: 1.85rem;
     line-height: 1.6;
     color: #444444;
     margin-bottom: 20px;
 }
 
-
-
-#typer {
-    transition: all 0.1s ease-out; /* Suaviza el cambio de ancho cuando entra una nueva letra */
+.parrafo_presentacion {
+    font-size: 1.85rem;
+    line-height: 1.5;
+    color: #444444;
+    margin-bottom: 20px;
+    max-width: 780px;
 }
 
+.texto-verde {
+    color: #c3d208;
+    font-weight: bold; 
+    font-weight: bold;
+    font-size: 3rem;
+    line-height: 1.5;
+    max-width: 780px;
+}
+
+.texto-rosa {
+    color: #e71d84;
+    font-weight: bold; 
+}
+
+.txt-violeta-big {
+    color: #b8b1d8;
+    font-weight: bold;
+    font-size: 4rem;
+    line-height: 1.3;
+    max-width: 780px;
+    text-align: center; 
+    margin-top: 25px;
+}
+
+.img-tablero {
+    width: 100%;
+    max-width: 780px; 
+    margin: 32px 0;   
+    border-radius: 20px;
+    overflow: hidden; 
+    display: flex;
+    justify-content: center;
+}
+
+.img-tablero img {
+    width: 100%;
+    height: auto;        
+    display: block;      
+    object-fit: contain; 
+}
+
+#typer {
+    transition: all 0.1s ease-out; 
+}
 
 /* ==========================================
-   cabecera despues de hacer scrolling 
+   cabecera despues de hacer scrolling
    ========================================== */
 .navbar {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 80px; /* Definimos una altura fija estándar para la barra activa */
+    top: 24px;
+    left: 50%;
+    width: 90%;
+    max-width: 960px; 
+    height: 64px; 
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e71d84; /* Tu color de énfasis fucsia */
+    background-color: #e71d84; 
     box-shadow: none;
     z-index: 1000;
-    padding: 0 40px;
-    
-    /* MODIFICADO: Empieza escondida un 100% hacia arriba fuera del campo visual */
-    transform: translateY(-100%);
-    
-    /* Curva de aceleración cubic-bezier para optimizar la respuesta cinética de la interfaz */
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease;
+    padding: 0 32px;
+    border-radius: 100px; 
+    transform: translate(-50%, -140%);
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, opacity 0.4s ease;
 }
 
+/* ==========================================
+   ESTADOS DE INTERACCIÓN CONTROLADOS POR JS (CORREGIDOS)
+   ========================================== */
 
-
-/* Clase que se activará mediante JavaScript al hacer scroll */
-.navbar.visible {
-    transform: translateY(0);
+.navbar.activada {
     opacity: 1;
 }
 
+.navbar.scroll-abajo {
+    transform: translate(-50%, -140%) !important;
+}
 
+.navbar.scroll-arriba.activada {
+    transform: translate(-50%, 0);
+}
 
-/* Modificamos el contenedor interno para que por defecto esté alineado en fila horizontal */
+.navbar.forced-visible {
+    transform: translate(-50%, 0) !important;
+    opacity: 1 !important;
+}
+
 .navbar-content {
     width: 100%;
     max-width: 1440px;
     margin: 0 auto;
     display: flex;
-    flex-direction: row; 
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
 }
 
 .navbar-logo {
-    font-size: 1.8rem; /* Escala funcional adaptada a la barra */
+    font-size: 1.8rem; 
     font-weight: 900;
     color: rgb(255, 255, 255);
     text-decoration: none;
@@ -177,23 +233,20 @@ body {
 .navbar-menu {
     display: flex;
     gap: 30px;
+    align-items: center;
 }
-
-
 
 .nav-item {
     font-size: 1rem;
     font-weight: 600;
-    color: #666;
+    color: #c3d208;
     text-decoration: none;
     transition: color 0.3s ease;
     position: relative;
 }
 
-
-/* Efecto hover interactivo para el menú */
 .nav-item:hover {
-    color: #e71d84; /* Cambia a tu color rosa de énfasis */
+    color: #b8b1d8; 
 }
 
 /* Añadido de prueba*/
@@ -202,35 +255,27 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 60vh; /* Asegura que tengan una buena altura de despliegue */
-
-       /* TRUCO CLAVE: Evita que la navbar fija tape tus títulos al clickear el menú */
+    min-height: 60vh; 
     scroll-margin-top: 75px;
 }
 
-/* Contenedor estándar para mantener la alineación limpia de la página */
 .bloque-contenedor {
     width: 100%;
     max-width: 1200px;
 }
 
-/* Ritmo visual alternado de fondos */
 .seccion-clara {
     background-color: #ffffff;
 }
-
 .seccion-oscura {
     background-color: #f5f5f5;
 }
 
-
-
-
 /* ==========================================
-   BOTÓN RESALTADO EN EL MENÚ (ir a uipage)
+   Botón (ir a uipage)
    ========================================== */
 .btn-nav-jugar {
-    background-color: #e71d84; /* Tu rosa magenta */
+    background-color: #e71d84; 
     color: white !important;
     padding: 6px 16px;
     border-radius: 20px;
@@ -238,37 +283,21 @@ body {
     transition: transform 0.3s ease, background-color 0.3s ease !important;
 }
 
-
 .btn-nav-jugar:hover {
-    background-color: #c3d208; /* Cambia a tu llamativo color verde */
+    background-color: #c3d208; 
     color: #333 !important;
     transform: scale(1.05);
 }
-
-
-
-/* ==========================================
-   SOBRE EL JUEGO - DOS COLUMNAS (MODIFICADO)
-   ========================================== */
-.presentacion-seccion {
-    background-color: #f5f5f5; /* Gris para contrastar la tarjeta */
-    padding: 140px 40px 100px 40px; /* Añadimos más margen arriba para que la navbar no tape el título */
-    display: flex;
-    justify-content: center;
-}
-
-
 
 /* ==========================================
    colofónnnnnn
    ========================================== */
 .colofon {
-    background-color: #000000; /* Volvemos al negro para cerrar la experiencia */
+    background-color: #000000; 
     padding: 6rem 2rem 4rem 2rem;
     position: relative;
-    z-index: 5; /* Asegura que quede por encima del fondo scrollable */
+    z-index: 5; 
 }
-
 
 .colofon-container {
     max-width: 1200px;
@@ -279,9 +308,6 @@ body {
     gap: 3rem;
 }
 
-
-
-/* Contenedor de enlaces */
 .colofon-links {
     display: flex;
     gap: 3rem;
@@ -289,11 +315,9 @@ body {
     justify-content: center;
 }
 
-
-/* Estilo de los links (Bajada de página) */
 .colofon-links a {
     color: #ffffff;
-    font-family: monospace; /* Estilo técnico/minimalista */
+    font-family: monospace; 
     font-size: 0.9rem;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -301,62 +325,43 @@ body {
     transition: color 0.3s ease, transform 0.3s ease;
 }
 
-
-/* Interacción sutil en los links */
 .colofon-links a:hover {
-    color: #e71d84; /* Cambia a Fucsia */
-    transform: translateY(-2px); /* Pequeño salto visual */
+    color: #e71d84; 
+    transform: translateY(-2px); 
 }
 
-
-/* Detalle geométrico final (Línea de la paleta) */
 .colofon-accent {
     width: 40px;
     height: 2px;
-    background-color: #b8b1d8; /* Violeta */
+    background-color: #b8b1d8; 
     margin-top: 1rem;
     opacity: 0.5;
 }
 
-
 /* ==========================================
-   ESTADOS DE INTERACCIÓN CONTROLADOS POR JS
+   MARQUESINA DE TEXTO GIGANTE
    ========================================== */
-
-/* Estado: Scroll hacia abajo. Desplaza el componente un 100% de su altura hacia arriba */
-.navbar.scroll-abajo {
-    transform: translateY(-100%);
-}
-
-/* Estado: Scroll hacia arriba. Restaura el componente a su posición visible, sólo si está activa */
-.navbar.scroll-arriba.activada {
-    transform: translateY(0);
-}
-
-/* 🚨 NUEVO ESTADO: Muestra forzada de cabecera por 3 segundos (Escritorio) */
-.navbar.forced-visible {
-    transform: translateY(0) !important;
-}
-
-/* ==========================================
-   MARQUESINA DE TEXTO GIGANTE 
-   ========================================== */
-
 .marquesina-texto-contenedor {
     width: 100%;
-    height: 25vh; 
+    min-height: 20vh;
     overflow: hidden;
-    background-color: #c3d208; /* Puedes cambiarlo por #f5f5f5 o el color de tu paleta */
+    background-color: #c3d208; 
     display: flex;
     align-items: center;
+    scroll-margin-top: 100px;
+    justify-content: center;
+    padding-top: 20px;    
+    padding-bottom: 20px; 
+    margin-bottom: 0px; 
 }
 
 .marquesina-texto-cinta {
     display: flex;
     width: max-content;
-    /* 25 segundos para que la lectura tipográfica sea fluida en escritorio */
-    animation: marquesina-texto-horizontal 30s linear infinite; 
+    animation: marquesina-texto-horizontal 30s linear infinite;
+    margin-bottom: 0px;
 }
+
 
 .grupo-texto {
     display: flex;
@@ -364,97 +369,94 @@ body {
 }
 
 .grupo-texto span {
-    /* Escala tipográfica masiva para llenar el 40% de la pantalla */
-    font-size: 8rem; 
-    font-weight: 900;
-    text-transform: lowercase; /* Opcional: le da un carácter más arquitectónico/bloque */
-    color: #e71d84; /* El fucsia identitario de Catapultazo */
-    white-space: nowrap; /* Evita que el texto salte de línea */
-    padding-right: 100px; /* Separación entre el fin de la frase y el inicio de la copia */
-    letter-spacing: -2px; /* Ajuste tipográfico ergonómico para tamaños gigantes */
+    font-size: 6rem;
+    font-weight: 400; 
+    text-transform: lowercase; 
+    color: #e71d84; 
+    white-space: nowrap; 
+    padding-right: 100px; 
+    letter-spacing: -2px; 
+    line-height: 1; 
 }
 
-/* ==========================================
-   MOTOR DE MOVIMIENTO HORIZONTAL
-   ========================================== */
 @keyframes marquesina-texto-horizontal {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%); /* Se desplaza la mitad exacta para el ciclo infinito */
-    }
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
 }
 
-
 /* ==========================================
-   MARQUESINA ONDULANTE PARA ESCRITORIO
+   MARQUESINA DE PICTOGRAMAS (9 ELEMENTOS - ESCRITORIO)
    ========================================== */
-
-/* Contenedor principal: corta todo lo que sobresalga de la pantalla del computador */
 .contenedor-marquesina {
     width: 100%;
     overflow: hidden;
-    background-color: #f5f5f5; /* O el color que prefieras de tu paleta */
-    padding: 60px 0;
+    background-color: #ffffff;
+    padding: 80px 0; 
     display: flex;
 }
 
-/* Envoltura que ejecuta el desplazamiento horizontal infinito */
 .marquesina-ondulante {
     display: flex;
     width: max-content;
-    animation: marquesina-horizontal 20s linear infinite;
+    animation: marquesina-horizontal 25s linear infinite; 
 }
 
-/* Los bloques que contienen los pictogramas alineados */
 .grupo-pictogramas {
     display: flex;
     justify-content: space-around;
     align-items: center;
-    gap: 80px; /* Separación generosa entre pictogramas en escritorio */
-    padding-right: 80px; /* Mismo valor del gap para evitar saltos en el bucle */
+    gap: 120px; 
+    padding-right: 120px;
 }
 
-/* El Pictograma Individual: Aquí configuramos el tamaño y la onda vertical */
 .picto {
-    width: 90px; /* Tamaño optimizado para pantallas de escritorio */
+    width: 140px;
     height: auto;
     display: block;
-    
-    /* Ejecuta la animación de la ola hacia arriba y abajo */
     animation: onda-vertical 3s ease-in-out infinite alternate;
 }
 
-/* 🚨 REGLA GESTALT DE RITMO: Desfasamos el inicio de la animación 
-   de cada pictograma para que no suban y bajen todos al mismo tiempo */
 .picto:nth-child(1) { animation-delay: 0s; }
-.picto:nth-child(2) { animation-delay: 0.4s; }
-.picto:nth-child(3) { animation-delay: 0.8s; }
-.picto:nth-child(4) { animation-delay: 1.2s; }
-/* Si añades más de 4 pictogramas, sigue sumando 0.4s a los siguientes */
+.picto:nth-child(2) { animation-delay: 0.3s; }
+.picto:nth-child(3) { animation-delay: 0.6s; }
+.picto:nth-child(4) { animation-delay: 0.9s; }
+.picto:nth-child(5) { animation-delay: 1.2s; }
+.picto:nth-child(6) { animation-delay: 1.5s; }
+.picto:nth-child(7) { animation-delay: 1.8s; }
+.picto:nth-child(8) { animation-delay: 2.1s; }
+.picto:nth-child(9) { animation-delay: 2.4s; }
+
+@keyframes marquesina-horizontal {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+@keyframes onda-vertical {
+    0% { transform: translateY(-40px); }
+    100% { transform: translateY(40px); }
+}
 
 
 /* ==========================================
-   MOTORES DE ANIMACIÓN (KEYFRAMES)
+   ANIMACIÓN DE SUBRAYADO POR SCROLL
    ========================================== */
-
-/* Animación 1: Mueve el bloque un 50% exacto de su ancho total (un grupo completo) */
-@keyframes marquesina-horizontal {
-    0% {
-        transform: translateX(0);
-    }
-    100% {
-        transform: translateX(-50%);
-    }
+.subrayado-animado {
+    /* 1. Preparamos el recuadro de color (usando tu verde llamativo #c3d208) */
+    background-image: linear-gradient(#c3d208, #c3d208);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 100%; 
+    
+    /* Estilos iniciales del texto */
+    color: inherit; 
+    padding: 0 4px; /* Un pequeño aire a los lados de las palabras */
+    border-radius: 4px;
+    transition: color 0.3s ease, font-weight 0.3s ease;
+    will-change: background-size;
 }
 
-/* Animación 2: El movimiento ondulatorio en el eje Y (Sube y baja 25 píxeles) */
-@keyframes onda-vertical {
-    0% {
-        transform: translateY(-25px);
-    }
-    100% {
-        transform: translateY(25px);
-    }
+
+.subrayado-animado.texto-contrastado {
+    color: #e71d84; 
+    font-weight: bold;
 }

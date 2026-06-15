@@ -42,10 +42,10 @@ boton.addEventListener("click", () => {
     navegacionPermitida = true;
     isForced = true;
     
-    // 🚨 Activa la cabecera visible de forma forzada inmediatamente
+    // Activa la cabecera visible de forma forzada inmediatamente
     navbar.classList.add("activada", "forced-visible");
     
-    // 🚨 Temporizador de 3 segundos antes de liberar el control cinético normal
+    // Temporizador de 3 segundos antes de liberar el control cinético normal
     setTimeout(() => {
         navbar.classList.remove("forced-visible");
         
@@ -64,6 +64,16 @@ window.addEventListener("scroll", () => {
     if (isForced) return;
 
     const posicionActualScroll = window.scrollY;
+    // Seleccionamos la sección hero para poder cambiar su estado visual
+    const heroSection = document.querySelector(".hero");
+
+    // 📐 INTERACCIÓN HERO -> NAVBAR: Al bajar los primeros 50px se encoge el título del Hero
+    if (posicionActualScroll > 50) {
+        heroSection.classList.add("encoger-titulo");
+        navbar.classList.add("activada"); // Asegura que la navbar ya tenga permitido mostrarse
+    } else {
+        heroSection.classList.remove("encoger-titulo");
+    }
 
     // Umbral de tolerancia superior (primeros 80px de la página)
     if (posicionActualScroll <= 80) {
@@ -85,4 +95,41 @@ window.addEventListener("scroll", () => {
 
     // Actualización del punto de referencia para el siguiente cuadro de renderizado
     ultimaPosicionScroll = posicionActualScroll;
+});
+
+
+// ==========================================
+// 3. CONTROL VINCULADO: SUBRAYADO DINÁMICO (UP & DOWN)
+// ==========================================
+/* 🚨 EDICIÓN: Se eliminó el antiguo IntersectionObserver fijo y se reemplazó
+   por este motor matemático que escucha el scroll en vivo dentro del viewport */
+window.addEventListener("scroll", () => {
+    // Si la navegación inicial no está permitida por el botón (+), congelamos la ejecución
+    if (!navegacionPermitida) return;
+
+    const subrayados = document.querySelectorAll(".subrayado-animado");
+    
+    subrayados.forEach(span => {
+        // Medimos la ubicación exacta del fragmento de texto respecto al monitor
+        const rect = span.getBoundingClientRect();
+        const alturaPantalla = window.innerHeight;
+
+        // 📐 Rangos de activación visual:
+        const puntoInicio = alturaPantalla * 0.85; // Comienza a pintarse al llegar al 85% inferior
+        const puntoFin = alturaPantalla * 0.35;    // Termina de llenarse al llegar al 35% superior
+
+        // Calculamos el porcentaje de avance (región matemática entre 0 y 1)
+        let progreso = (puntoInicio - rect.top) / (puntoInicio - puntoFin);
+        progreso = Math.max(0, Math.min(1, progreso));
+
+        // Inyectamos el estilo dinámico de forma directa en el atributo style del HTML
+        span.style.backgroundSize = `${progreso * 100}% 100%`;
+
+        // Si el resaltador cubrió más de la mitad de la palabra, forzamos el cambio de contraste
+        if (progreso > 0.5) {
+            span.classList.add("texto-contrastado");
+        } else {
+            span.classList.remove("texto-contrastado");
+        }
+    });
 });
