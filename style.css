@@ -1,3 +1,14 @@
+/* ==========================================
+   PALETA DE COLORES OFICIAL - CATAPULTAZO
+   ========================================== */
+:root {
+    --verde: #c3d208;
+    --violeta: #b8b1d8;
+    --fucsia: #e71d84;
+    --blanco: #FDFDF8;
+    --negro: #181818;
+}
+
 /* CONFIGURACIÓN GENERAL */
 * {
     margin: 0;
@@ -10,9 +21,9 @@ html {
 }
 
 body {
-    font-family: 'HostGrotesk', sans-serif;
-    background: #f5f5f5;
-    color: #333;
+    font-family: "poppins", sans-serif; 
+    background: var(--blanco); /* 🚨 Corregido: Usa tu blanco marfil oficial */
+    color: var(--negro);        /* 🚨 Corregido: Usa tu negro oficial */
     cursor: auto;
 }
 
@@ -24,7 +35,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e71d84;
+    background-color: var(--fucsia); /* 🚨 Cambiado a variable */
     background-size: cover;
     background-position: center;
     padding: 0 80px;
@@ -52,7 +63,7 @@ body {
 .btn {  
     display: inline-block;
     font-size: 10rem;
-    color: #c3d208;
+    color: var(--verde); /* 🚨 Cambiado a variable */
     text-decoration: none;
     line-height: 1;
     margin-left: 30px;
@@ -70,13 +81,13 @@ body {
 }
 
 .btn:hover {
-    color: #b8b1d8;
+    color: var(--violeta); /* 🚨 Cambiado a variable */
     transform: scale(1.1);
 }
 
 /* SOBRE EL JUEGO - DOS COLUMNAS */
 .presentacion-seccion {
-    background-color: #ffffff;
+    background-color: var(--blanco); /* 🚨 Cambiado a variable */
     min-height: 80vh; 
     padding: 30px 40px 40px 40px;
     display: flex;
@@ -104,7 +115,7 @@ body {
 .subtitulo {
     font-size: 3rem;
     font-weight: 800;
-    color: #e71d84; 
+    color: var(--fucsia); /* 🚨 Cambiado a variable */
     margin-bottom: 24px;
 }
 
@@ -131,25 +142,25 @@ body {
 .texto-verde,
 .texto-rosa,
 .txt-violeta-big {
-    font-size: 3rem;          /* 🚨 Todas las letras quedan ahora de este tamaño */
-    line-height: 1.5;         /* Mantiene la misma proporción de interlineado */
-    font-weight: bold;        /* Todas comparten el peso negrita */
-    max-width: 780px;         /* Limita el ancho de lectura para que no se desarme */
+    font-size: 3rem;          
+    line-height: 1.5;         
+    font-weight: bold;        
+    max-width: 780px;         
 }
 
-/* 2. Especificaciones de color y comportamiento único de cada clase */
+/* 2. Especificaciones de color */
 .texto-verde {
-    color: #c3d208;
+    color: var(--verde); /* 🚨 Cambiado a variable */
 }
 
 .texto-rosa {
-    color: #e71d84;
+    color: var(--fucsia); /* 🚨 Cambiado a variable */
 }
 
 .txt-violeta-big {
-    color: #b8b1d8;
-    text-align: center;       /* Mantiene el centrado que tenías para el violeta */
-    margin-top: 25px;         /* Mantiene el aire superior */
+    color: var(--violeta); /* 🚨 Cambiado a variable */
+    text-align: center;       
+    margin-top: 25px;         
 }
 
 .img-tablero {
@@ -186,31 +197,26 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #e71d84; 
+    background-color: var(--fucsia); /* 🚨 Cambiado a variable */
     box-shadow: none;
     z-index: 1000;
     padding: 0 32px;
     border-radius: 100px; 
-    transform: translate(-50%, -140%); /* Nace escondida en el techo */
+    transform: translate(-50%, -140%); 
     cursor: pointer;
     opacity: 0;
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, opacity 0.4s ease;
 }
 
-/* ==========================================
-   ESTADOS DE INTERACCIÓN CONTROLADOS POR JS (CORREGIDOS PARA MOSTRAR AL BAJAR)
-   ========================================== */
-
+/* ESTADOS DE INTERACCIÓN CONTROLADOS POR JS */
 .navbar.activada {
     opacity: 1;
 }
 
-/* 🚨 CORREGIDO: Al hacer scroll abajo se MUESTRA la barra fucsia */
 .navbar.scroll-arriba.activada {
     transform: translate(-50%, 0);
 }
 
-/* 🚨 CORREGIDO: Al hacer scroll arriba se OCULTA de la pantalla */
 .navbar.scroll-abajo {
     transform: translate(-50%, -140%) !important;
 }
@@ -247,14 +253,14 @@ body {
 .nav-item {
     font-size: 1rem;
     font-weight: 600;
-    color: #c3d208;
+    color: var(--verde); /* 🚨 Cambiado a variable */
     text-decoration: none;
     transition: color 0.3s ease;
     position: relative;
 }
 
 .nav-item:hover {
-    color: #b8b1d8; 
+    color: var(--violeta); /* 🚨 Cambiado a variable */
 }
 
 /* SECCIONES BASE */
@@ -273,7 +279,7 @@ body {
 }
 
 .seccion-clara {
-    background-color: #ffffff;
+    background-color: var(--blanco); /* 🚨 Cambiado a variable */
 }
 .seccion-oscura {
     background-color: #f5f5f5;
@@ -281,7 +287,7 @@ body {
 
 /* BOTÓN NAV JUGAR */
 .btn-nav-jugar {
-    background-color: #e71d84; 
+    background-color: var(--fucsia); /* 🚨 Cambiado a variable */
     color: white !important;
     padding: 6px 16px;
     border-radius: 20px;
@@ -290,14 +296,14 @@ body {
 }
 
 .btn-nav-jugar:hover {
-    background-color: #c3d208; 
+    background-color: var(--verde); /* 🚨 Cambiado a variable */
     color: #333 !important;
     transform: scale(1.05);
 }
 
 /* COLOFÓN (FOOTER) */
 .colofon {
-    background-color: #000000; 
+    background-color: var(--negro); /* 🚨 Cambiado a variable */
     padding: 6rem 2rem 4rem 2rem;
     position: relative;
     z-index: 5; 
@@ -330,14 +336,14 @@ body {
 }
 
 .colofon-links a:hover {
-    color: #e71d84; 
+    color: var(--fucsia); /* 🚨 Cambiado a variable */
     transform: translateY(-2px); 
 }
 
 .colofon-accent {
     width: 40px;
     height: 2px;
-    background-color: #b8b1d8; 
+    background-color: var(--violeta); /* 🚨 Cambiado a variable */
     margin-top: 1rem;
     opacity: 0.5;
 }
@@ -347,7 +353,7 @@ body {
     width: 100%;
     min-height: 20vh;
     overflow: hidden;
-    background-color: #c3d208; 
+    background-color: var(--verde); /* 🚨 Cambiado a variable */
     display: flex;
     align-items: center;
     scroll-margin-top: 100px;
@@ -373,7 +379,7 @@ body {
     font-size: 6rem;
     font-weight: 400; 
     text-transform: lowercase; 
-    color: #e71d84; 
+    color: var(--fucsia); /* 🚨 Cambiado a variable */
     white-space: nowrap; 
     padding-right: 100px; 
     letter-spacing: -2px; 
@@ -389,7 +395,7 @@ body {
 .contenedor-marquesina {
     width: 100%;
     overflow: hidden;
-    background-color: #ffffff;
+    background-color: var(--blanco); /* 🚨 Cambiado a variable */
     padding: 80px 0; 
     display: flex;
 }
@@ -437,7 +443,7 @@ body {
 
 /* ANIMACIÓN DE SUBRAYADO POR SCROLL */
 .subrayado-animado {
-    background-image: linear-gradient(#c3d208, #c3d208);
+    background-image: linear-gradient(var(--verde), var(--verde)); /* 🚨 Cambiado a variable */
     background-position: 0 100%;
     background-repeat: no-repeat;
     background-size: 0% 100%; 
@@ -449,7 +455,7 @@ body {
 }
 
 .subrayado-animado.texto-contrastado {
-    color: #e71d84; 
+    color: var(--fucsia); /* 🚨 Cambiado a variable */
     font-weight: bold;
 }
 
@@ -458,7 +464,7 @@ body {
     width: 100%;
     height: 60vh;
     overflow: hidden;
-    background-color: #ffffff;
+    background-color: var(--blanco); /* 🚨 Cambiado a variable */
     position: relative;
     display: flex;
     align-items: center;
@@ -476,7 +482,7 @@ body {
 .tarjeta-flotante {
     width: 320px;
     height: 420px;
-    background-color: #ffffff;
+    background-color: var(--blanco); /* 🚨 Cambiado a variable */
     border-radius: 24px;
     overflow: hidden;
     display: flex;
@@ -496,12 +502,12 @@ body {
 
 .tarjeta-flotante:hover {
     transform: translateY(-15px) scale(1.02);
-    box-shadow: 0 20px 40px #b8b1d8; 
+    box-shadow: 0 20px 40px var(--violeta); /* 🚨 Cambiado a variable */
 }
 
 /* VISOR MODAL / LIGHTBOX */
 #modal-visor {
-    display: none; /* Nace oculto */
+    display: none; 
     position: fixed;
     z-index: 9999;
     padding-top: 60px;
@@ -510,12 +516,11 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background-color: rgba(26, 26, 26, 0.95);
+    background-color: rgba(24, 24, 24, 0.95); /* Usa tu tono negro */
     align-items: center;
     justify-content: center;
 }
 
-/* 🚨 AÑADIDO: Clase activa que tu JS llamará para mostrar el lightbox */
 #modal-visor.activo {
     display: flex !important;
 }
@@ -547,7 +552,7 @@ body {
 }
 
 .btn-cerrar-modal:hover {
-    color: #e71d84;
+    color: var(--fucsia); /* 🚨 Cambiado a variable */
 }
 
 /* CONFIGURACIÓN DE TAMAÑO PARA LA PARTITURA PIX */
@@ -561,7 +566,7 @@ body {
 .contenedor-tarjeta-iframe {
     width: 100%;
     max-width: 1200px;
-    background: #ffffff;
+    background: var(--blanco); /* 🚨 Cambiado a variable */
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     overflow: hidden;
@@ -573,15 +578,14 @@ body {
     height: 650px;
     border: none;
     display: block;
-    background: #ffffff;
+    background: var(--blanco); /* 🚨 Cambiado a variable */
 }
 
-/* ESTILOS PARA EL GIF DE LA LANDING (RESETEO SEGURO) */
+/* ESTILOS PARA EL GIF DE LA LANDING */
 .contenedor-gif {
     width: 100%;
     max-width: 800px;
     margin: 40px auto;
-    /* 🚨 AÑADIDO !important para blindar el contenedor de los grises de Casiopea */
     padding: 0px !important;
     background: transparent !important;
     border: none !important;
@@ -597,24 +601,108 @@ body {
 }
 
 /* ==========================================
-   3 imágenes centradas de catapulta
+   3 IMÁGENES CENTRADAS (SECCIÓN FIJA)
    ========================================== */
-
-/* Variante para el contenedor padre centrado */
 .galeria-interactiva-contenedor.version-centrada {
-    justify-content: center;   /* Centra el contenido horizontalmente */
-    cursor: default;           /* Cursor normal, ya que no se desplaza */
-    height: auto;              /* Permite que la altura se adapte al contenido */
-    padding: 60px 0;           /* Espaciado arriba y abajo de la sección */
+    justify-content: center;   
+    cursor: default;           
+    height: auto;              
+    padding: 60px 0;           
 }
 
-/* Variante para la tira de imágenes centrada */
 .version-centrada .carrusel-tira-imagenes {
     display: flex;
-    justify-content: center;   /* Centra las tarjetas juntas en el medio */
-    flex-wrap: wrap;           /* Permite que bajen si la pantalla es muy chica (Responsive) */
-    gap: 40px;                 /* Mantiene la separación de 40px entre cartas */
-    width: 100%;               /* Usa todo el ancho disponible */
-    max-width: 1200px;         /* Evita que se dispersen demasiado en monitores gigantes */
+    justify-content: center;   
+    flex-wrap: wrap;           
+    gap: 40px;                 
+    width: 100%;               
+    max-width: 1200px;         
     padding: 0 20px;
+}
+
+/* ==========================================
+   NUEVO: VENTANA EMERGENTE DE CUESTIONARIO (POP-UP)
+   ========================================== */
+.modal-emergente-wrap {
+    display: none; /* Controlado por JS */
+    position: fixed;
+    z-index: 10005; /* Un paso por delante de la barra y el lightbox */
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(24, 24, 24, 0.4); 
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.tarjeta-cuestionario {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 540px;
+    border-radius: 28px;
+    padding: 32px 40px;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+    animation: entradaModal 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes entradaModal {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.texto-cuestionario {
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: #000000;
+    line-height: 1.4;
+    margin-bottom: 28px;
+    padding-right: 24px;
+    text-align: left;
+}
+
+.cerrar-cuestionario {
+    position: absolute;
+    top: 24px;
+    right: 28px;
+    color: #000000;
+    font-size: 28px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+    line-height: 1;
+}
+
+.cerrar-cuestionario:hover {
+    color: var(--fucsia);
+    transform: scale(1.1);
+}
+
+.grupo-botones-cuestionario {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+}
+
+.btn-pildora {
+    flex: 1;
+    background-color: #ffffff;
+    color: #000000;
+    border: 1px solid #cccccc;
+    border-radius: 100px;
+    padding: 14px 20px;
+    font-family: monospace;
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+}
+
+.btn-pildora:hover {
+    border-color: var(--fucsia);
+    color: var(--fucsia);
+    background-color: #fef4f8;
 }

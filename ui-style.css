@@ -1,4 +1,4 @@
-/* Custom Properties para la consistencia del Sistema de Diseño */
+/* Definición estricta de la paleta cromática del proyecto */
 :root {
     --verde: #c3d208;
     --violeta: #b8b1d8;
@@ -7,42 +7,23 @@
     --negro: #181818;
 }
 
-/* Configuración del contenedor global (Viewport como tablero) */
+/* Configuración del entorno del tablero */
 body {
     margin: 0;
     padding: 0;
-    overflow: hidden; /* Elimina scrollbars para evitar desbordes visuales tradicionales */
+    overflow: hidden; /* Elimina cualquier desborde convencional de página */
     background-color: var(--negro);
-    font-family: 'Courier New', Courier, monospace; /* Tipografía técnica monocromática */
-    color: var(--blanco);
-    user-select: none; /* Previene la interferencia del cursor al simular la tensión mecánica */
+    user-select: none; /* Evita interferencias visuales al arrastrar los nodos */
     -webkit-user-select: none;
 }
 
-/* Capa de renderizado físico */
+/* Lienzo de renderizado de geometrías */
 canvas {
     display: block;
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 1; /* El lienzo de interacción crítica se posiciona en la base del espacio */
-}
-
-/* Módulo de Telemetría (Panel de métricas técnicas) */
-#panel-metricas {
-    position: absolute;
-    top: 25px;
-    left: 25px;
-    z-index: 10; /* Se superpone para asegurar la legibilidad de las mutaciones de estado */
-    pointer-events: none; /* Evita bloquear los eventos de clic destinados al lienzo inferior */
-    text-transform: uppercase;
-    line-height: 1.8;
-    font-size: 11px;
-    letter-spacing: 1px;
-}
-
-/* Indicadores de estado cinético */
-.metric-tag {
-    color: var(--verde);
-    font-weight: bold;
+    width: 100vw;
+    height: 100vh;
+    z-index: 1;
 }
