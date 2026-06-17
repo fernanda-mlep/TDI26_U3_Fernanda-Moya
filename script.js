@@ -1,216 +1,207 @@
-// ==========================================
-// 1. CONFIGURACIÓN DEL EFECTO MÁQUINA DE ESCRIBIR
-// ==========================================
+// ==========================================================================
+// MOTOR DE INTERACCIÓN UNIFICADO - CATAPULTAZO
+// ==========================================================================
+
+// --- SELECTORES GLOBALES CONSTANTES ---
+const contenedorTexto = document.getElementById("typer");
+const botonComenzar = document.getElementById("btn-comenzar");
+const navbar = document.getElementById("main-navbar");
+const heroSection = document.querySelector(".hero");
+const logoNav = document.getElementById("logo-nav");
+
+// --- COMPUERTAS LÓGICAS (ESTADOS) ---
 const textoEscribir = "Catapultazo";
 let indiceActual = 0;
+let ultimaPosicionScroll = 0;
+let navegacionPermitida = false; // Bloqueo inicial inmersivo
+let isForced = false;             // Bloqueo temporal de 3 segundos del Smart Header
 
-const contenedorTexto = document.getElementById("typer");
-const boton = document.getElementById("btn-comenzar");
 
+// ==========================================
+// 1. EFECTO MÁQUINA DE ESCRIBIR (HERO)
+// ==========================================
 function escribirLetra() {
     if (indiceActual < textoEscribir.length) {
-        contenedorTexto.textContent += textoEscribir.charAt(indiceActual);
+        if (contenedorTexto) {
+            contenedorTexto.textContent += textoEscribir.charAt(indiceActual);
+        }
         indiceActual++;
         
-        // Genera una velocidad variable para emular un ritmo orgánico de digitación
+        // Ritmo orgánico humano de digitación (Velocidad variable)
         const velocidadFluida = Math.floor(Math.random() * (220 - 120 + 1)) + 120;
         setTimeout(escribirLetra, velocidadFluida);
     } else {
-        // Muestra el punto de interacción principal (+) tras una pausa de 300ms
-        setTimeout(() => {
-            boton.classList.add("mostrar");
-        }, 300); 
+        // Revela el botón de interacción (+) tras 300ms de pausa cinematográfica
+        if (botonComenzar) {
+            setTimeout(() => {
+                botonComenzar.classList.add("mostrar");
+            }, 300);
+        }
     }
 }
 
-// Inicialización de la animación tras la carga estructural de la página
+// Inicialización controlada del Typewriter
 window.addEventListener("DOMContentLoaded", () => {
     setTimeout(escribirLetra, 1000); 
 });
 
 
 // ==========================================
-// 2. CONTROL UNIFICADO DE INTERACCIÓN DE SCROLL (SMART HEADER)
+// 2. DISPARADOR DE NAVEGACIÓN (BOTÓN CLIC "+")
 // ==========================================
-const navbar = document.getElementById("main-navbar");
-let ultimaPosicionScroll = 0; // Registro histórico del scroll previo
-let navegacionPermitida = false; // Compuerta lógica: Bloquea el menú al inicio
-let isForced = false; // 🚨 Nueva compuerta: Bloquea el scroll durante el aviso de 3s
-
-// Escucha el clic en el botón "+" para dar de alta la navegación
-boton.addEventListener("click", () => {
-    navegacionPermitida = true;
-    isForced = true;
-    
-    // Activa la cabecera visible de forma forzada inmediatamente
-    navbar.classList.add("activada", "forced-visible");
-    
-    // Temporizador de 3 segundos antes de liberar el control cinético normal
-    setTimeout(() => {
-        navbar.classList.remove("forced-visible");
+if (botonComenzar) {
+    botonComenzar.addEventListener("click", () => {
+        navegacionPermitida = true;
+        isForced = true;
         
-        // Espera a que termine la animación física CSS para habilitar el motor de scroll
+        // Muestra la Navbar de forma forzada inmediatamente
+        if (navbar) navbar.classList.add("activada", "forced-visible");
+        
+        // Temporizador de 3s de advertencia visual antes de liberar el control inercial
         setTimeout(() => {
-            isForced = false;
-        }, 400);
-    }, 3000);
-});
+            if (navbar) navbar.classList.remove("forced-visible");
+            
+            // Espera el fin de la transición CSS (400ms) para liberar el motorcinético
+            setTimeout(() => {
+                isForced = false;
+            }, 00);
+        }, 3000);
+    });
+}
 
+
+// ==========================================
+// 3. RESET DE INTERFAZ (LOGOCLIC NAV)
+// ==========================================
+if (logoNav) {
+    logoNav.addEventListener("click", (event) => {
+        event.preventDefault(); // Evita el salto nativo brusco del navegador
+        
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+        // Devuelve la Navbar a su estado oculto original de la portada
+        if (navbar) {
+            navbar.classList.remove("scroll-arriba", "activada", "forced-visible");
+            navbar.classList.add("scroll-abajo");
+        }
+    });
+}
+
+
+// ==========================================
+// 4. MOTOR CENTRALIZADO DE SCROLL (PERFORMANCE OPTIMIZED)
+// ==========================================
 window.addEventListener("scroll", () => {
-    // Si no se ha presionado el botón "+", el código se detiene aquí y protege la inmersión
-    if (!navegacionPermitida) return;
-    
-    // 🚨 Si la cabecera está en la muestra forzada de 3s, congela las evaluaciones de scroll
-    if (isForced) return;
+    // Si el usuario no ha iniciado la experiencia con (+), congelamos la ejecución
+    if (!navegacionPermitida || isForced) return;
 
     const posicionActualScroll = window.scrollY;
-    // Seleccionamos la sección hero para poder cambiar su estado visual
-    const heroSection = document.querySelector(".hero");
 
-    // 📐 INTERACCIÓN HERO -> NAVBAR: Al bajar los primeros 50px se encoge el título del Hero
-    if (posicionActualScroll > 50) {
-        heroSection.classList.add("encoger-titulo");
-        navbar.classList.add("activada"); // Asegura que la navbar ya tenga permitido mostrarse
-    } else {
-        heroSection.classList.remove("encoger-titulo");
-    }
-
-    // Umbral de tolerancia superior (primeros 80px de la página)
-    if (posicionActualScroll <= 80) {
-        navbar.classList.remove("scroll-abajo", "scroll-arriba");
-        ultimaPosicionScroll = posicionActualScroll;
-        return; 
-    }
-
-    // Evaluation matemática del vector de movimiento (Dirección del scroll)
-    if (posicionActualScroll > ultimaPosicionScroll) {
-        // El usuario baja: REVELAR barra fucsia
-         navbar.classList.remove("scroll-abajo");
-         navbar.classList.add("scroll-arriba");
-         } else {
-         // El usuario sube: OCULTAR barra fucsia
-         navbar.classList.remove("scroll-arriba");
-        navbar.classList.add("scroll-abajo");
+    // --- SUB-MÓDULO A: COMPORTAMIENTO HERO NAVBAR ---
+    if (heroSection && navbar) {
+        if (posicionActualScroll > 50) {
+            heroSection.classList.add("encoger-titulo");
+            navbar.classList.add("activada");
+        } else {
+            heroSection.classList.remove("encoger-titulo");
         }
-
-    // Actualización del punto de referencia para el siguiente cuadro de renderizado
-    ultimaPosicionScroll = posicionActualScroll;
-});
-
-
-// 🚨🚨 AÑADIDO NUEVO: 2.5 RESET AL INICIO CON EL LOGO DE LA NAVBAR 🚨🚨
-document.addEventListener("DOMContentLoaded", () => {
-    const logoNav = document.getElementById("logo-nav");
-    
-    if (logoNav) {
-        logoNav.addEventListener("click", function(event) {
-            event.preventDefault(); // Detiene el salto tosco de ancla nativo
-            
-            // Sube al monitor con suavidad cinemática
-            window.scrollTo({
-                top: 0,
-                behavior: "smooth"
-            });
-
-            // Resetea visualmente los estados de la navbar para que vuelva a su fase oculta inicial
-            if (navbar) {
-                navbar.classList.remove("scroll-arriba", "activada", "forced-visible");
-                navbar.classList.add("scroll-abajo");
-            }
-        });
     }
-});
 
+    // --- SUB-MÓDULO B: DIRECCIÓN DEL SCROLL (SMART NAVBAR) ---
+    if (navbar) {
+        if (posicionActualScroll <= 80) {
+            navbar.classList.remove("scroll-abajo", "scroll-arriba");
+        } else if (posicionActualScroll > ultimaPosicionScroll) {
+            // Bajando: Ocultar barra (O Revelar según tu diseño, modificado para consistencia con tu CSS)
+            navbar.classList.remove("scroll-abajo");
+            navbar.classList.add("scroll-arriba");
+        } else {
+            // Subiendo: Mostrar barra
+            navbar.classList.remove("scroll-arriba");
+            navbar.classList.add("scroll-abajo");
+        }
+    }
 
-// ==========================================
-// 3. CONTROL VINCULADO: SUBRAYADO DINÁMICO (UP & DOWN)
-// ==========================================
-window.addEventListener("scroll", () => {
-    // Si la navegación inicial no está permitida por el botón (+), congelamos la ejecución
-    if (!navegacionPermitida) return;
-
+    // --- SUB-MÓDULO C: SUBRAYADO DINÁMICO (UP & DOWN) ---
     const subrayados = document.querySelectorAll(".subrayado-animado");
-    
+    const alturaPantalla = window.innerHeight;
+    const puntoInicio = alturaPantalla * 0.85; 
+    const puntoFin = alturaPantalla * 0.35;    
+
     subrayados.forEach(span => {
-        // Medimos la ubicación exacta del fragmento de texto respecto al monitor
         const rect = span.getBoundingClientRect();
-        const alturaPantalla = window.innerHeight;
-
-        // 📐 Rangos de activación visual:
-        const puntoInicio = alturaPantalla * 0.85; // Comienza a pintarse al llegar al 85% inferior
-        const puntoFin = alturaPantalla * 0.35;    // Termina de llenarse al llegar al 35% superior
-
-        // Calculamos el porcentaje de avance (región matemática entre 0 y 1)
+        
+        // Región matemática de progreso (entre 0 y 1)
         let progreso = (puntoInicio - rect.top) / (puntoInicio - puntoFin);
         progreso = Math.max(0, Math.min(1, progreso));
 
-        // Inyectamos el estilo dinámico de forma directa en el atributo style del HTML
+        // Inyección directa de estilos de renderizado
         span.style.backgroundSize = `${progreso * 100}% 100%`;
 
-        // Si el resaltador cubrió más de la mitad de la palabra, forzamos el cambio de contraste
+        // Umbral de contraste tipográfico
         if (progreso > 0.5) {
             span.classList.add("texto-contrastado");
         } else {
             span.classList.remove("texto-contrastado");
         }
     });
+
+    // Actualización del registro histórico de posición
+    ultimaPosicionScroll = posicionActualScroll;
 });
 
 
 // ==========================================
-// 4. MOTOR CINEMÁTICO: CARRUSEL INFINITO ESTILO MARQUESINA (MOUSE MOVE)
+// 5. MARQUESINA CINEMÁTICA CON INERCIA (MOUSE MOVE)
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
-    // 🚨 ADAPTACIÓN: Seleccionamos el contenedor excluyendo explícitamente la nueva "version-centrada"
+    // Seleccionamos explícitamente el carrusel móvil ignorando la versión centrada por CSS
     const contenedorGaleria = document.querySelector(".galeria-interactiva-contenedor:not(.version-centrada)");
     
-    // Si no existe un carrusel móvil activo en la página actual, salimos del código limpiamente
     if (!contenedorGaleria) return;
     
     const tiraImagenes = contenedorGaleria.querySelector(".carrusel-tira-imagenes");
     if (!tiraImagenes) return;
 
-    // 1. CLONACIÓN STRUCTURAL: Clonamos las cartas para rellenar los extremos falsos
+    // Clonación Estructural Segura
     const cartasOriginales = Array.from(tiraImagenes.children);
     
-    // Clonamos al final
     cartasOriginales.forEach(carta => {
-        const clon = carta.cloneNode(true);
-        tiraImagenes.appendChild(clon);
+        tiraImagenes.appendChild(carta.cloneNode(true));
     });
-    // Clonamos al inicio (para cuando muevan el mouse al revés)
     cartasOriginales.reverse().forEach(carta => {
-        const clon = carta.cloneNode(true);
-        tiraImagenes.insertBefore(clon, tiraImagenes.firstChild);
+        tiraImagenes.insertBefore(carta.cloneNode(true), tiraImagenes.firstChild);
     });
 
-    // 2. CÁLCULO DE MEDIDAS MATEMÁTICAS
-    const anchoUnaCarta = 320 + 40; 
+    // Medidas Matemáticas de la Tira de cartas
+    const anchoUnaCarta = 320 + 40; // Ancho + Gap configurado en CSS
     const cantidadOriginales = cartasOriginales.length;
     const anchoOriginalTotal = cantidadOriginales * anchoUnaCarta;
 
-    // Posición inicial: Desplazamos la tira exactamente el ancho de los clones iniciales
+    // Posicionamiento Inicial
     let posicionActualX = -anchoOriginalTotal;
+    let posicionDestinoX = -anchoOriginalTotal;
     tiraImagenes.style.transform = `translateX(${posicionActualX}px)`;
 
-    // Variables para suavizar el movimiento (Efecto Inercia/Ease)
-    let posicionDestinoX = -anchoOriginalTotal;
-    
+    // Registro de coordenadas del Mouse
     contenedorGaleria.addEventListener("mousemove", (e) => {
         const anchoContenedor = contenedorGaleria.offsetWidth;
         const mouseX = e.clientX - contenedorGaleria.getBoundingClientRect().left;
         const porcentajeMouseX = mouseX / anchoContenedor;
 
-        // Factor de velocidad: Mientras más al borde esté el mouse, más rápido corre la marquesina
+        // Vector de velocidad según la cercanía a los bordes de la pantalla
         const velocidad = (porcentajeMouseX - 0.5) * 55; 
         posicionDestinoX -= velocidad;
     });
 
-    // 3. BUCLE DE RENDERIZADO (Animación fluida cuadro por cuadro)
+    // Bucle de Renderizado Fluido (RequestAnimationFrame)
     function animarCarrusel() {
-        posicionActualX += (posicionDestinoX - posicionActualX) * 0.1;
+        posicionActualX += (posicionDestinoX - posicionActualX) * 0.1; // Efecto Inercia (Ease)
 
-        // Control de fronteras matemáticas
+        // Control de límites del bucle infinito (Fronteras Matemáticas)
         if (posicionActualX <= -(anchoOriginalTotal * 2)) {
             posicionActualX += anchoOriginalTotal;
             posicionDestinoX += anchoOriginalTotal;
@@ -229,49 +220,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // ==========================================
-// 5. INTERACCIÓN LIGHTBOX: AMPLIAR IMÁGENES AL HACER CLICK
+// 6. CONTROL LIGHTBOX VISOR MODAL
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById("modal-visor");
     const imagenGrande = document.getElementById("img-grande");
     const botonCerrar = document.querySelector(".btn-cerrar-modal");
-    
-    // Selecciona todas las imágenes de las cartas que viven en las tarjetas flotantes
     const imagenesCartas = document.querySelectorAll(".tarjeta-flotante img");
 
     if (!modal || !imagenGrande || !botonCerrar) return;
 
-    // 1. Escuchar el click en cada carta para clonarla en el visor gigante
     imagenesCartas.forEach(img => {
-        img.style.cursor = "zoom-in"; // Cambia el cursor para avisar la acción
-
+        img.style.cursor = "zoom-in";
         img.addEventListener("click", () => {
             modal.style.display = "flex";
-            imagenGrande.src = img.src; // Pasa la ruta de la carta clickeada
+            imagenGrande.src = img.src;
             imagenGrande.alt = img.alt;
         });
     });
 
-    // 2. Función unificada para cerrar la vista ampliada
     const cerrarModal = () => {
         modal.style.display = "none";
-        imagenGrande.src = ""; // Limpia la memoria del visor
+        imagenGrande.src = "";
     };
 
-    // Cerrar al pulsar el botón X
     botonCerrar.addEventListener("click", cerrarModal);
-
-    // Cerrar de forma intuitiva haciendo click en el espacio oscuro de fondo
-    modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
-            cerrarModal();
-        }
-    });
-
-    // Cerrar mediante la tecla física de Escape (ESC)
+    modal.addEventListener("click", (e) => { if (e.target === modal) cerrarModal(); });
     document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && modal.style.display === "flex") {
-            cerrarModal();
-        }
+        if (e.key === "Escape" && modal.style.display === "flex") cerrarModal();
     });
 });
