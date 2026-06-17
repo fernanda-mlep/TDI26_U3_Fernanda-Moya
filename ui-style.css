@@ -1,82 +1,48 @@
-/* Reset básico y tipografía */
-* {
+/* Custom Properties para la consistencia del Sistema de Diseño */
+:root {
+    --verde: #c3d208;
+    --violeta: #b8b1d8;
+    --fucsia: #e71d84;
+    --blanco: #FDFDF8;
+    --negro: #181818;
+}
+
+/* Configuración del contenedor global (Viewport como tablero) */
+body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: sans-serif;
+    overflow: hidden; /* Elimina scrollbars para evitar desbordes visuales tradicionales */
+    background-color: var(--negro);
+    font-family: 'Courier New', Courier, monospace; /* Tipografía técnica monocromática */
+    color: var(--blanco);
+    user-select: none; /* Previene la interferencia del cursor al simular la tensión mecánica */
+    -webkit-user-select: none;
 }
 
-body {
-    background-color: #000000;
-    color: #ffffff;
-    overflow-x: hidden;
-}
-
-/* --- PRIMERA PANTALLA --- */
-#interactive-hero {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
-
-/* Fondo con Violeta y Fucsia (fijo atrás) */
-.color-bg {
+/* Capa de renderizado físico */
+canvas {
+    display: block;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #b8b1d8 0%, #e71d84 100%);
-    z-index: 1;
+    z-index: 1; /* El lienzo de interacción crítica se posiciona en la base del espacio */
 }
 
-/* Capa negra que enmascara el fondo de color */
-.dark-mask {
+/* Módulo de Telemetría (Panel de métricas técnicas) */
+#panel-metricas {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    /* Iniciamos completamente negro */
-    background: #000000; 
-    z-index: 2;
-    pointer-events: none; /* Permite que el mouse "atraviese" la capa hacia el contenedor */
+    top: 25px;
+    left: 25px;
+    z-index: 10; /* Se superpone para asegurar la legibilidad de las mutaciones de estado */
+    pointer-events: none; /* Evita bloquear los eventos de clic destinados al lienzo inferior */
+    text-transform: uppercase;
+    line-height: 1.8;
+    font-size: 11px;
+    letter-spacing: 1px;
 }
 
-/* Texto principal */
-.hero-content {
-    position: relative;
-    z-index: 3;
-    text-align: center;
-    mix-blend-mode: difference; /* Hace que el texto reaccione visualmente a los colores de fondo */
-    pointer-events: none;
-}
-
-.hero-content h1 {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-}
-
-/* --- SEGUNDA SECCIÓN (Verde) --- */
-.main-content {
-    min-height: 100vh;
-    background-color: #c3d208; /* El verde de tu paleta */
-    color: #000000; /* Texto negro para contraste */
-    padding: 5rem 2rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    position: relative;
-    z-index: 4;
-}
-
-.main-content h2 {
-    font-size: 3rem;
-    margin-bottom: 2rem;
+/* Indicadores de estado cinético */
+.metric-tag {
+    color: var(--verde);
+    font-weight: bold;
 }
