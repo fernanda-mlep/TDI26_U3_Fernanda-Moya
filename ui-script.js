@@ -1,194 +1,227 @@
-const canvas = document.getElementById('lienzoCineticos');
-const ctx = canvas.getContext('2d');
+// ==========================================================================
+// MOTOR CINÉTICO EXPERIMENTAL - CATAPULTAZO
+// ==========================================================================
 
-const COLOR = {
-    verde: '#c3d208',
-    violeta: '#b8b1d8',
-    fucsia: '#e71d84',
-    blanco: '#FDFDF8',
-    negro: '#181818'
+const canvas = document.getElementById("tablero-experimental");
+const ctx = canvas ? canvas.getContext("2d") : null;
+const contadorImpactos = document.getElementById("contador-impactos");
+const estadoSistema = document.getElementById("estado-sistema");
+
+// --- CONFIGURACIÓN DINÁMICA DEL ENTORNO ---
+let anchoPantalla = window.innerWidth;
+let alturaPantalla = window.innerHeight;
+let impactosTotales = 0;
+
+if (canvas && ctx) {
+    canvas.width = anchoPantalla;
+    canvas.height = alturaPantalla;
+}
+
+// Redimensionamiento elástico del espacio gráfico
+window.addEventListener("resize", () => {
+    if (!canvas) return;
+    anchoPantalla = window.innerWidth;
+    alturaPantalla = window.innerHeight;
+    canvas.width = anchoPantalla;
+    canvas.height = alturaPantalla;
+});
+
+// --- ENTIDADES DEL SISTEMA (ABSTRACCIÓN DE ELEMENTOS DEL JUEGO) ---
+// El Peón Lanzable (Representa al Jugador)
+const peon = {
+    x: 150,
+    y: alturaPantalla - 150,
+    radio: 42,
+    color: "#e71d84", // Fucsia Oficial
+    vx: 0,
+    vy: 0,
+    friccion: 0.98,
+    gravedad: 0.25,
+    origenX: 150,
+    origenY: alturaPantalla - 150,
+    enLanzamiento: false,
+    siendoArrastrado: false
 };
 
-function ajustarPantalla() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', ajustarPantalla);
-ajustarPantalla();
-
-// --- CONFIGURACIÓN DE FÍSICAS ---
-const gravedad = 0.2;
-const friccion = 0.98;
-
-// --- NODOS CON ESTÉTICA CONSTRUCTIVISTA (Borde cromático, relleno blanco) ---
-let nodos = [
-    {
-        id: "ligero",
-        x: 200, y: 300,
-        origX: 200, origY: 300,
-        vx: 1.5, vy: -1, // Velocidad inicial autónoma
-        masa: 1.2, radio: 30,
-        colorBorde: COLOR.fucsia,
-        enMovimiento: true, activo: false
-    },
-    {
-        id: "pesado",
-        x: 400, y: 400,
-        origX: 400, origY: 400,
-        vx: -0.8, vy: 1.2, // Movimiento autónomo por el lienzo
-        masa: 4.5, radio: 60,
-        colorBorde: COLOR.violeta,
-        enMovimiento: true, activo: false
-    }
+const objetivos = [
+    // 👈 Aumenta los radios de tus casillas/objetivos para que ocupen más espacio visual
+    { x: anchoPantalla * 0.6, y: alturaPantalla * 0.3, radio: 80, color: "#c3d208", activo: true }, 
+    { x: anchoPantalla * 0.75, y: alturaPantalla * 0.55, radio: 65, color: "#b8b1d8", activo: true }, 
+    { x: anchoPantalla * 0.5, y: alturaPantalla * 0.7, radio: 90, color: "#c3d208", activo: true }
 ];
 
-// --- ZONA DE IMPACTO CON VARIABLES DE DEFORMACIÓN ELÁSTICA ---
-let zonaDestino = {
-    x: canvas.width - 400,
-    y: 150,
-    anchoBase: 250,
-    altoBase: 250,
-    ancho: 250, // Dimensiones mutables por el impacto
-    alto: 250,
-    vxElastica: 0, // Velocidad de oscilación elástica
-    vyElastica: 0,
-    kElastica: 0.15, // Constante de elasticidad del resorte
-    amortiguacion: 0.85 // Disipación de la vibración
-};
+// Variables del estado del Mouse/Interactividad
+let mouseX = 0;
+let mouseY = 0;
 
-let nodoSeleccionado = null;
-let mouse = { x: 0, y: 0, arrastrando: false };
-
-// --- CAPTURA DE INTERACCIONES (Mecánica de Catapulta) ---
-canvas.addEventListener('mousedown', (e) => {
-    nodos.forEach(nodo => {
-        let d = Math.hypot(e.clientX - nodo.x, e.clientY - nodo.y);
-        if (d < nodo.radio) {
-            nodoSeleccionado = nodo;
-            mouse.arrastrando = true;
-            nodo.vx = 0; nodo.vy = 0;
-            nodo.enMovimiento = false;
-        }
-    });
-});
-
-canvas.addEventListener('mousemove', (e) => {
-    if (mouse.arrastrando && nodoSeleccionado) {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-    }
-});
-
-canvas.addEventListener('mouseup', (e) => {
-    if (mouse.arrastrando && nodoSeleccionado) {
-        mouse.arrastrando = false;
-        let dx = nodoSeleccionado.x - e.clientX;
-        let dy = nodoSeleccionado.y - e.clientY;
-        
-        // F = m * a -> Aceleración resultante alterada por la masa
-        nodoSeleccionado.vx = (dx * 0.22) / nodoSeleccionado.masa;
-        nodoSeleccionado.vy = (dy * 0.22) / nodoSeleccionado.masa;
-        nodoSeleccionado.enMovimiento = true;
-        nodoSeleccionado = null;
-    }
-});
-
-// --- MOTOR DE PROCESAMIENTO GRÁFICO ---
-function renderMundo() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // 1. PROCESAR DEFORMACIÓN ELÁSTICA DEL CONTENEDOR DE DESTINO
-    // Ley de Hooke aplicada al ancho y alto: F = -k * x
-    let axElastica = -zonaDestino.kElastica * (zonaDestino.ancho - zonaDestino.anchoBase);
-    zonaDestino.vxElastica += axElastica;
-    zonaDestino.vxElastica *= zonaDestino.amortiguacion;
-    zonaDestino.ancho += zonaDestino.vxElastica;
-
-    let ayElastica = -zonaDestino.kElastica * (zonaDestino.alto - zonaDestino.altoBase);
-    zonaDestino.vyElastica += ayElastica;
-    zonaDestino.vyElastica *= zonaDestino.amortiguacion;
-    zonaDestino.alto += zonaDestino.vyElastica;
-
-    // Calcular posición centrada respecto a sus dimensiones mutadas
-    let xRender = (canvas.width - 300) - zonaDestino.ancho / 2;
-    let yRender = 275 - zonaDestino.alto / 2;
-
-    // Dibujar Zona de Destino
-    ctx.strokeStyle = COLOR.blanco;
-    ctx.lineWidth = 2;
-    ctx.setLineDash([6, 6]);
-    ctx.strokeRect(xRender, yRender, zonaDestino.ancho, zonaDestino.alto);
-    ctx.setLineDash([]);
-    ctx.fillStyle = 'rgba(253, 253, 248, 0.02)';
-    ctx.fillRect(xRender, yRender, zonaDestino.ancho, zonaDestino.alto);
-
-    // 2. VECTOR DE PROYECCIÓN DE TRAYECTORIA
-    if (mouse.arrastrando && nodoSeleccionado) {
-        ctx.beginPath();
-        ctx.moveTo(nodoSeleccionado.x, nodoSeleccionado.y);
-        let pX = nodoSeleccionado.x + ((nodoSeleccionado.x - mouse.x) * 1.5) / nodoSeleccionado.masa;
-        let pY = nodoSeleccionado.y + ((nodoSeleccionado.y - mouse.y) * 1.5) / nodoSeleccionado.masa;
-        ctx.lineTo(pX, pY);
-        ctx.strokeStyle = COLOR.verde;
-        ctx.lineWidth = 3;
-        ctx.stroke();
-        ctx.closePath();
-    }
-
-    // 3. PROCESAR Y DIBUJAR GEOMETRÍAS AUTÓNOMAS
-    nodos.forEach(nodo => {
-        if (nodo.enMovimiento) {
-            // Si el nodo vuela libre, la gravedad lo afecta, si no, mantiene inercia autónoma
-            if (nodo.vx > 2 || nodo.vy > 2 || nodo.vy < -2) {
-                nodo.vy += gravedad;
-            }
-            nodo.vx *= friccion;
-            nodo.vy *= friccion;
-
-            nodo.x += nodo.vx;
-            nodo.y += nodo.vy;
-
-            // DETECCIÓN DE COLISIÓN (Impacto sobre la caja elástica)
-            if (nodo.x + nodo.radio > xRender && nodo.x - nodo.radio < xRender + zonaDestino.ancho &&
-                nodo.y + nodo.radio > yRender && nodo.y - nodo.radio < yRender + zonaDestino.alto) {
-                
-                // Transferencia de energía del nodo a la elasticidad de la caja
-                zonaDestino.vxElastica = nodo.vx * 3;
-                zonaDestino.vyElastica = nodo.vy * 3;
-
-                nodo.vx *= -0.4; // Rebote mecánico amortiguado
-                nodo.vy *= -0.4;
-                nodo.activo = true;
-            }
-
-            // DETECCIÓN DE CAÍDA (Reinicio de posición si sale del Viewport)
-            if (nodo.y - nodo.radio > canvas.height || nodo.x - nodo.radio > canvas.width || nodo.x + nodo.radio < 0) {
-                nodo.x = nodo.origX;
-                nodo.y = nodo.origY;
-                nodo.vx = (Math.random() - 0.5) * 3; // Re-impulso autónomo sutil
-                nodo.vy = (Math.random() - 0.5) * 3;
-                nodo.activo = false;
-            }
-        }
-
-        // DIBUJO CON ESTÉTICA DE REFERENTES (Desfase gráfico constructivista)
-        // Borde exterior desfasado 4px para emular el desfase de impresión del diseño analógico
-        ctx.beginPath();
-        ctx.arc(nodo.x + 4, nodo.y + 4, nodo.radio, 0, Math.PI * 2);
-        ctx.strokeStyle = nodo.activo ? COLOR.verde : nodo.colorBorde;
-        ctx.lineWidth = 6; // Trazo grueso rígido inspirado en el trabajo de Ben Bos
-        ctx.stroke();
-        ctx.closePath();
-
-        // Relleno Blanco Sólido superpuesto
-        ctx.beginPath();
-        ctx.arc(nodo.x, nodo.y, nodo.radio, 0, Math.PI * 2);
-        ctx.fillStyle = COLOR.blanco;
-        ctx.fill();
-        ctx.closePath();
-    });
-
-    requestAnimationFrame(renderMundo);
+// ==========================================
+// DETECCIÓN DE ENTRADA DISPOSITIVO (MOUSE & CAPTURA)
+// ==========================================
+function calcularDistancia(x1, y1, x2, y2) {
+    return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
 }
 
-renderMundo();
+canvas.addEventListener("mousedown", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const clickY = (e.clientY - rect.top); 
+
+    // Si el usuario hace clic dentro de la masa física del peón, se inicia la carga de energía
+    if (calcularDistancia(clickX, clickY, peon.x, peon.y) < peon.radio && !peon.enLanzamiento) {
+        peon.siendoArrastrado = true;
+        // ...
+    }
+});
+
+canvas.addEventListener("mousemove", (e) => {
+    const rect = canvas.getBoundingClientRect();
+    mouseX = e.clientX - rect.left;
+    mouseY = e.clientY - rect.top;
+
+    // Si está arrastrando, limitamos la elongación de la resortera táctil
+    if (peon.siendoArrastrado) {
+        const distanciaTension = calcularDistancia(mouseX, mouseY, peon.origenX, peon.origenY);
+        const maxTension = 150; // Umbral límite de fuerza de la catapulta
+
+        if (distanciaTension < maxTension) {
+            peon.x = mouseX;
+            peon.y = mouseY;
+        } else {
+            // Trigonometría analítica para mantener el vector bloqueado en el perímetro límite
+            const angulo = Math.atan2(mouseY - peon.origenY, mouseX - peon.origenX);
+            peon.x = peon.origenX + Math.cos(angulo) * maxTension;
+            peon.y = peon.origenY + Math.sin(angulo) * maxTension;
+        }
+    }
+});
+
+canvas.addEventListener("mouseup", () => {
+    if (peon.siendoArrastrado) {
+        peon.siendoArrastrado = false;
+        peon.enLanzamiento = true;
+
+        // Vector inverso de lanzamiento proporcional a la elongación
+        peon.vx = (peon.origenX - peon.x) * 0.15;
+        peon.vy = (peon.origenY - peon.y) * 0.15;
+
+        if (estadoSistema) {
+            estadoSistema.textContent = "¡Impulso Liberado!";
+        }
+    }
+});
+
+// ==========================================
+// LOOP DE FÍSICAS Y RENDERIZADO (60 FPS)
+// ==========================================
+function actualizarFisicas() {
+    if (peon.enLanzamiento) {
+        // Inyección de aceleración gravitatoria y desaceleración por resistencia aerodinámica
+        peon.vy += peon.gravedad;
+        peon.vx *= peon.friccion;
+        peon.vy *= peon.friccion;
+
+        peon.x += peon.vx;
+        peon.y += peon.vy;
+
+        // --- SISTEMA DE GESTIÓN DE COLISIONES ---
+        objetivos.forEach(target => {
+            if (target.activo) {
+                const distanciaImpacto = calcularDistancia(peon.x, peon.y, target.x, target.y);
+                if (distanciaImpacto < peon.radio + target.radio) {
+                    // Colisión detectada con éxito
+                    target.activo = false;
+                    impactosTotales++;
+                    if (contadorImpactos) contadorImpactos.textContent = impactosTotales;
+                    
+                    // Pequeña explosión de fuerza inversa tras el impacto
+                    peon.vx *= -0.5;
+                    peon.vy *= -0.5;
+
+                    // Regeneración programada del objetivo tras 2 segundos
+                    setTimeout(() => { target.activo = true; }, 2000);
+                }
+            }
+        });
+
+        // --- MECÁNICA DE CAÍDA Y REINICIO (REGLA FUNDAMENTAL DE CATAPULTAZO) ---
+        // Si el peón supera las fronteras visuales del tablero, cae al vacío y reinicia
+        if (peon.x - peon.radio > anchoPantalla || peon.y - peon.radio > alturaPantalla || peon.x + peon.radio < 0) {
+            reiniciarPeon("¡Caída del Tablero! Reiniciando...");
+        }
+    }
+}
+
+function reiniciarPeon(mensajeEstado) {
+    peon.x = peon.origenX;
+    peon.y = peon.origenY;
+    peon.vx = 0;
+    peon.vy = 0;
+    peon.enLanzamiento = false;
+    if (estadoSistema) {
+        estadoSistema.textContent = mensajeEstado;
+        estadoSistema.className = "txt-normal";
+        setTimeout(() => {
+            if(!peon.enLanzamiento && !peon.siendoArrastrado) estadoSistema.textContent = "Estable";
+        }, 2000);
+    }
+}
+
+function renderizarTablero() {
+    if (!ctx) return;
+    
+    // Limpieza de buffer
+    ctx.clearRect(0, 0, anchoPantalla, alturaPantalla);
+
+    // Dibuja el Vector de Dirección / Guía de Trayectoria (Línea Elástica de Tensión)
+    if (peon.siendoArrastrado) {
+        ctx.beginPath();
+        ctx.moveTo(peon.origenX, peon.origenY);
+        ctx.lineTo(peon.x, peon.y);
+        ctx.strokeStyle = "#b8b1d8"; // Violeta Oficial
+        ctx.lineWidth = 3;
+        ctx.setLineDash([5, 5]); // Línea segmentada experimental
+        ctx.stroke();
+        ctx.setLineDash([]); // Reset estilo de línea
+    }
+
+    // Dibuja la Zona de Base / Lanzadera Fija
+    ctx.beginPath();
+    ctx.arc(peon.origenX, peon.origenY, peon.radio * 1.5, 0, Math.PI * 2);
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.1)";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Dibuja los Objetivos Activos
+    objetivos.forEach(target => {
+        if (target.activo) {
+            ctx.beginPath();
+            ctx.arc(target.x, target.y, target.radio, 0, Math.PI * 2);
+            ctx.fillStyle = target.color;
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = target.color;
+            ctx.fill();
+            ctx.shadowBlur = 0; // Reset sombra
+        }
+    });
+
+    // Dibuja al Peón Principal del Jugador
+    ctx.beginPath();
+    ctx.arc(peon.x, peon.y, peon.radio, 0, Math.PI * 2);
+    ctx.fillStyle = peon.color;
+    ctx.fill();
+    ctx.strokeStyle = "#ffffff";
+    ctx.lineWidth = 2;
+    ctx.stroke();
+}
+
+// Bucle Continuo Integrado
+function loop() {
+    actualizarFisicas();
+    renderizarTablero();
+    requestAnimationFrame(loop);
+}
+
+// Inicialización del ecosistema
+if (canvas && ctx) {
+    loop();
+}
