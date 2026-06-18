@@ -1,52 +1,43 @@
-// ==========================================================================
-// MOTOR DE INTERACCIÓN UNIFICADO - CATAPULTAZO
-// ==========================================================================
-
 // --- SELECTORES GLOBALES CONSTANTES ---
 const navbar = document.getElementById("main-navbar");
-const heroSection = document.querySelector(".hero");
-const logoNav = document.getElementById("logo-nav");
+const preloaderContainer = document.getElementById("preloader-container");
+const tituloHero = document.getElementById("titulo-hero");
 
-// --- COMPUERTAS LÓGICAS (ESTADOS) ---
+// --- ESTADOS LÓGICOS DE INTERACCIÓN ---
 let ultimaPosicionScroll = 0;
-let navegacionPermitida = false; // Bloqueo inicial inmersivo durante la animación
-let isForced = false;             // Bloqueo temporal de 3 segundos del Smart Header
+let navegacionPermitida = false; 
 
+// CONTROL DEL FLUJO DEL PRELOADER
+function manejarPreloader() {
+    if (!preloaderContainer || !tituloHero) return;
 
-// ==========================================
-// 1. ANIMACIÓN DE LOGOS/PICTOGRAMAS (PRECARGA AL CARGAR RECURSOS - 2s TOTAL)
-// ==========================================
-function iniciarPreloader() {
-    const contenedorPictos = document.getElementById("secuencia-pictogramas");
-    const tituloHero = document.getElementById("titulo-hero");
-    
-    if (!contenedorPictos) return;
-    const arrayPictos = contenedorPictos.querySelectorAll(".picto-animado");
-    
-    let pictoActual = 0;
-    // 500ms por pictograma × 4 imágenes = 2 segundos de precarga en total
-    const intervaloAnimacion = 500; 
+    // 1. APERTURA: Se muestra el título "Catapultazo" centrado inmediatamente
+    setTimeout(() => {
+        tituloHero.classList.remove("oculto");
+        tituloHero.classList.add("visible");
+    }, 100); // Pequeño margen para asegurar el renderizado inicial
 
-    const cicloPictos = setInterval(() => {
-        // Quitamos el estado activo al pictograma anterior
-        arrayPictos[pictoActual].classList.remove("activo");
-        
-        pictoActual++;
-        
-        if (pictoActual < arrayPictos.length) {
-            // Encendemos el siguiente pictograma
-            arrayPictos[pictoActual].classList.add("activo");
-        } else {
-            // Detenemos el intervalo cuando ya se mostraron los 4
-            clearInterval(cicloPictos);
-            
-            // Ocultamos el contenedor de pictogramas por completo
-            contenedorPictos.style.display = "none";
-            
-            // DISPARO DE APERTURA AUTOMÁTICA DE LANDING
-            activarAperturaLanding(tituloHero);
+    // 2. CIERRE Y TRANSICIÓN: Tras 1.5 segundos (1500ms), transformamos la interfaz
+    setTimeout(() => {
+        // Se desvanece el preloader fucsia de fondo
+        preloaderContainer.classList.add("retirar-preloader");
+
+        // Activamos los permisos del Home/Landing
+        document.body.classList.add("preloader-completado");
+        navegacionPermitida = true;
+
+        // Presentamos la cabecera flotante de forma suave
+        if (navbar) {
+            navbar.classList.add("activada", "scroll-arriba");
         }
-    }, intervaloAnimacion);
+    }, 1600); // 100ms iniciales + 1500ms de duración requerida
+}
+
+// Inicializador seguro del ciclo de vida de la página
+if (document.readyState === "complete") {
+    manejarPreloader();
+} else {
+    window.addEventListener("load", manejarPreloader);
 }
 
 // Ejecutamos cuando todo esté cargado en el navegador (incluyendo las imágenes)
@@ -56,10 +47,7 @@ if (document.readyState === "complete") {
     window.addEventListener("load", iniciarPreloader);
 }
 
-
-// ==========================================
-// 2. DISPARADOR AUTOMÁTICO DE NAVEGACIÓN Y TRANSICIÓN (SCROLL AUTOMÁTICO)
-// ==========================================
+// // 2. DISPARADOR AUTOMÁTICO DE NAVEGACIÓN Y TRANSICIÓN (SCROLL AUTOMÁTICO)
 function activarAperturaLanding(titulo) {
     // 1. Revelamos el título principal
     if (titulo) {
@@ -82,9 +70,7 @@ function activarAperturaLanding(titulo) {
     }, 1500); 
 }
 
-// ==========================================
 // 3. RESET DE INTERFAZ (LOGOCLIC NAV)
-// ==========================================
 if (logoNav) {
     logoNav.addEventListener("click", (event) => {
         event.preventDefault(); // Evita el salto nativo brusco del navegador
@@ -102,11 +88,8 @@ if (logoNav) {
     });
 }
 
-
-// ==========================================
 // 4. MOTOR CENTRALIZADO DE SCROLL (PERFORMANCE OPTIMIZED)
-// ==========================================
-window.addEventListener("scroll", () => {
+    window.addEventListener("scroll", () => {
     // Si el usuario no ha completado la precarga, congelamos la ejecución
     if (!navegacionPermitida || isForced) return;
 
@@ -159,10 +142,7 @@ window.addEventListener("scroll", () => {
     ultimaPosicionScroll = posicionActualScroll;
 });
 
-
-// ==========================================
 // 5. MARQUESINA CINEMÁTICA CON INERCIA (MOUSE MOVE - IMÁGENES)
-// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
     const contenedorGaleria = document.querySelector(".galeria-interactiva-contenedor:not(.version-centrada)");
     if (!contenedorGaleria) return;
@@ -216,9 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// ==========================================
 // 6. CONTROL LIGHTBOX VISOR MODAL
-// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
     const modal = document.getElementById("modal-visor");
     const imagenGrande = document.getElementById("img-grande");
@@ -249,9 +227,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// ==========================================
 // 7. MOTOR CINEMÁTICO: MARQUESINA DE TEXTO INTERACTIVA POR DETECCIÓN DE CURSOR
-// ==========================================
 document.addEventListener("DOMContentLoaded", () => {
     const contenedorMarquesina = document.getElementById("marquesina-introduccion");
     if (!contenedorMarquesina) return;
