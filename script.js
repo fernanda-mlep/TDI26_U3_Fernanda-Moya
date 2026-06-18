@@ -14,9 +14,6 @@ let isForced = false;             // Bloqueo temporal de 3 segundos del Smart He
 
 
 // ==========================================
-// 1. ANIMACIÓN DE LOGOS/PICTOGRAMAS (PRECARGA AL CARGAR RECURSOS)
-// ==========================================
-// ==========================================
 // 1. ANIMACIÓN DE LOGOS/PICTOGRAMAS (PRECARGA AL CARGAR RECURSOS - 2s TOTAL)
 // ==========================================
 function iniciarPreloader() {
@@ -84,15 +81,6 @@ function activarAperturaLanding(titulo) {
         }
     }, 1500); 
 }
-    // 4. Abrimos las compuertas lógicas de interacción inmediatamente
-    navegacionPermitida = true;
-    isForced = false; 
-    
-    // 🚨 ELIMINADO: Se removió el bloque de código que forzaba a la navbar a mostrarse
-    // automáticamente con "forced-visible" al cargar.
-}
-
-
 
 // ==========================================
 // 3. RESET DE INTERFAZ (LOGOCLIC NAV)
