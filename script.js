@@ -3,70 +3,79 @@
 // ==========================================================================
 
 // --- SELECTORES GLOBALES CONSTANTES ---
-const contenedorTexto = document.getElementById("typer");
-const botonComenzar = document.getElementById("btn-comenzar");
 const navbar = document.getElementById("main-navbar");
 const heroSection = document.querySelector(".hero");
 const logoNav = document.getElementById("logo-nav");
 
 // --- COMPUERTAS LÓGICAS (ESTADOS) ---
-const textoEscribir = "Catapultazo";
-let indiceActual = 0;
 let ultimaPosicionScroll = 0;
-let navegacionPermitida = false; // Bloqueo inicial inmersivo
+let navegacionPermitida = false; // Bloqueo inicial inmersivo durante la animación
 let isForced = false;             // Bloqueo temporal de 3 segundos del Smart Header
 
 
 // ==========================================
-// 1. EFECTO MÁQUINA DE ESCRIBIR (HERO)
+// 1. ANIMACIÓN DE LOGOS/PICTOGRAMAS (1 SEGUNDO DE PRECARGA AUTOMÁTICA)
 // ==========================================
-function escribirLetra() {
-    if (indiceActual < textoEscribir.length) {
-        if (contenedorTexto) {
-            contenedorTexto.textContent += textoEscribir.charAt(indiceActual);
-        }
-        indiceActual++;
-        
-        // Ritmo orgánico humano de digitación (Velocidad variable)
-        const velocidadFluida = Math.floor(Math.random() * (220 - 120 + 1)) + 120;
-        setTimeout(escribirLetra, velocidadFluida);
-    } else {
-        // Revela el botón de interacción (+) tras 300ms de pausa cinematográfica
-        if (botonComenzar) {
-            setTimeout(() => {
-                botonComenzar.classList.add("mostrar");
-            }, 300);
-        }
-    }
-}
-
-// Inicialización controlada del Typewriter
 window.addEventListener("DOMContentLoaded", () => {
-    setTimeout(escribirLetra, 1000); 
+    const contenedorPictos = document.getElementById("secuencia-pictogramas");
+    const tituloHero = document.getElementById("titulo-hero");
+    
+    if (!contenedorPictos) return;
+    const arrayPictos = contenedorPictos.querySelectorAll(".picto-animado");
+    
+    let pictoActual = 0;
+    // Dividimos 1000ms (1 segundo) entre los 4 pictogramas = 250ms por cada uno
+    const intervaloAnimacion = 250; 
+
+    const cicloPictos = setInterval(() => {
+        // Quitamos el estado activo al pictograma anterior
+        arrayPictos[pictoActual].classList.remove("activo");
+        
+        pictoActual++;
+        
+        if (pictoActual < arrayPictos.length) {
+            // Encendemos el siguiente pictograma
+            arrayPictos[pictoActual].classList.add("activo");
+        } else {
+            // Detenemos el intervalo cuando ya se mostraron los 4
+            clearInterval(cicloPictos);
+            
+            // Ocultamos el contenedor de pictogramas por completo
+            contenedorPictos.style.display = "none";
+            
+            // DISPARO DE APERTURA AUTOMÁTICA DE LANDING (Fin del segundo exacto)
+            activarAperturaLanding(tituloHero);
+        }
+    }, intervaloAnimacion);
 });
 
 
 // ==========================================
-// 2. DISPARADOR DE NAVEGACIÓN (BOTÓN CLIC "+")
+// 2. DISPARADOR AUTOMÁTICO DE NAVEGACIÓN (APERTURA POST-ANIMACIÓN)
 // ==========================================
-if (botonComenzar) {
-    botonComenzar.addEventListener("click", () => {
-        navegacionPermitida = true;
-        isForced = true;
+function activarAperturaLanding(titulo) {
+    // Revelamos el título principal consolidado
+    if (titulo) {
+        titulo.classList.remove("oculto");
+        titulo.classList.add("visible");
+    }
+
+    // Abrimos las compuertas lógicas de interacción
+    navegacionPermitida = true;
+    isForced = true;
+    
+    // Muestra la Navbar fucsia de forma forzada inmediatamente
+    if (navbar) navbar.classList.add("activada", "forced-visible");
+    
+    // Temporizador de 3s de advertencia visual antes de liberar el control inercial
+    setTimeout(() => {
+        if (navbar) navbar.classList.remove("forced-visible");
         
-        // Muestra la Navbar de forma forzada inmediatamente
-        if (navbar) navbar.classList.add("activada", "forced-visible");
-        
-        // Temporizador de 3s de advertencia visual antes de liberar el control inercial
+        // Espera el fin de la transición CSS (400ms) para liberar el motor cinético
         setTimeout(() => {
-            if (navbar) navbar.classList.remove("forced-visible");
-            
-            // Espera el fin de la transición CSS (400ms) para liberar el motorcinético
-            setTimeout(() => {
-                isForced = false;
-            }, 00);
-        }, 3000);
-    });
+            isForced = false;
+        }, 400);
+    }, 3000);
 }
 
 
@@ -95,7 +104,7 @@ if (logoNav) {
 // 4. MOTOR CENTRALIZADO DE SCROLL (PERFORMANCE OPTIMIZED)
 // ==========================================
 window.addEventListener("scroll", () => {
-    // Si el usuario no ha iniciado la experiencia con (+), congelamos la ejecución
+    // Si el usuario no ha completado la precarga, congelamos la ejecución
     if (!navegacionPermitida || isForced) return;
 
     const posicionActualScroll = window.scrollY;
@@ -115,11 +124,9 @@ window.addEventListener("scroll", () => {
         if (posicionActualScroll <= 80) {
             navbar.classList.remove("scroll-abajo", "scroll-arriba");
         } else if (posicionActualScroll > ultimaPosicionScroll) {
-            // Bajando: Ocultar barra (O Revelar según tu diseño, modificado para consistencia con tu CSS)
             navbar.classList.remove("scroll-abajo");
             navbar.classList.add("scroll-arriba");
         } else {
-            // Subiendo: Mostrar barra
             navbar.classList.remove("scroll-arriba");
             navbar.classList.add("scroll-abajo");
         }
@@ -134,14 +141,11 @@ window.addEventListener("scroll", () => {
     subrayados.forEach(span => {
         const rect = span.getBoundingClientRect();
         
-        // Región matemática de progreso (entre 0 y 1)
         let progreso = (puntoInicio - rect.top) / (puntoInicio - puntoFin);
         progreso = Math.max(0, Math.min(1, progreso));
 
-        // Inyección directa de estilos de renderizado
         span.style.backgroundSize = `${progreso * 100}% 100%`;
 
-        // Umbral de contraste tipográfico
         if (progreso > 0.5) {
             span.classList.add("texto-contrastado");
         } else {
@@ -149,24 +153,20 @@ window.addEventListener("scroll", () => {
         }
     });
 
-    // Actualización del registro histórico de posición
     ultimaPosicionScroll = posicionActualScroll;
 });
 
 
 // ==========================================
-// 5. MARQUESINA CINEMÁTICA CON INERCIA (MOUSE MOVE)
+// 5. MARQUESINA CINEMÁTICA CON INERCIA (MOUSE MOVE - IMÁGENES)
 // ==========================================
 document.addEventListener("DOMContentLoaded", () => {
-    // Seleccionamos explícitamente el carrusel móvil ignorando la versión centrada por CSS
     const contenedorGaleria = document.querySelector(".galeria-interactiva-contenedor:not(.version-centrada)");
-    
     if (!contenedorGaleria) return;
     
     const tiraImagenes = contenedorGaleria.querySelector(".carrusel-tira-imagenes");
     if (!tiraImagenes) return;
 
-    // Clonación Estructural Segura
     const cartasOriginales = Array.from(tiraImagenes.children);
     
     cartasOriginales.forEach(carta => {
@@ -176,32 +176,26 @@ document.addEventListener("DOMContentLoaded", () => {
         tiraImagenes.insertBefore(carta.cloneNode(true), tiraImagenes.firstChild);
     });
 
-    // Medidas Matemáticas de la Tira de cartas
-    const anchoUnaCarta = 320 + 40; // Ancho + Gap configurado en CSS
+    const anchoUnaCarta = 320 + 40; 
     const cantidadOriginales = cartasOriginales.length;
     const anchoOriginalTotal = cantidadOriginales * anchoUnaCarta;
 
-    // Posicionamiento Inicial
     let posicionActualX = -anchoOriginalTotal;
     let posicionDestinoX = -anchoOriginalTotal;
     tiraImagenes.style.transform = `translateX(${posicionActualX}px)`;
 
-    // Registro de coordenadas del Mouse
     contenedorGaleria.addEventListener("mousemove", (e) => {
         const anchoContenedor = contenedorGaleria.offsetWidth;
         const mouseX = e.clientX - contenedorGaleria.getBoundingClientRect().left;
         const porcentajeMouseX = mouseX / anchoContenedor;
 
-        // Vector de velocidad según la cercanía a los bordes de la pantalla
         const velocidad = (porcentajeMouseX - 0.5) * 55; 
         posicionDestinoX -= velocidad;
     });
 
-    // Bucle de Renderizado Fluido (RequestAnimationFrame)
     function animarCarrusel() {
-        posicionActualX += (posicionDestinoX - posicionActualX) * 0.1; // Efecto Inercia (Ease)
+        posicionActualX += (posicionDestinoX - posicionActualX) * 0.1; 
 
-        // Control de límites del bucle infinito (Fronteras Matemáticas)
         if (posicionActualX <= -(anchoOriginalTotal * 2)) {
             posicionActualX += anchoOriginalTotal;
             posicionDestinoX += anchoOriginalTotal;
@@ -249,4 +243,64 @@ document.addEventListener("DOMContentLoaded", () => {
     document.addEventListener("keydown", (e) => {
         if (e.key === "Escape" && modal.style.display === "flex") cerrarModal();
     });
+});
+
+
+// ==========================================
+// 7. MOTOR CINEMÁTICO: MARQUESINA DE TEXTO INTERACTIVA POR DETECCIÓN DE CURSOR
+// ==========================================
+document.addEventListener("DOMContentLoaded", () => {
+    const contenedorMarquesina = document.getElementById("marquesina-introduccion");
+    if (!contenedorMarquesina) return;
+
+    const cintaTexto = contenedorMarquesina.querySelector(".marquesina-texto-cinta");
+    if (!cintaTexto) return;
+
+    let posicionX = 0;
+    let velocidadActual = -2; // Velocidad base por defecto (movimiento continuo inicial)
+    let velocidadDestino = -2;
+
+    const mitadAnchoCinta = cintaTexto.offsetWidth / 2;
+
+    // Escuchador dinámico sobre el contenedor de la marquesina de texto
+    contenedorMarquesina.addEventListener("mousemove", (e) => {
+        const anchoVentana = window.innerWidth;
+        const mouseX = e.clientX; 
+
+        // Posición normalizada respecto al centro de la pantalla (rango de -0.5 a 0.5)
+        const posicionRelativaCentro = (mouseX / anchoVentana) - 0.5;
+
+        if (posicionRelativaCentro > 0) {
+            // Mitad Derecha: Desplazamiento acelerado hacia la izquierda (valores negativos de transformación)
+            velocidadDestino = -4 - (posicionRelativaCentro * 25);
+        } else {
+            // Mitad Izquierda: Desplazamiento invertido acelerado hacia la derecha (valores positivos)
+            velocidadDestino = 4 - (posicionRelativaCentro * 25);
+        }
+    });
+
+    // Restauración de velocidad constante base al retirar el mouse de la zona activa
+    contenedorMarquesina.addEventListener("mouseleave", () => {
+        velocidadDestino = -2; 
+    });
+
+    // Bucle continuo a 60fps independientes del CSS
+    function animarMarquesinaTexto() {
+        // Interpolación lineal (Efecto inercia / Suavizado cinético)
+        velocidadActual += (velocidadDestino - velocidadActual) * 0.08;
+        posicionX += velocidadActual;
+
+        // Bucle estructural infinito (Reinicio invisible antes de que termine el bloque espejo)
+        if (posicionX <= -mitadAnchoCinta) {
+            posicionX = 0;
+        }
+        if (posicionX > 0) {
+            posicionX = -mitadAnchoCinta;
+        }
+
+        cintaTexto.style.transform = `translateX(${posicionX}px)`;
+        requestAnimationFrame(animarMarquesinaTexto);
+    }
+
+    animarMarquesinaTexto();
 });

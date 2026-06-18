@@ -47,12 +47,48 @@ body {
     text-align: center;
 }
 
+/* 🚨 NUEVO: Estilos para la precarga secuencial de 4 pictogramas */
+.secuencia-pictos {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.picto-animado {
+    position: absolute;
+    width: 140px;
+    height: auto;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.1s ease, transform 0.1s ease;
+}
+
+.picto-animado.activo {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* 🚨 AJUSTADO: El título inicia oculto y se activa desde JS */
 .hero h1 {
     font-size: 12rem;
     color: rgb(255, 255, 255);
     display: inline-block;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
     will-change: transform, opacity;
+}
+
+.hero h1.oculto {
+    opacity: 0;
+    transform: scale(0.6);
+}
+
+.hero h1.visible {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .hero.encoger-titulo h1 {
@@ -353,7 +389,7 @@ body {
     width: 100%;
     min-height: 20vh;
     overflow: hidden;
-    background-color: var(--verde); /* 🚨 Cambiado a variable */
+    background-color: var(--verde); 
     display: flex;
     align-items: center;
     scroll-margin-top: 100px;
@@ -361,13 +397,16 @@ body {
     padding-top: 20px;    
     padding-bottom: 20px; 
     margin-bottom: 0px; 
+    cursor: ew-resize; /* Indica interactividad horizontal */
 }
 
+/* 🚨 MODIFICADO: Quitamos la animación fija de CSS para heredar el motor de JS */
 .marquesina-texto-cinta {
     display: flex;
     width: max-content;
-    animation: marquesina-texto-horizontal 30s linear infinite;
     margin-bottom: 0px;
+    will-change: transform;
+    transform: translateX(0);
 }
 
 .grupo-texto {
@@ -384,11 +423,6 @@ body {
     padding-right: 100px; 
     letter-spacing: -2px; 
     line-height: 1; 
-}
-
-@keyframes marquesina-texto-horizontal {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
 }
 
 /* MARQUESINA DE PICTOGRAMAS */
@@ -516,7 +550,7 @@ body {
     width: 100vw;
     height: 100vh;
     overflow: hidden;
-    background-color: rgba(24, 24, 24, 0.95); /* Usa tu tono negro */
+    background-color: rgba(24, 24, 24, 0.95); 
     align-items: center;
     justify-content: center;
 }
@@ -624,9 +658,9 @@ body {
    NUEVO: VENTANA EMERGENTE DE CUESTIONARIO (POP-UP)
    ========================================== */
 .modal-emergente-wrap {
-    display: none; /* Controlado por JS */
+    display: none; 
     position: fixed;
-    z-index: 10005; /* Un paso por delante de la barra y el lightbox */
+    z-index: 10005; 
     left: 0;
     top: 0;
     width: 100vw;
