@@ -60,6 +60,12 @@ function activarAperturaLanding(titulo) {
         titulo.classList.add("visible");
     }
 
+    // NUEVO: Revelamos el botón de comenzar (+)
+    const botonComenzar = document.getElementById("btn-comenzar");
+    if (botonComenzar) {
+        botonComenzar.classList.add("mostrar");
+    }
+
     // Abrimos las compuertas lógicas de interacción
     navegacionPermitida = true;
     isForced = true;
@@ -77,7 +83,6 @@ function activarAperturaLanding(titulo) {
         }, 400);
     }, 3000);
 }
-
 
 // ==========================================
 // 3. RESET DE INTERFAZ (LOGOCLIC NAV)
