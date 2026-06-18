@@ -22,10 +22,12 @@ html {
 
 body {
     font-family: "poppins", sans-serif; 
-    background: var(--blanco); /* 🚨 Corregido: Usa tu blanco marfil oficial */
-    color: var(--negro);        /* 🚨 Corregido: Usa tu negro oficial */
+    background: var(--blanco); 
+    color: var(--negro); 
     cursor: auto;
+    overflow: hidden;
 }
+
 
 /* PORTADA (HERO) - CATAPULTAZO */
 .hero {

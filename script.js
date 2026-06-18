@@ -14,9 +14,12 @@ let isForced = false;             // Bloqueo temporal de 3 segundos del Smart He
 
 
 // ==========================================
-// 1. ANIMACIÓN DE LOGOS/PICTOGRAMAS (1 SEGUNDO DE PRECARGA AUTOMÁTICA)
+// 1. ANIMACIÓN DE LOGOS/PICTOGRAMAS (PRECARGA AL CARGAR RECURSOS)
 // ==========================================
-window.addEventListener("DOMContentLoaded", () => {
+// ==========================================
+// 1. ANIMACIÓN DE LOGOS/PICTOGRAMAS (PRECARGA AL CARGAR RECURSOS - 2s TOTAL)
+// ==========================================
+function iniciarPreloader() {
     const contenedorPictos = document.getElementById("secuencia-pictogramas");
     const tituloHero = document.getElementById("titulo-hero");
     
@@ -24,8 +27,8 @@ window.addEventListener("DOMContentLoaded", () => {
     const arrayPictos = contenedorPictos.querySelectorAll(".picto-animado");
     
     let pictoActual = 0;
-    // Dividimos 1000ms (1 segundo) entre los 4 pictogramas = 250ms por cada uno
-    const intervaloAnimacion = 250; 
+    // 500ms por pictograma × 4 imágenes = 2 segundos de precarga en total
+    const intervaloAnimacion = 500; 
 
     const cicloPictos = setInterval(() => {
         // Quitamos el estado activo al pictograma anterior
@@ -43,46 +46,53 @@ window.addEventListener("DOMContentLoaded", () => {
             // Ocultamos el contenedor de pictogramas por completo
             contenedorPictos.style.display = "none";
             
-            // DISPARO DE APERTURA AUTOMÁTICA DE LANDING (Fin del segundo exacto)
+            // DISPARO DE APERTURA AUTOMÁTICA DE LANDING
             activarAperturaLanding(tituloHero);
         }
     }, intervaloAnimacion);
-});
+}
+
+// Ejecutamos cuando todo esté cargado en el navegador (incluyendo las imágenes)
+if (document.readyState === "complete") {
+    iniciarPreloader();
+} else {
+    window.addEventListener("load", iniciarPreloader);
+}
 
 
 // ==========================================
-// 2. DISPARADOR AUTOMÁTICO DE NAVEGACIÓN (APERTURA POST-ANIMACIÓN)
+// 2. DISPARADOR AUTOMÁTICO DE NAVEGACIÓN Y TRANSICIÓN (SCROLL AUTOMÁTICO)
 // ==========================================
 function activarAperturaLanding(titulo) {
-    // Revelamos el título principal consolidado
+    // 1. Revelamos el título principal
     if (titulo) {
         titulo.classList.remove("oculto");
         titulo.classList.add("visible");
     }
 
-    // NUEVO: Revelamos el botón de comenzar (+)
-    const botonComenzar = document.getElementById("btn-comenzar");
-    if (botonComenzar) {
-        botonComenzar.classList.add("mostrar");
-    }
-
-    // Abrimos las compuertas lógicas de interacción
-    navegacionPermitida = true;
-    isForced = true;
-    
-    // Muestra la Navbar fucsia de forma forzada inmediatamente
-    if (navbar) navbar.classList.add("activada", "forced-visible");
-    
-    // Temporizador de 3s de advertencia visual antes de liberar el control inercial
+    // 2. Transición automática tras mostrar el título 1.5 segundos
     setTimeout(() => {
-        if (navbar) navbar.classList.remove("forced-visible");
-        
-        // Espera el fin de la transición CSS (400ms) para liberar el motor cinético
-        setTimeout(() => {
-            isForced = false;
-        }, 400);
-    }, 3000);
+        // Habilitamos el scroll del body
+        document.body.style.overflow = "auto";
+        navegacionPermitida = true;
+        isForced = false;
+
+        // Desplazamiento automático suave a la siguiente sección
+        const siguienteSeccion = document.getElementById("marquesina-introduccion");
+        if (siguienteSeccion) {
+            siguienteSeccion.scrollIntoView({ behavior: "smooth" });
+        }
+    }, 1500); 
 }
+    // 4. Abrimos las compuertas lógicas de interacción inmediatamente
+    navegacionPermitida = true;
+    isForced = false; 
+    
+    // 🚨 ELIMINADO: Se removió el bloque de código que forzaba a la navbar a mostrarse
+    // automáticamente con "forced-visible" al cargar.
+}
+
+
 
 // ==========================================
 // 3. RESET DE INTERFAZ (LOGOCLIC NAV)
