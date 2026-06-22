@@ -1,144 +1,17 @@
-/* ==========================================================================
-   PALETA DE COLORES OFICIAL - TRASLADADA DESDE EL LANDING
-   ========================================================================== */
-:root {
-    --verde: #c3d208;
-    --violeta: #b8b1d8;
-    --fucsia: #e71d84;
-    --blanco: #FDFDF8;
-    --negro: #181818;
-}
-
-/* RESET COMPORTAMIENTO ESPACIAL */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body, html {
-    width: 100%;
-    overflow-x: hidden; 
-    overflow-y: auto; 
-    font-family: "Poppins", sans-serif;
-    height: 400vh; 
-    background: linear-gradient(
-        to bottom, 
-        #c3d208 0%,    /* Verde */
-        #b8b1d8 33%,   /* Violeta */
-        #e71d84 66%,   /* Fucsia */
-        #FDFDF8 100%   /* Blanco */
-    );
-    background-attachment: scroll;
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: #FDFDF8;
 }
 
-/* CANVAS DE ALTO RENDIMIENTO */
-#tablero-experimental {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 1; /* Capa base inferior */
-    background-color: transparent;
-}
-
-
-/* CAPA SUPERIOR: HUD (HEADS-UP DISPLAY) */
-.hud-interfaz {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 30px 40px;
-    z-index: 10; /* Flota de forma transparente sobre el Canvas */
-    pointer-events: none; /* Permite que los clics pasen a través del texto hacia el Canvas */
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-/* Forzar que los elementos interactivos del HUD sí reaccionen al mouse */
-.btn-regresar {
-    pointer-events: auto;
-    background-color: transparent;
-    color: var(--blanco);
-    text-decoration: none;
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 8px 18px;
-    border: 2px solid var(--violeta);
-    border-radius: 50px;
-    transition: background-color 0.3s, color 0.3s, border-color 0.3s;
-}
-
-.btn-regresar:hover {
-    background-color: var(--fucsia);
-    border-color: var(--fucsia);
-    color: var(--blanco);
-}
-
-.hud-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-
-.hud-titulo {
-    font-size: 2rem;
-    font-weight: 900;
-    color: var(--blanco);
-    text-transform: uppercase;
-    letter-spacing: -1px;
-}
-
-.hud-instrucciones {
-    max-width: 600px;
-    background-color: rgba(24, 24, 24, 0.75);
-    border-left: 4px solid var(--verde);
-    padding: 12px 20px;
-    border-radius: 0 12px 12px 0;
-}
-
-.hud-instrucciones p {
-    font-size: 0.95rem;
-    color: #cccccc;
-    line-height: 1.5;
-}
-
-.hud-instrucciones strong {
-    color: var(--verde);
-}
-
-.hud-marcador {
-    background-color: rgba(231, 29, 132, 0.15);
-    border: 1px solid rgba(231, 29, 132, 0.3);
-    padding: 10px 24px;
-    border-radius: 100px;
-    width: max-content;
-    color: var(--blanco);
-    font-size: 1rem;
-    font-weight: 600;
-    display: flex;
-    gap: 15px;
-    align-items: center;
-}
-
-.hud-marcador strong {
-    color: var(--fucsia);
-}
-
-.hud-marcador #estado-sistema.txt-alerta {
-    color: var(--verde);
-    animation: pulsoAlerta 0.5s ease infinite alternate;
-}
-
-.separador {
-    opacity: 0.3;
-}
-
-@keyframes pulsoAlerta {
-    from { opacity: 0.6; }
-    to { opacity: 1; }
+canvas {
+  display: block;
+  cursor: none;
 }
