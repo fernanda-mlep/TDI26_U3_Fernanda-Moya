@@ -1,86 +1,43 @@
-// --- SELECTORES GLOBALES CONSTANTES ---
-const navbar = document.getElementById("main-navbar");
+// ─── SELECTORES ─────────────────────────────────────
+const navbar             = document.getElementById("main-navbar");
 const preloaderContainer = document.getElementById("preloader-container");
-const tituloHero = document.getElementById("titulo-hero");
+const tituloHero         = document.getElementById("titulo-hero");
+const logoNav            = document.querySelector(".navbar-logo");
+const heroSection        = document.getElementById("preloader-container");
 
-// --- ESTADOS LÓGICOS DE INTERACCIÓN ---
+// ─── ESTADO ─────────────────────────────────────────
 let ultimaPosicionScroll = 0;
-let navegacionPermitida = false; 
+let navegacionPermitida  = false;
 
-// CONTROL DEL FLUJO DEL PRELOADER
+// ─── 1. PRELOADER ────────────────────────────────────
 function manejarPreloader() {
     if (!preloaderContainer || !tituloHero) return;
 
-    // 1. APERTURA: Se muestra el título "Catapultazo" centrado inmediatamente
+    // Muestra el título
     setTimeout(() => {
         tituloHero.classList.remove("oculto");
         tituloHero.classList.add("visible");
-    }, 100); // Pequeño margen para asegurar el renderizado inicial
+    }, 100);
 
-    // 2. CIERRE Y TRANSICIÓN: Tras 1.5 segundos (1500ms), transformamos la interfaz
+    // Retira el preloader y habilita la página
     setTimeout(() => {
-        // Se desvanece el preloader fucsia de fondo
         preloaderContainer.classList.add("retirar-preloader");
-
-        // Activamos los permisos del Home/Landing
         document.body.classList.add("preloader-completado");
         navegacionPermitida = true;
 
-        // Presentamos la cabecera flotante de forma suave
         if (navbar) {
             navbar.classList.add("activada", "scroll-arriba");
         }
-    }, 1600); // 100ms iniciales + 1500ms de duración requerida
+    }, 1600);
 }
 
-// Inicializador seguro del ciclo de vida de la página
-if (document.readyState === "complete") {
-    manejarPreloader();
-} else {
-    window.addEventListener("load", manejarPreloader);
-}
+window.addEventListener("load", manejarPreloader);
 
-// Ejecutamos cuando todo esté cargado en el navegador (incluyendo las imágenes)
-if (document.readyState === "complete") {
-    iniciarPreloader();
-} else {
-    window.addEventListener("load", iniciarPreloader);
-}
-
-// // 2. DISPARADOR AUTOMÁTICO DE NAVEGACIÓN Y TRANSICIÓN (SCROLL AUTOMÁTICO)
-function activarAperturaLanding(titulo) {
-    // 1. Revelamos el título principal
-    if (titulo) {
-        titulo.classList.remove("oculto");
-        titulo.classList.add("visible");
-    }
-
-    // 2. Transición automática tras mostrar el título 1.5 segundos
-    setTimeout(() => {
-        // Habilitamos el scroll del body
-        document.body.style.overflow = "auto";
-        navegacionPermitida = true;
-        isForced = false;
-
-        // Desplazamiento automático suave a la siguiente sección
-        const siguienteSeccion = document.getElementById("marquesina-introduccion");
-        if (siguienteSeccion) {
-            siguienteSeccion.scrollIntoView({ behavior: "smooth" });
-        }
-    }, 1500); 
-}
-
-// 3. RESET DE INTERFAZ (LOGOCLIC NAV)
+// ─── 2. LOGO → VOLVER ARRIBA ─────────────────────────
 if (logoNav) {
-    logoNav.addEventListener("click", (event) => {
-        event.preventDefault(); // Evita el salto nativo brusco del navegador
-        
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-
-        // Devuelve la Navbar a su estado oculto original de la portada
+    logoNav.addEventListener("click", (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: "smooth" });
         if (navbar) {
             navbar.classList.remove("scroll-arriba", "activada", "forced-visible");
             navbar.classList.add("scroll-abajo");
@@ -88,198 +45,136 @@ if (logoNav) {
     });
 }
 
-// 4. MOTOR CENTRALIZADO DE SCROLL (PERFORMANCE OPTIMIZED)
-    window.addEventListener("scroll", () => {
-    // Si el usuario no ha completado la precarga, congelamos la ejecución
-    if (!navegacionPermitida || isForced) return;
+// ─── 3. MOTOR DE SCROLL ──────────────────────────────
+window.addEventListener("scroll", () => {
+    if (!navegacionPermitida) return;
 
-    const posicionActualScroll = window.scrollY;
+    const pos = window.scrollY;
 
-    // --- SUB-MÓDULO A: COMPORTAMIENTO HERO NAVBAR ---
-    if (heroSection && navbar) {
-        if (posicionActualScroll > 50) {
-            heroSection.classList.add("encoger-titulo");
-            navbar.classList.add("activada");
-        } else {
-            heroSection.classList.remove("encoger-titulo");
-        }
-    }
-
-    // --- SUB-MÓDULO B: DIRECCIÓN DEL SCROLL (SMART NAVBAR) ---
+    // Navbar hide/show según dirección
     if (navbar) {
-        if (posicionActualScroll <= 80) {
+        if (pos <= 80) {
             navbar.classList.remove("scroll-abajo", "scroll-arriba");
-        } else if (posicionActualScroll > ultimaPosicionScroll) {
-            navbar.classList.remove("scroll-abajo");
-            navbar.classList.add("scroll-arriba");
-        } else {
+        } else if (pos > ultimaPosicionScroll) {
             navbar.classList.remove("scroll-arriba");
             navbar.classList.add("scroll-abajo");
+        } else {
+            navbar.classList.remove("scroll-abajo");
+            navbar.classList.add("scroll-arriba");
         }
     }
 
-    // --- SUB-MÓDULO C: SUBRAYADO DINÁMICO (UP & DOWN) ---
-    const subrayados = document.querySelectorAll(".subrayado-animado");
-    const alturaPantalla = window.innerHeight;
-    const puntoInicio = alturaPantalla * 0.85; 
-    const puntoFin = alturaPantalla * 0.35;    
+    // Encoger título hero al hacer scroll
+    if (heroSection && navbar && pos > 50) {
+        heroSection.classList.add("encoger-titulo");
+        navbar.classList.add("activada");
+    } else if (heroSection && pos <= 50) {
+        heroSection.classList.remove("encoger-titulo");
+    }
+
+    // Subrayados animados
+    const subrayados   = document.querySelectorAll(".subrayado-animado");
+    const h            = window.innerHeight;
+    const puntoInicio  = h * 0.85;
+    const puntoFin     = h * 0.35;
 
     subrayados.forEach(span => {
-        const rect = span.getBoundingClientRect();
-        
-        let progreso = (puntoInicio - rect.top) / (puntoInicio - puntoFin);
-        progreso = Math.max(0, Math.min(1, progreso));
-
+        const rect     = span.getBoundingClientRect();
+        let progreso   = (puntoInicio - rect.top) / (puntoInicio - puntoFin);
+        progreso       = Math.max(0, Math.min(1, progreso));
         span.style.backgroundSize = `${progreso * 100}% 100%`;
-
-        if (progreso > 0.5) {
-            span.classList.add("texto-contrastado");
-        } else {
-            span.classList.remove("texto-contrastado");
-        }
+        span.classList.toggle("texto-contrastado", progreso > 0.5);
     });
 
-    ultimaPosicionScroll = posicionActualScroll;
+    ultimaPosicionScroll = pos;
 });
 
-// 5. MARQUESINA CINEMÁTICA CON INERCIA (MOUSE MOVE - IMÁGENES)
+// ─── 4. CARRUSEL INTERACTIVO (MOUSE) ─────────────────
 document.addEventListener("DOMContentLoaded", () => {
     const contenedorGaleria = document.querySelector(".galeria-interactiva-contenedor:not(.version-centrada)");
     if (!contenedorGaleria) return;
-    
+
     const tiraImagenes = contenedorGaleria.querySelector(".carrusel-tira-imagenes");
     if (!tiraImagenes) return;
 
     const cartasOriginales = Array.from(tiraImagenes.children);
-    
-    cartasOriginales.forEach(carta => {
-        tiraImagenes.appendChild(carta.cloneNode(true));
-    });
-    cartasOriginales.reverse().forEach(carta => {
-        tiraImagenes.insertBefore(carta.cloneNode(true), tiraImagenes.firstChild);
-    });
+    cartasOriginales.forEach(c => tiraImagenes.appendChild(c.cloneNode(true)));
+    [...cartasOriginales].reverse().forEach(c => tiraImagenes.insertBefore(c.cloneNode(true), tiraImagenes.firstChild));
 
-    const anchoUnaCarta = 320 + 40; 
-    const cantidadOriginales = cartasOriginales.length;
-    const anchoOriginalTotal = cantidadOriginales * anchoUnaCarta;
-
-    let posicionActualX = -anchoOriginalTotal;
-    let posicionDestinoX = -anchoOriginalTotal;
-    tiraImagenes.style.transform = `translateX(${posicionActualX}px)`;
+    const anchoCarta      = 320 + 40;
+    const anchoOriginal   = cartasOriginales.length * anchoCarta;
+    let posActualX        = -anchoOriginal;
+    let posDestinoX       = -anchoOriginal;
+    tiraImagenes.style.transform = `translateX(${posActualX}px)`;
 
     contenedorGaleria.addEventListener("mousemove", (e) => {
-        const anchoContenedor = contenedorGaleria.offsetWidth;
-        const mouseX = e.clientX - contenedorGaleria.getBoundingClientRect().left;
-        const porcentajeMouseX = mouseX / anchoContenedor;
-
-        const velocidad = (porcentajeMouseX - 0.5) * 55; 
-        posicionDestinoX -= velocidad;
+        const rect    = contenedorGaleria.getBoundingClientRect();
+        const pct     = (e.clientX - rect.left) / contenedorGaleria.offsetWidth;
+        posDestinoX  -= (pct - 0.5) * 55;
     });
 
     function animarCarrusel() {
-        posicionActualX += (posicionDestinoX - posicionActualX) * 0.1; 
-
-        if (posicionActualX <= -(anchoOriginalTotal * 2)) {
-            posicionActualX += anchoOriginalTotal;
-            posicionDestinoX += anchoOriginalTotal;
-        }
-        if (posicionActualX >= 0) {
-            posicionActualX -= anchoOriginalTotal;
-            posicionDestinoX -= anchoOriginalTotal;
-        }
-
-        tiraImagenes.style.transform = `translateX(${posicionActualX}px)`;
+        posActualX += (posDestinoX - posActualX) * 0.1;
+        if (posActualX <= -(anchoOriginal * 2)) { posActualX += anchoOriginal; posDestinoX += anchoOriginal; }
+        if (posActualX >= 0)                    { posActualX -= anchoOriginal; posDestinoX -= anchoOriginal; }
+        tiraImagenes.style.transform = `translateX(${posActualX}px)`;
         requestAnimationFrame(animarCarrusel);
     }
-
     animarCarrusel();
 });
 
-
-// 6. CONTROL LIGHTBOX VISOR MODAL
+// ─── 5. LIGHTBOX MODAL ───────────────────────────────
 document.addEventListener("DOMContentLoaded", () => {
-    const modal = document.getElementById("modal-visor");
-    const imagenGrande = document.getElementById("img-grande");
-    const botonCerrar = document.querySelector(".btn-cerrar-modal");
-    const imagenesCartas = document.querySelectorAll(".tarjeta-flotante img");
+    const modal       = document.getElementById("modal-visor");
+    const imgGrande   = document.getElementById("img-grande");
+    const btnCerrar   = document.querySelector(".btn-cerrar-modal");
+    const imagenes    = document.querySelectorAll(".tarjeta-flotante img");
 
-    if (!modal || !imagenGrande || !botonCerrar) return;
+    if (!modal || !imgGrande || !btnCerrar) return;
 
-    imagenesCartas.forEach(img => {
+    imagenes.forEach(img => {
         img.style.cursor = "zoom-in";
         img.addEventListener("click", () => {
             modal.style.display = "flex";
-            imagenGrande.src = img.src;
-            imagenGrande.alt = img.alt;
+            imgGrande.src = img.src;
+            imgGrande.alt = img.alt;
         });
     });
 
-    const cerrarModal = () => {
-        modal.style.display = "none";
-        imagenGrande.src = "";
-    };
-
-    botonCerrar.addEventListener("click", cerrarModal);
-    modal.addEventListener("click", (e) => { if (e.target === modal) cerrarModal(); });
-    document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape" && modal.style.display === "flex") cerrarModal();
-    });
+    const cerrar = () => { modal.style.display = "none"; imgGrande.src = ""; };
+    btnCerrar.addEventListener("click", cerrar);
+    modal.addEventListener("click", e => { if (e.target === modal) cerrar(); });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && modal.style.display === "flex") cerrar(); });
 });
 
-
-// 7. MOTOR CINEMÁTICO: MARQUESINA DE TEXTO INTERACTIVA POR DETECCIÓN DE CURSOR
+// ─── 6. MARQUESINA DE TEXTO (MOUSE SPEED) ────────────
 document.addEventListener("DOMContentLoaded", () => {
-    const contenedorMarquesina = document.getElementById("marquesina-introduccion");
-    if (!contenedorMarquesina) return;
+    const contenedor = document.getElementById("marquesina-introduccion");
+    if (!contenedor) return;
 
-    const cintaTexto = contenedorMarquesina.querySelector(".marquesina-texto-cinta");
-    if (!cintaTexto) return;
+    const cinta = contenedor.querySelector(".marquesina-texto-cinta");
+    if (!cinta) return;
 
-    let posicionX = 0;
-    let velocidadActual = -2; // Velocidad base por defecto (movimiento continuo inicial)
-    let velocidadDestino = -2;
+    let posX       = 0;
+    let velActual  = -2;
+    let velDestino = -2;
+    const mitad    = cinta.offsetWidth / 2;
 
-    const mitadAnchoCinta = cintaTexto.offsetWidth / 2;
-
-    // Escuchador dinámico sobre el contenedor de la marquesina de texto
-    contenedorMarquesina.addEventListener("mousemove", (e) => {
-        const anchoVentana = window.innerWidth;
-        const mouseX = e.clientX; 
-
-        // Posición normalizada respecto al centro de la pantalla (rango de -0.5 a 0.5)
-        const posicionRelativaCentro = (mouseX / anchoVentana) - 0.5;
-
-        if (posicionRelativaCentro > 0) {
-            // Mitad Derecha: Desplazamiento acelerado hacia la izquierda (valores negativos de transformación)
-            velocidadDestino = -4 - (posicionRelativaCentro * 25);
-        } else {
-            // Mitad Izquierda: Desplazamiento invertido acelerado hacia la derecha (valores positivos)
-            velocidadDestino = 4 - (posicionRelativaCentro * 25);
-        }
+    contenedor.addEventListener("mousemove", (e) => {
+        const pct = (e.clientX / window.innerWidth) - 0.5;
+        velDestino = pct > 0
+            ? -4 - (pct * 25)
+            :  4 - (pct * 25);
     });
+    contenedor.addEventListener("mouseleave", () => { velDestino = -2; });
 
-    // Restauración de velocidad constante base al retirar el mouse de la zona activa
-    contenedorMarquesina.addEventListener("mouseleave", () => {
-        velocidadDestino = -2; 
-    });
-
-    // Bucle continuo a 60fps independientes del CSS
-    function animarMarquesinaTexto() {
-        // Interpolación lineal (Efecto inercia / Suavizado cinético)
-        velocidadActual += (velocidadDestino - velocidadActual) * 0.08;
-        posicionX += velocidadActual;
-
-        // Bucle estructural infinito (Reinicio invisible antes de que termine el bloque espejo)
-        if (posicionX <= -mitadAnchoCinta) {
-            posicionX = 0;
-        }
-        if (posicionX > 0) {
-            posicionX = -mitadAnchoCinta;
-        }
-
-        cintaTexto.style.transform = `translateX(${posicionX}px)`;
-        requestAnimationFrame(animarMarquesinaTexto);
+    function animar() {
+        velActual += (velDestino - velActual) * 0.08;
+        posX      += velActual;
+        if (posX <= -mitad) posX = 0;
+        if (posX >  0)      posX = -mitad;
+        cinta.style.transform = `translateX(${posX}px)`;
+        requestAnimationFrame(animar);
     }
-
-    animarMarquesinaTexto();
+    animar();
 });
