@@ -44,11 +44,11 @@ body.preloader-completado { overflow-y: auto; }
     top: 24px; left: 50%;
     transform: translate(-50%, -140%);
     width: 90%; max-width: 1200px;
-    height: 64px;
+    height: 80px;
     display: flex; align-items: center; justify-content: space-between;
     background: var(--fucsia);
     border-radius: 50px;
-    padding: 0 32px;
+    padding: 0 48px; 
     z-index: 3000;
     opacity: 0;
     transition: transform .4s cubic-bezier(.16,1,.3,1), opacity .4s ease;
@@ -58,16 +58,16 @@ body.preloader-completado { overflow-y: auto; }
 .navbar.forced-visible    { transform:translate(-50%, 0) !important; opacity:1 !important; }
 
 .navbar-logo {
-    font-size: 1.8rem; font-weight:900;
+    font-size: 2.2rem; font-weight:900;
     color: #fff; text-decoration:none; cursor:pointer;
 }
 .navbar-menu { display:flex; gap:30px; align-items:center; }
 
 .nav-item {
-    font-size:1rem; font-weight:600;
+    font-size: 1.15rem; font-weight:600;
     color: var(--verde); text-decoration:none;
     transition: color .3s;
-}
+} 
 .nav-item:hover { color: var(--violeta); }
 
 .btn-nav-jugar {
@@ -77,6 +77,36 @@ body.preloader-completado { overflow-y: auto; }
     transition: transform .3s, background .3s !important;
 }
 .btn-nav-jugar:hover { background:var(--violeta); transform:scale(1.05); }
+
+/* ─── DOBLE COLUMNA TEXTO ────────────────────────────── */
+.seccion-dos-columnas {
+    padding: 80px 40px;
+}
+.columnas-flex {
+    flex-direction: row !important; /* Fuerza la alineación horizontal */
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 60px; /* Espacio entre el título y el párrafo */
+}
+.columna-titulo-izq {
+    flex: 1; /* Ocupa el espacio proporcional de la izquierda */
+    min-width: 300px;
+}
+.subtitulo-columna {
+    font-size: 3.5rem;
+    font-weight: 800;
+    color: var(--fucsia);
+    line-height: 1.1;
+}
+.columna-parrafo-der {
+    flex: 1.5; /* Le da un poco más de ancho al párrafo que al título */
+    min-width: 300px;
+}
+.parrafo-columna {
+    font-size: 1.6rem;
+    line-height: 1.6;
+    color: var(--negro);
+}
 
 /* ─── TIPOGRAFÍA GENERAL ────────────────────────────── */
 .subtitulo       { font-size:3rem; font-weight:800; color:var(--fucsia); margin-bottom:24px; }
