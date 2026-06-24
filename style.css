@@ -98,8 +98,9 @@ body.preloader-completado { overflow-y: auto; }
     font-size: 3.5rem;
     font-weight: 800;
     color: var(--fucsia);
-    margin-top: 0;
-    line-height: 1.2;
+    margin: 0; 
+    padding: 0;
+    line-height: 1.5;
 }
 .columna-parrafo-der {
     flex: 1.5; /* Le da un poco más de ancho al párrafo que al título */
