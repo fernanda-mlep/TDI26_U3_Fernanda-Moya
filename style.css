@@ -80,11 +80,13 @@ body.preloader-completado { overflow-y: auto; }
 
 /* ─── DOBLE COLUMNA TEXTO ────────────────────────────── */
 .seccion-dos-columnas {
-    padding: 80px 40px;
+    padding: 20px 40px 80px;
+    min-height: auto !important;
 }
 .columnas-flex {
     flex-direction: row !important; /* Fuerza la alineación horizontal */
     justify-content: space-between;
+    display: flex;
     align-items: flex-start;
     gap: 60px; /* Espacio entre el título y el párrafo */
 }
@@ -96,7 +98,8 @@ body.preloader-completado { overflow-y: auto; }
     font-size: 3.5rem;
     font-weight: 800;
     color: var(--fucsia);
-    line-height: 1.1;
+    margin-top: 0;
+    line-height: 1.2;
 }
 .columna-parrafo-der {
     flex: 1.5; /* Le da un poco más de ancho al párrafo que al título */
@@ -106,6 +109,7 @@ body.preloader-completado { overflow-y: auto; }
     font-size: 1.6rem;
     line-height: 1.6;
     color: var(--negro);
+    margin-top: 0;
 }
 
 /* ─── VISOR DE PEONES 3D INTERACTIVOS ────────────────── */
@@ -167,7 +171,8 @@ body.preloader-completado { overflow-y: auto; }
     background:var(--blanco); min-height:80vh;
     padding:30px 40px 40px;
     display:flex; justify-content:center; align-items:center;
-    scroll-margin-top:80px;
+    scroll-margin-top:104px;
+    min-height: 80vh;
 }
 .presentacion-contenedor {
     width:100%; max-width:1200px;
@@ -189,7 +194,7 @@ body.preloader-completado { overflow-y: auto; }
     background:var(--verde);
     display:flex; align-items:center; justify-content:center;
     padding:20px 0; cursor:ew-resize;
-    scroll-margin-top:100px;
+    scroll-margin-top:104px;
 }
 .marquesina-texto-cinta { display:flex; width:max-content; will-change:transform; }
 .grupo-texto { display:flex; align-items:center; }
@@ -202,7 +207,7 @@ body.preloader-completado { overflow-y: auto; }
 /* ─── MARQUESINA DE PICTOGRAMAS ─────────────────────── */
 .contenedor-marquesina {
     width:100%; overflow:hidden; background:var(--blanco);
-    padding:80px 0; display:flex;
+    padding:190px 0; display:flex;
 }
 .marquesina-ondulante {
     display:flex; width:max-content;
