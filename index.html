@@ -9,206 +9,218 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
     <header class="navbar" id="main-navbar">
-    <span class="navbar-logo" id="logo-nav">Catapultazo</span>
-    <nav class="navbar-menu" aria-label="Navegación principal">
-        <a href="#sobre-el-juego" class="nav-item">Sobre el juego</a>
-        <a href="#como-jugar" class="nav-item">¿Cómo jugar?</a>
-        <a href="#pix" class="nav-item">Pix</a>
-        <a href="#fundamento" class="nav-item">Fundamento</a>
-        <a href="uipage.html" class="nav-item btn-nav-jugar">Jugar</a>
-    </nav>
-</header>
+        <span class="navbar-logo" id="logo-nav">Catapultazo</span>
+        <nav class="navbar-menu" aria-label="Navegación principal">
+            <a href="#sobre-el-juego" class="nav-item">Sobre el juego</a>
+            <a href="#como-jugar" class="nav-item">¿Cómo jugar?</a>
+            <a href="#pix" class="nav-item">Pix</a>
+            <a href="#fundamento" class="nav-item">Fundamento</a>
+            <a href="uipage.html" class="nav-item btn-nav-jugar">Jugar</a>
+        </nav>
+    </header>
 
     <section class="hero" id="preloader-container">
-    <div class="hero-content">
-        <h1 id="titulo-hero" class="oculto">Catapultazo</h1>
-    </div>
-</section>
-
-
-  <section id="marquesina-pictos" class="contenedor-marquesina">
-    <div class="marquesina-ondulante">
-        <div class="grupo-pictogramas">
-            <img src="assets/pic1_pozo.png" alt="Pictograma 1" class="picto">
-            <img src="assets/pic2_caidalibre.png" alt="Pictograma 2" class="picto">
-            <img src="assets/pic4_base.png" alt="Pictograma 4" class="picto">
-            <img src="assets/pic5_guerra.png" alt="Pictograma 1" class="picto">
-            <img src="assets/pic6_congelado.png" alt="Pictograma 2" class="picto">
-            <img src="assets/pic7_equilibrio.png" alt="Pictograma 3" class="picto">
-            <img src="assets/pic8_muevelo.png" alt="Pictograma 4" class="picto">
-            <img src="assets/pic9_rescate.png" alt="Pictograma 4" class="picto">
+        <div class="hero-content">
+            <h1 id="titulo-hero" class="oculto">Catapultazo</h1>
         </div>
-        <div class="grupo-pictogramas" aria-hidden="true">
-            <img src="assets/pic1_pozo.png" alt="Pictograma 1" class="picto">
-            <img src="assets/pic2_caidalibre.png" alt="Pictograma 2" class="picto">
-            <img src="assets/pic4_base.png" alt="Pictograma 4" class="picto">
-            <img src="assets/pic5_guerra.png" alt="Pictograma 1" class="picto">
-            <img src="assets/pic6_congelado.png" alt="Pictograma 2" class="picto">
-            <img src="assets/pic7_equilibrio.png" alt="Pictograma 3" class="picto">
-            <img src="assets/pic8_muevelo.png" alt="Pictograma 4" class="picto">
-            <img src="assets/pic9_rescate.png" alt="Pictograma 4" class="picto">    
-        </div>
-    </div>
-</section>
+    </section>
 
-<section class="presentacion-seccion seccion-dos-columnas">
-    <div class="presentacion-contenedor columnas-flex">
-        
-        <div class="columna-titulo-izq">
-            <h2 class="subtitulo-columna">Competencia <br/> Precisión <br/> Estrategia <br/> Azar</h2>
-        </div>
-        
-        <div class="columna-parrafo-der">
-            <p class="parrafo-columna">
-             Catapultazo es un juego de mesa, que reúne de 3 a 4 participantes
-            en una experiencia lúdica. Una carrera de 12 pasos en un tablero piramidal, que se impulsa a través de 
-            un mazo de 56 cartas. El recorrido del juego se ve intervenido por 
-            casillas y fichas que dictan dinámicas entre jugadores. ¡Cuidado! Que un
-            Catapultazo te puede botar, y tendrás que volver a empezar. </p>
-        </div>
-
-    </div>
-</section>
-
-<section class="seccion-peones-3d">
-    <div class="contenedor-peones-3d">
-        <p class="instruccion-3d">Haz clic y arrastra para rotar las piezas en todas las direcciones</p>
-        <div id="canvas-peones-3d"></div>
-    </div>
-</section>
-
-
-
-
-
-
-
-
-
-
-    <section id="sobre-el-juego" class="presentacion-seccion">
-    <div class="presentacion-contenedor">
-        <div class="columna-texto">
-            
-            <p class="txt-violeta-big">
-                El objetivo de Catapultazo es simple: Ser la primera persona en llegar a la meta. 
-            </p>
-
-            <div class="img-tablero">
-                <img src="assets/tablero.png" alt="Tablero de Catapultazo">
+    <section class="presentacion-seccion seccion-dos-columnas">
+        <div class="presentacion-contenedor columnas-flex">
+            <div class="columna-titulo-izq">
+                <h2 class="subtitulo-columna">Competencia<br/>Estrategia<br/>Precisión<br/>Azar</h2>
             </div>
-
-            <p class="texto-verde">
-               <span class="subrayado-animado">Para iniciar el juego, debes reunir de 3 a 4 participantes. Cada jugador debe elegir su peón antes de comenzar.</span> 
-            </p>
-
-            <div class="img-tablero">
-                <img src="assets/peones.png" alt="Peones de Catapultazo">
+            <div class="columna-parrafo-der">
+                <p class="parrafo-columna">
+                    Catapultazo es un juego de mesa que reúne de 3 a 4 participantes en una experiencia lúdica. Una carrera de 12 pasos en un tablero piramidal, que se impulsa a través de un mazo de 56 cartas. El recorrido del juego se ve intervenido por casillas y fichas que dictan dinámicas entre jugadores. ¡Cuidado! Que un Catapultazo te puede botar, y tendrás que volver a empezar.
+                </p>
             </div>
-
-            <p id="como-jugar" class="txt-violeta-big">       
-            Los jugadores deben sacar una carta al inicio de cada partida, aplicar su movimiento y devolver la carta a un mazo de descarte.
-            </p>
-        </div> 
-    </div>
-    </section> 
-
-    <section class="galeria-interactiva-contenedor">
-    <div class="carrusel-tira-imagenes">
-        <div class="tarjeta-flotante"><img src="assets/carta1.png" alt="Carta Catapultazo 1"></div>
-        <div class="tarjeta-flotante"><img src="assets/carta2.png" alt="Carta Catapultazo 2"></div>
-        <div class="tarjeta-flotante"><img src="assets/carta3.png" alt="Carta Catapultazo 3"></div>
-        <div class="tarjeta-flotante"><img src="assets/carta4.png" alt="Carta Catapultazo 4"></div>
-        <div class="tarjeta-flotante"><img src="assets/carta5.png" alt="Carta Catapultazo 5"></div>
-        <div class="tarjeta-flotante"><img src="assets/carta6.png" alt="Carta Catapultazo 6"></div>
-        <div class="tarjeta-flotante"><img src="assets/carta7.png" alt="Carta Catapultazo 7"></div>
-        <div class="tarjeta-flotante"><img src="assets/carta8.png" alt="Carta Catapultazo 8"></div>
-        <div class="tarjeta-flotante"><img src="assets/carta9.png" alt="Carta Catapultazo 9"></div>
-        <div class="tarjeta-flotante"><img src="assets/carta10.png" alt="Carta Catapultazo 10"></div>
-        <div class="tarjeta-flotante"><img src="assets/carta11.png" alt="Carta Catapultazo 11"></div>
-        <div class="tarjeta-flotante"><img src="assets/carta12.png" alt="Carta Catapultazo 12"></div>
-        <div class="tarjeta-flotante"><img src="assets/carta13.png" alt="Carta Catapultazo 13"></div>
-    </div>
-</section>
-
-<div id="modal-visor" class="modal-oculto">
-    <span class="btn-cerrar-modal">&times;</span>
-    <img class="imagen-ampliada" id="img-grande" src="" alt="Visualización ampliada">
-</div>
-
-<section class="presentacion-seccion">
-    <div class="presentacion-contenedor">
-        <div class="columna-texto">
-            <p class="texto-verde">
-            El tablero contiene casillas con efectos que se activan al caer en ellas, estas alteran el curso del juego. Además, cada jugador puede acceder a una catapulta que puede usar para lanzar municiones al tablero.
         </div>
+    </section>
 
-      <section class="galeria-interactiva-contenedor version-centrada">
-    <div class="carrusel-tira-imagenes">
-        <div class="tarjeta-flotante"><img src="assets/catapulta2.png" alt="Carta Catapultazo 1"></div>
-        <div class="tarjeta-flotante"><img src="assets/municion.png" alt="Carta Catapultazo 3"></div>
-        <div class="tarjeta-flotante"><img src="assets/catapulta.png" alt="Carta Catapultazo 2"></div>
-    </div>
-</section>
+    <section id="marquesina-pictos" class="contenedor-marquesina">
+        <div class="marquesina-ondulante">
+            <div class="grupo-pictogramas">
+                <img src="assets/pic1_pozo.png" alt="Pictograma Pozo" class="picto">
+                <img src="assets/pic2_caidalibre.png" alt="Pictograma Caída Libre" class="picto">
+                <img src="assets/pic4_base.png" alt="Pictograma Base" class="picto">
+                <img src="assets/pic5_guerra.png" alt="Pictograma Guerra" class="picto">
+                <img src="assets/pic6_congelado.png" alt="Pictograma Congelado" class="picto">
+                <img src="assets/pic7_equilibrio.png" alt="Pictograma Equilibrio" class="picto">
+                <img src="assets/pic8_muevelo.png" alt="Pictograma Múvelo" class="picto">
+                <img src="assets/pic9_rescate.png" alt="Pictograma Rescate" class="picto">
+            </div>
+            <div class="grupo-pictogramas" aria-hidden="true">
+                <img src="assets/pic1_pozo.png" alt="Pictograma Pozo" class="picto">
+                <img src="assets/pic2_caidalibre.png" alt="Pictograma Caída Libre" class="picto">
+                <img src="assets/pic4_base.png" alt="Pictograma Base" class="picto">
+                <img src="assets/pic5_guerra.png" alt="Pictograma Guerra" class="picto">
+                <img src="assets/pic6_congelado.png" alt="Pictograma Congelado" class="picto">
+                <img src="assets/pic7_equilibrio.png" alt="Pictograma Equilibrio" class="picto">
+                <img src="assets/pic8_muevelo.png" alt="Pictograma Múvelo" class="picto">
+                <img src="assets/pic9_rescate.png" alt="Pictograma Rescate" class="picto">    
+            </div>
+        </div>
+    </section>
 
-      <div class="columna-texto">
-            <p class="txt-violeta-big">
-             El desafío se encuentra en lograr la precisión necesaria para impactar en los peones de tus compañeros y llegar primero a la meta. Sin embargo, si tu peón cae del tablero, tendrás que volver a iniciar tu recorrido desde la casilla de inicio.
-            </p>
-        </div>       
-    </div>
-</section>
+    <div class="contenedor-transicion-circular" id="como-jugar">
+        <svg class="svg-mascara-circulo" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <defs>
+                <clipPath id="mascara-clip" clipPathUnits="objectBoundingBox">
+                    <circle id="circulo-clip" cx="0.5" cy="0.5" r="0"></circle>
+                </clipPath>
+            </defs>
+        </svg>
 
-
-
-<div class="contenedor-gif">
-    <img src="assets/gif_juego.gif" alt="Demostración interactiva de Catapultazo" class="gif-landing">
-</div>
-
-
-
-   <section id="pix" class="seccion-base seccion-clara">
-    <div class="bloque-contenedor">
-        <h2 class="subtitulo">Partitura PIX</h2>
-        <section class="seccion-partitura-iframe">
-            <div class="contenedor-tarjeta-iframe">
-                <iframe 
-                    src="https://eadpucv.github.io/pix/#!/import/eyJ0aXRsZSI6IkludGVyYWNjacOzbiBkZSBDYXRhcHVsdGF6byAiLCJsYXlvdXQiOiJwaXgiLCJkZXNjcmlwdGlvbiI6IjMtNCBqdWdhZG9yZXMiLCJzY29yZXMiOltbeyJzdGVwX3RpdGxlIjoiQXBlcnR1cmEgZGUgY2FqYSBkZSBqdWVnbyIsInVzZXIiOiJwaXgtaW50cmlndWVkIFF1aWVybyBhYnJpciBsYSBjYWphIiwiZGlhbG9ndWUiOiJwaXgtaGFuZCBsZXZhbnRhIGxhIHRhcGEgc3VwZXJpb3IgZGUgbGEgY2FqYSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoicGl4LXN1cnByaXNlZCBPYnNlcnZhIGNvbW8gYWN0w7phIGxhIGNhamEgYWwgbGV2YW50YXIgbGEgdGFwYSIsImRpYWxvZ3VlIjoiIiwic3lzdGVtIjoicGl4LXByb2Nlc3MgTGEgdGFwYSBzdXBlcmlvciBhbCBsZXZhbnRhcnNlLCBzZSBhYnJlIGRlIGZvcm1hIHN1YXZlIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiicGl4LXN1cnByaXNlZCBPYnNlcnZhIGVsIGh0ZXJpb3IgZGUgbGEgY2FqYSIsImRpYWxvZ3VlIjoiIiwic3lzdGVtIjoicGl4LWFyY2hpdmUgQ2FqYSBndWFyZGEgdGFibGVybywgcGVvbmVzLCBtdW5pY2lvbmVzLCBjYXRhcHVsdGEsIGNhcnRhcyB5IG1hbnVhbCBkZSB1c28iLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiSW50ZXJhY2Npw7NuIGNvbiBwYXJ0ZXMgZGVsIGp1ZWdvIiwidXNlciI6IiIsImRpYWxvZ3VlIjoicGl4LWhhbmQgVG9tYSBlbCBtYW51YWwgZGUgdXNvIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC12aWV3IExlZSBlbCBtYW51YWwgZGUgdXNvIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC1tb3ZlIFNhY2EgbG9zIGVsZW1lbnRvcyBkZSBsYSBjYWphIiwic3lzdGVtIjoicGl4LXNoYXJlIExhIGNhamEgc2UgZGVqYSBhIHVuIGNvc3RhZG8geSBsYXMgcGFydGVzIGRlbCBqdWVnbyBzZSBkZWphbiBhbCBjZW50cm8gZGUgbGEgbWVzYSIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoicGl4LXNtaWxpbmcgXCJRdWUgbGluZGEgbGEgcGFsZXRhIGRlIGNvbG9yZXNcIiIsImRpYWxvZ3VlIjoicGl4LWhhbmQgVG9tYSBsYXMgY2FydGFzIHkgbGFzIHJldnVlbHZlIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC1tb3ZlIE9yZGVuYSBlbCB0YWJsZXJvIGVuIGxhIG1lc2EiLCJzeXN0ZW0iOiIiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiSW5pY2lvIGRlIHR1cm5vIDEiLCJ1c2VyIjoicGl4LWludHJpZ3VlZCBKdWdhZG9yIChBKSBJbmljaWEgZWwganVlZ28iLCJkaWFsb2d1ZSI6InBpeC1oYW5kIFNhY2EgdW5hIGNhcnRhIGFsIGF6YXIgZGVsIG1hem8sIGxlIHRvY2EgdW5hIGRlIG1vdmltaWVudG8gKzMiLCJzeXN0ZW0iOiJwaXgtcmlnaHQgTXVldmUgc3UgcGXDs24gZW4gdHJlcyBjYXNpbGxhcyIsIm5vdGUiOiJIYXkgOCB0aXBvcyBkZSBjYXJ0YXM7IG1vdmltaWVudG8sIGNhdGFwdWx0YSwgbXVuaWNpw7NuLCBlc2N1ZG8sIHBpdG9uaXNvLCBsYWRyw7NuLCBqdWljaW8geSBwb3pvLiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC10YXAxZG93biBEZXZ1ZWx2ZSBsYSBjYXJ0YSBhbCBtYXpvIGRlIGRlc2NhcnRlIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IkluaWNpbyBkZSB0dXJubyAyIiwidXNlciI6InBpeC1oYXBweSBKdWdhZG9yIChCKSBcIk1lIHRvY2EganVnYXJcIiIsImRpYWxvZ3VlIjoicGl4LWhhbmQgU2FjYSB1bmEgY2FydGEgYWwgYXphciBkZWwgbWF6bywgbGUgdG9jYSB1bmEgZGUgbW92aW1pZW50byArNCIsInN5c3RlbSI6InBpeC1yaWdodCBNdWV2ZSBzdSBwZcOzbiBjdWF0cm8gY2FzaWxsYXMiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6InBpeC1oYXBweSBcIsKhU8OtISB1biArNFwiIiwiZGlhbG9ndWUiOiJwaXgtdGFwMWRvd24gRGV2dWVsdmUgbGEgY2FydGEgYWwgbWF6byBkZSBkZXNjYXJ0ZSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiJJbmljaW8gZGUgdHVybm8gMyIsInVzZXIiOiJwaXgtaW50cmlndWVkIEp1Z2Fkb3IgKEMpIiwiZGlhbG9ndWUiOiJwaXgtaGFuZCBTYWNhIHVuYSBjYXJ0YSBhbCBhemFyIGRlbCBtYXpvLCBsZSB0b2NhIHVuYSBjYXJ0YSBkZSBwb3pvIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiJwaXgtaW50cmlndWVkIMK/Q2FydGEgZGUgcG96bz8iLCJkaWFsb2d1ZSI6IiIsInN5c3RlbSI6InBpeC1zZW5kIFNhY2EgdW5hIGZpY2hhIGRlIHBvem8iLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6IiIsImRpYWxvZ3VlIjoicGl4LXZpZXcgTGVlIGxhIGNhcnRhIGRlIGV4cGxpY2FjacOzbiBkZSBsYXMgZmljaGFzIGRlIHBvem8iLCJzeXN0ZW0iOiJwaXgtc2VuZCBTYWxlIHVuYSBmaWNoYSBkZSBcIkludmFzacOzblwiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiJwaXgtaGFwcHkgXCJKYWphamFqYVwiIiwiZGlhbG9ndWUiOiJwaXgtdXBkYXRlIEp1Z2Fkb3IgKEMpIGNhbWJpYSBzdSBwZcOzbiBwb3IgZWwgcGXDs24gZGVsIGp1Z2Fkb3IgKEIpIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC10YXAxZG93biBEZXZ1ZWx2ZSBsYSBjYXJ0YSBhbCBtYXpvIGRlIGRlc2NhcnRlIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IkluaWNpbyBkZSB0dXJubyA0IiwidXNlciI6InBpeC1pbnRyaWd1ZWQgSnVnYWRvciAoQSkiLCJkaWFsb2d1ZSI6InBpeC1oYW5kIFNhY2EgdW5hIGNhcnRhIGFsIGF6YXIgZGVsIG1hem8sIGxlIHNhbGUgbGEgY2FydGEgZGUgbW92aW1pZW50byArMyIsInN5c3RlbSI6InBpeC1yaWdodCBNdWV2ZSBzdSBwZcOzbiB0cmVzIGNhc2lsbGFzIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC10YXAgQ2FlIGVuIGxhIGNhc2lsbGEgZGUgQ2F0YXB1bHRhIGVuIGVsIHRhYmxlcm8iLCJzeXN0ZW0iOiJwaXgtcmlnaHQgU2UgbGUgcGFzYSBhbCBqdWdhZG9yIGxhIGNhdGFwdWx0YSB5IHVuYSBtdW5pY2nDs24iLCJub3RlIjoiTGEgY2FzaWxsYSBkZSBjYXRhcHVsdGEgZW4gZWwgdGFibGVybyBnZW5lcmEgcXVlIGVsIGp1Z2Fkb3IgcHVlZGEgYWNjZWRlciBhIGxhIGNhdGFwdWx0YSB5IGxhbnphciB1bmEgdmV6LiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC1yaWdodCBMYW56YSBsYSBjYXRhcHVsdGEgKG5vIGdvbHBlYSBhIG5hZGllKSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoiIiwiZGlhbG9ndWUiOiJwaXgtdGFwMWRvd24gRGV2dWVsdmUgbGEgY2FydGEgYWwgbWF6byBkZSBkZXNjYXJ0ZSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiJJbmljaW8gZGUgdHVybm8gNSIsInVzZXIiOiJwaXgtc2FkIEp1Z2Fkb3IgKEIpIFwiUHVjaGEgZXN0b3kgZGUgbG9zIMO6bHRpbW9zXCIiLCJkaWFsb2d1ZSI6InBpeC1oYW5kIFNhY2EgdW5hIGNhcnRhIGFsIGF6YXIgZGVsIG1hem8sIHNhbGUgbGEgY2FydGEgZGVsIHBpdG9uaXNvIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC1pbnRyaWd1ZWQgU2FjYSA1IGNhcnRhcyBkZWwgbWF6bywgbGFzIHJlb3JkZW5hIHkgbGFzIGRldnVlbHZlIGEgc3UgbHVnYXIiLCJzeXN0ZW0iOiIiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6IiIsImRpYWxvZ3VlIjoicGl4LXRhcDFkb3duIERldnVlbHZlIGxhIGNhcnRhIGFsIG1hem8gZGUgZGVzY2FydGUiLCJzeXN0ZW0iOiIiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiSW5pY2lvIGRlIHR1cm5vIDYiLCJ1c2VyIjoicGl4LXNtaWxpbmcgSnVnYWRvciAoQykiLCJkaWFsb2d1ZSI6InBpeC1oYW5kIFNhY2EgdW5hIGNhcnRhIGFsIGF6YXIgZGVsIG1hem8sIHNhbGUgbGEgY2FydGEgbW92aW1pZW50byArMyIsInN5c3RlbSI6InBpeC1yaWdodCBNdWV2ZSBzdSBwZcOzbiB0cmVzIGNhc2lsbGFzIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC1zZW5kIENhZSBlbiBsYSBjYXNpbGxhIGRlIHBvem8gZW4gZWwgdGFibGVybyIsInN5c3RlbSI6InBpeC1zZW5kIFNhY2EgdW5hIGZpY2hhIGFsIGF6YXIgeSBzYWxlIGZpY2hhIGRlIHJlc2NhdGUiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6InBpeC1zbWlsaW5nIFwiWW8gdGUgdm95IGEgYXl1ZGFyIGFtaWdvIChCKVwiIiwiZGlhbG9ndWUiOiIiLCJzeXN0ZW0iOiJwaXgtcmlnaHQgTXVldmUgbGEgZmljaGEgZGVsIGp1Z2Fkb3IgKEIpIHPDs2xvIHVuYSBjYXNpbGxhIiwiIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoiIiwiZGlhbG9ndWUiOiJwaXgtdGFwMWRvd24gRGV2dWVsdmUgbGEgY2FydGEgYWwgbWF6byBkZSBkZXNjYXJ0ZSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiJJbmljaW8gdHVybm8gNyIsInVzZXIiOiJwaXgtc21pbGluZyBKdWdhZG9yIChBKSIsImRpYWxvZ3VlIjoicGl4LWhhbmQgU2FjYSB1bmEgY2FydGEgYWwgYXphciBkZWwgbWF6bywgc2FsZSBsYSBjYXJ0YSBtb3ZpbWllbnRvICs0Iiwic3lzdGVtIjoicGl4LXJpZ2h0IE11ZXZlIHN1IHBlw7NuIGN1YXRybyBjYXNpbGxsYXMiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6IiIsImRpYWxvZ3VlIjoicGl4LXNlbmQgQ2FlIGVuIGxhIGNhc2lsbGEgZGUgcG96byBlbiBlbCB0YWJsZXJvIiwic3lzdGVtIjoicGl4LXNlbmQgU2FjYSB1bmEgZmljaGEgYWwgYXphciB5IHNhbGUgbGEgY2FydGEgZGUgY29uZ2VsYWRvIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC1jYW5jZWwgRWwganVnYWRvciAoQSkgY29uZ2VsYSBhbCBqdWdhZG9yIChCKSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoiIiwiZGlhbG9ndWUiOiJwaXgtdGFwMWRvd24gRGV2dWVsdmUgbGEgY2FydGEgYWwgbWF6byBkZSBkZXNjYXJ0ZSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiJJbmljaW8gdHVybm8gOCIsInVzZXIiOiJwaXgtZnVyaW91cyBKdWdhZG9yIChCKSIsImRpYWxvZ3VlIjoicGl4LWNhbmNlbCBbyBqdWVnYSBwb3JxdWUgZXN0w6EgY29uZ2VsYWRvIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IkluaWNpbyB0dXJubyA5IiwidXNlciI6InBpeC1zdXJwcmlzZWQgSnVnYWRvciAoQykiLCJkaWFsb2d1ZSI6InBpeC1oYW5kIFNhY2EgdW5hIGNhcnRhIGFsIGF6YXIgZGVsIG1hem8sIHNhbGUgbGEgY2FydGEgZGUgKzQiLCJzeXN0ZW0iOiJwaXgtcmlnaHQgTXVldmUgc3UgcGXDs24gY3VhdHJvIGNhc2lsbGFzIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6IiIsInN5c3RlbSI6InBpeC1kb3VibGV0YXAgQ2FlIGVuIGxhIGNhc2lsbGEgZGUgQ2F0YXB1bHRhIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC10YXAgTGFuemEgdW5hIG11bmljacOzbiBhbCBqdWdhZG9yIChBKSBwZXJvIG5vIGxvZ3JhIGJvdGFybG8iLCJzeXN0ZW0iOiIjLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6IiIsImRpYWxvZ3VlIjoicGl4LXRhcDFkb3duIERldnVlbHZlIGxhIGNhcnRhIGFsIG1hem8gZGUgZGVzY2FydGUiLCJzeXN0ZW0iOiIiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiSW5pY2lvIGRlIHR1cm5vIDEwIiwidXNlciI6InBpeC1oYXBweSBKdWdhZG9yIChBKSIsImRpYWxvZ3VlIjoicGl4LWhhbmQgU2FjYSB1bmEgY2FydGEgYWwgYXphciBkZWwgbWF6bywgc2FsZSBsYSBjYXJ0YSBkZSArMyIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoiIiwiZGlhbG9ndWUiOiIiLCJzeXN0ZW0iOiJwaXgtcmlnaHQgTXVldmUgc3UgcGXDs24gMyBjYXNpbGxhcyB5IGNhZSBlbiB1bmEgY2FzaWxsYSBkZSBiYXNlIiwibm90ZSI6IkxhIGNhc2lsbGEgZGUgYmFzZSBvdG9yZ2EgcHJvdGVjY2nDs24gYW50ZSBjYc वैधkYXMgZGUgY2F0YXB1bHRhIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6IiIsImRpYWxvZ3VlIjoicGl4LXRhcDFkb3duIERldnVlbHZlIGxhIGNhcnRhIGFsIG1hem8gZGUgZGVzY2FydGUiLCJzeXN0ZW0iOiIiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiSW5pY2lvIGRlIHR1cm5vIDExIiwidXNlciI6InBpeC1hbmdyeSBKdWdhZG9yIChCKSIsImRpYWxvZ3VlIjoicGl4LWhhbmQgU2FjYSB1bmEgY2FydGEgYWwgYXphciBkZWwgbWF6bywgc2FsZSBsYSBjYXJ0YSBkZSBtb3ZpbWllbnRvICsyIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6IiIsInN5c3RlbSI6InBpeC1yaWdodCBNdWV2ZSBzdSBwZcOzbiAyIGNhc2lsbGFzIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC10YXAxZG93biBEZXZ1ZWx2ZSBsYSBjYXJ0YSBhbCBtYXpvIGRlIGRlc2NhcnRlIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IkluaWNpbyBkZSB0dXJubyAxMiIsInVzZXIiOiJwaXgtc21pbGluZyBKdWdhZG9yIChDKSIsImRpYWxvZ3VlIjoicGl4LWhhbmQgU2FjYSB1bmEgY2FydGEgYWwgYXphciBkZWwgbWF6bywgc2FsZSBsYSBjYXJ0YSArMiIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoiIiwiZGlhbG9ndWUiOiIiLCJzeXN0ZW0iOiJwaXgtcmlnaHQgTXVldmUgc3UgcGXDs24gMiBjYXNpbGxhcyB5IGNhZSBlbiB1bmEgY2FzaWxsYSBkZSBiYXNlIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC10YXAxZG93biBEZXZ1ZWx2ZSBsYSBjYXJ0YSBhbCBtYXpvIGRlIGRlc2NhcnRlIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IkluaWNpbyBkZSB0dXJubyAxMyIsInVzZXIiOiJwaXgtc21pbGluZyIsImRpYWxvZ3VlIjoicGl4LWhhbmQgU2FjYSB1bmEgY2FydGEgYWwgYXphciBkZWwgbWF6bywgc2FsZSBsYSBjYXJ0YSArMiIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoiIiwiZGlhbG9ndWUiOiIiLCJzeXN0ZW0iOiJwaXgtcmlnaHQgTXVldmUgc3UgcGXDs24gMiBjYXNpbGxhcyB5IGxsZWdhIGEgbGEgbWV0YSIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoicGl4LWhhcHB5IFwiU8OtISBHYW7DqVwiIiwiZGlhbG9ndWUiOiIiLCJzeXN0ZW0iOiIiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiVMOpcm1pbm8gZGVsIGp1ZWdvIiwidXNlciI6InBpeC10aGluayBcIlPDrSwgZ2Fuw6lcIiBcIk5vIHNlIHZhbGUsIG1lIGNvbmdlbGFzdGVcIiBcIkVzIHBhcnRlIGRlbCBqdWVnb1wiIiwiZGlhbG9ndWUiOiJwaXgtY29sbGFwc2UgR3VhcmRhbiBlbCBqdWVnbyBlbiBsYSBjYWphIiwic3lzdGVtIjoiIiwibm90ZSI6IiJdfV1dfQ==" 
-                    title="Partitura PIX interactiva - Flujo de Juego Catapultazo"
-                    class="iframe-pix">
-                </iframe>
+        <section class="nueva-pantalla-revelada" style="clip-path: url(#mascara-clip);">
+            <div class="contenido-nueva-pantalla">
+                <h2>¿Cómo jugar?</h2>
+                <br/>
+                <h3>Paso #1: Elige tu peón</h3>
             </div>
         </section>
     </div>
-</section>
+
+    <section class="seccion-peones-3d">
+        <div class="contenedor-peones-3d">
+            <p class="instruccion-3d">Haz clic y arrastra para rotar las piezas en todas las direcciones</p>
+            <div id="canvas-peones-3d"></div>
+        </div>
+    </section>
+
+    <section class="presentacion-seccion">
+        <div class="presentacion-contenedor container-centrado">
+            <div class="contenido-nueva-pantalla visible" style="opacity: 1; transform: none; text-align: center; margin-bottom: 40px;">
+                <h2>Inicia una partida</h2>
+                <br/>
+                <h3>Paso #2: Saca una carta del mazo</h3>
+            </div>
+            
+            <p class="txt-violeta-big" style="text-align: center; max-width: 800px; margin: 0 auto 30px;">       
+                Los jugadores deben sacar una carta al inicio de cada partida, aplicar su movimiento y devolver la carta a un mazo de descarte.
+            </p>
+        </div>
+    </section>
+
+    <section class="galeria-interactiva-contenedor">
+        <div class="carrusel-tira-imagenes">
+            <div class="tarjeta-flotante"><img src="assets/carta1.png" alt="Carta Catapultazo 1"></div>
+            <div class="tarjeta-flotante"><img src="assets/carta2.png" alt="Carta Catapultazo 2"></div>
+            <div class="tarjeta-flotante"><img src="assets/carta3.png" alt="Carta Catapultazo 3"></div>
+            <div class="tarjeta-flotante"><img src="assets/carta4.png" alt="Carta Catapultazo 4"></div>
+            <div class="tarjeta-flotante"><img src="assets/carta5.png" alt="Carta Catapultazo 5"></div>
+            <div class="tarjeta-flotante"><img src="assets/carta6.png" alt="Carta Catapultazo 6"></div>
+            <div class="tarjeta-flotante"><img src="assets/carta7.png" alt="Carta Catapultazo 7"></div>
+            <div class="tarjeta-flotante"><img src="assets/carta8.png" alt="Carta Catapultazo 8"></div>
+            <div class="tarjeta-flotante"><img src="assets/carta9.png" alt="Carta Catapultazo 9"></div>
+            <div class="tarjeta-flotante"><img src="assets/carta10.png" alt="Carta Catapultazo 10"></div>
+            <div class="tarjeta-flotante"><img src="assets/carta11.png" alt="Carta Catapultazo 11"></div>
+            <div class="tarjeta-flotante"><img src="assets/carta12.png" alt="Carta Catapultazo 12"></div>
+            <div class="tarjeta-flotante"><img src="assets/carta13.png" alt="Carta Catapultazo 13"></div>
+        </div>
+    </section>
+
+    <section id="sobre-el-juego" class="presentacion-seccion">
+        <div class="presentacion-contenedor">
+            <div class="columna-texto">
+                <p class="txt-violeta-big">
+                    El objetivo de Catapultazo es simple: Ser la primera persona en llegar a la meta. 
+                </p>
+
+                <div class="img-tablero">
+                    <img src="assets/tablero.png" alt="Tablero de Catapultazo">
+                </div>
+
+                <p class="texto-verde">
+                    <span class="subrayado-animado">Para iniciar el juego, debes reunir de 3 a 4 participantes. Cada jugador debe elegir su peón antes de comenzar.</span> 
+                </p>
+
+                <div class="img-tablero">
+                    <img src="assets/peones.png" alt="Peones de Catapultazo">
+                </div>
+            </div> 
+        </div>
+    </section> 
+
+    <div id="modal-visor" class="modal-oculto">
+        <span class="btn-cerrar-modal">&times;</span>
+        <img class="imagen-ampliada" id="img-grande" src="" alt="Visualización ampliada">
+    </div>
+
+    <section class="presentacion-seccion">
+        <div class="presentacion-contenedor">
+            <div class="columna-texto">
+                <p class="texto-verde">
+                    El tablero contiene casillas con efectos que se activan al caer en ellas, estas alteran el curso del juego. Además, cada jugador puede acceder a una catapulta que puede usar para lanzar municiones al tablero.
+                </p>
+            </div>
+
+            <div class="galeria-interactiva-contenedor version-centrada">
+                <div class="carrusel-tira-imagenes">
+                    <div class="tarjeta-flotante"><img src="assets/catapulta2.png" alt="Catapulta Vista Frontal"></div>
+                    <div class="tarjeta-flotante"><img src="assets/municion.png" alt="Municiones de Goma"></div>
+                    <div class="tarjeta-flotante"><img src="assets/catapulta.png" alt="Catapulta Vista Lateral"></div>
+                </div>
+            </div>
+
+            <div class="columna-texto">
+                <p class="txt-violeta-big">
+                    El desafío se encuentra en lograr la precisión necesaria para impactar en los peones de tus compañeros y llegar primero a la meta. Sin embargo, si tu peón cae del tablero, tendrás que volver a iniciar tu recorrido desde la casilla de inicio.
+                </p>
+            </div>       
+        </div>
+    </section>
+
+    <div class="contenedor-gif">
+        <img src="assets/gif_juego.gif" alt="Demostración interactiva de Catapultazo" class="gif-landing">
+    </div>
+
+    <section id="pix" class="seccion-base seccion-clara">
+        <div class="bloque-contenedor">
+            <h2 class="subtitulo">Partitura PIX</h2>
+            <div class="seccion-partitura-iframe">
+                <div class="contenedor-tarjeta-iframe">
+                    <iframe 
+                        src="https://eadpucv.github.io/pix/#!/import/eyJ0aXRsZSI6IkludGVyYWNjacOzbiBkZSBDYXRhcHVsdGF6byAiLCJsYXlvdXQiOiJwaXgiLCJkZXNjcmlwdGlvbiI6IjMtNCBqdWdhZG9yZXMiLCJzY29yZXMiOltbeyJzdGVwX3RpdGxlIjoiQXBlcnR1cmEgZGUgY2FqYSBkZSBqdWVnbyIsInVzZXIiOiJwaXgtaW50cmlndWVkIFF1aWVybyBhYnJpciBsYSBjYWphIiwiZGlhbG9ndWUiOiJwaXgtaGFuZCBsZXZhbnRhIGxhIHRhcGEgc3VwZXJpb3IgZGUgbGEgY2FqYSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoicGl4LXN1cnByaXNlZCBPYnNlcnZhIGNvbW8gYWN0w7phIGxhIGNhamEgYWwgbGV2YW50YXIgbGEgdGFwYSIsImRpYWxvZ3VlIjoiIiwic3lzdGVtIjoicGl4LXByb2Nlc3MgTGEgdGFwYSBzdXBlcmlvciBhbCBsZXZhbnRhcnNlLCBzZSBhYnJlIGRlIGZvcm1hIHN1YXZlIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiicGl4LXN1cnByaXNlZCBPYnNlcnZhIGVsIGh0ZXJpb3IgZGUgbGEgY2FqYSIsImRpYWxvZ3VlIjoiIiwic3lzdGVtIjoicGl4LWFyY2hpdmUgQ2FqYSBndWFyZGEgdGFibGVybywgcGVvbmVzLCBtdW5pY2lvbmVzLCBjYXRhcHVsdGEsIGNhcnRhcyB5IG1hbnVhbCBkZSB1c28iLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiSW50ZXJhY2Npw7NuIGNvbiBwYXJ0ZXMgZGVsIGp1ZWdvIiwidXNlciI6IiIsImRpYWxvZ3VlIjoicGl4LWhhbmQgVG9tYSBlbCBtYW51YWwgZGUgdXNvIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC12aWV3IExlZSBlbCBtYW51YWwgZGUgdXNvIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC1tb3ZlIFNhY2EgbG9zIGVsZW1lbnRvcyBkZSBsYSBjYWphIiwic3lzdGVtIjoicGl4LXNoYXJlIExhIGNhamEgc2UgZGVqYSBhIHVuIGNvc3RhZG8geSBsYXMgcGFydGVzIGRlbCBqdWVnbyBzZSBkZWphbiBhbCBjZW50cm8gZGUgbGEgbWVzYSIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoicGl4LXNtaWxpbmcgXCJRdWUgbGluZGEgbGEgcGFsZXRhIGRlIGNvbG9yZXNcIiIsImRpYWxvZ3VlIjoicGl4LWhhbmQgVG9tYSBsYXMgY2FydGFzIHkgbGFzIHJldnVlbHZlIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC1tb3ZlIE9yZGVuYSBlbCB0YWJsZXJvIGVuIGxhIG1lc2EiLCJzeXN0ZW0iOiIiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiSW5pY2lvIGRlIHR1cm5vIDEiLCJ1c2VyIjoicGl4LWludHJpZ3VlZCBKdWdhZG9yIChBKSBJbmljaWEgZWwganVlZ28iLCJkaWFsb2d1ZSI6InBpeC1oYW5kIFNhY2EgdW5hIGNhcnRhIGFsIGF6YXIgZGVsIG1hem8sIGxlIHRvY2EgdW5hIGRlIG1vdmltaWVudG8gKzMiLCJzeXN0ZW0iOiJwaXgtcmlnaHQgTXVldmUgc3UgcGXDs24gZW4gdHJlcyBjYXNpbGxhcyIsIm5vdGUiOiJIYXkgOCB0aXBvcyBkZSBjYXJ0YXM7IG1vdmltaWVudG8sIGNhdGFwdWx0YSwgbXVuaWNpw7NuLCBlc2N1ZG8sIHBpdG9uaXNvLCBsYWRyw7NuLCBqdWljaW8geSBwb3pvLiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC10YXAxZG93biBEZXZ1ZWx2ZSBsYSBjYXJ0YSBhbCBtYXpvIGRlIGRlc2NhcnRlIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IkluaWNpbyBkZSB0dXJubyAyIiwidXNlciI6InBpeC1oYXBweSBKdWdhZG9yIChBKSBcIk1lIHRvY2EganVnYXJcIiIsImRpYWxvZ3VlIjoicGl4LWhhbmQgU2FjYSB1bmEgY2FydGEgYWwgYXphciBkZWwgbWF6bywgbGUgdG9jYSB1bmEgZGUgbW92aW1pZW50byArNCIsInN5c3RlbSI6InBpeC1yaWdodCBNdWV2ZSBzdSBwZcOzbiBjdWF0cm8gY2FzaWxsYXMiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6InBpeC1oYXBweSBcIsKhU8OtISB1biArNFwiIiwiZGlhbG9ndWUiOiJwaXgtdGFwMWRvd24gRGV2dWVsdmUgbGEgY2FydGEgYWwgbWF6byBkZSBkZXNjYXJ0ZSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiJJbmljaW8gZGUgdHVybm8gMyIsInVzZXIiOiJwaXgtaW50cmlndWVkIEp1Z2Fkb3IgKEMpIiwiZGlhbG9ndWUiOiJwaXgtaGFuZCBTYWNhIHVuYSBjYXJ0YSBhbCBhemFyIGRlbCBtYXpvLCBsZSB0b2NhIHVuYSBjYXJ0YSBkZSBwb3pvIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiJwaXgtaW50cmlndWVkIMK/Q2FydGEgZGUgcG96bz8iLCJkaWFsb2d1ZSI6IiIsInN5c3RlbSI6InBpeC1zZW5kIFNhY2EgdW5hIGZpY2hhIGRlIHBvem8iLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6IiIsImRpYWxvZ3VlIjoicGl4LXZpZXcgTGVlIGxhIGNhcnRhIGRlIGV4cGxpY2FjacOzbiBkZSBsYXMgZmljaGFzIGRlIHBvem8iLCJzeXN0ZW0iOiJwaXgtc2VuZCBTYWxlIHVuYSBmaWNoYSBkZSBcIkludmFzacOzblwiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiJwaXgtaYXBweSBcIkpha2FqYWphXCIiLCJkaWFsb2d1ZSI6InBpeC11cGRhdGUgSnVnYWRvciAoQykiIGNhbWJpYSBzdSBwZcOzbiBwb3IgZWwgcGXDs24gZGVsIGp1Z2Fkb3IgKEIpIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC10YXAxZG93biBEZXZ1ZWx2ZSBsYSBjYXJ0YSBhbCBtYXpvIGRlIGRlc2NhcnRlIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IkluaWNpbyBkZSB0dXJubyA0IiwidXNlciI6InBpeC1pbnRyaWd1ZWQgSnVnYWRvciAoQSkiLCJkaWFsb2d1ZSI6InBpeC1oYW5kIFNhY2EgdW5hIGNhcnRhIGFsIGF6YXIgZGVsIG1hem8sIGxlIHNhbGUgbGEgY2FydGEgZGUgbW92aW1pZW50byArMyIsInN5c3RlbSI6InBpeC1yaWdodCBNdWV2ZSBzdSBwZcOzbiB0cmVzIGNhc2lsbGFzIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC10YXAgQ2FlIGVuIGxhIGNhc2lsbGEgZGUgQ2F0YXB1bHRhIGVuIGVsIHRhYmxlcm8iLCJzeXN0ZW0iOiJwaXgtcmlnaHQgU2UgbGUgcGFzYSBhbCBqdWdhZG9yIGxhIGNhdGFwdWx0YSB5IHVuYSBtdW5pY2nDs24iLCJub3RlIjoiTGEgY2FzaWxsYSBkZSBjYXRhcHVsdGEgZW4gZWwgdGFibGVybyBnZW5lcmEgcXVlIGVsIGp1Z2Fkb3IgcHVlZGEgYWNjZWRlciBhIGxhIGNhdGFwdWx0YSB5IGxhbnphciB1bmEgdmV6LiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC1yaWdodCBMYW56YSBsYSBjYXRhcHVsdGEgKG5vIGdvbHBlYSBhIG5hZGllKSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoiIiwiZGlhbG9ndWUiOiJwaXgtdGFwMWRvd24gRGV2dWVsdmUgbGEgY2FydGEgYWwgbWF6byBkZSBkZXNjYXJ0ZSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiJJbmljaW8gZGUgdHVybm8gNSIsInVzZXIiOiJwaXgtc2FkIEp1Z2Fkb3IgKEIpIFwiUHVjaGEgZXN0b3kgZGUgbG9zIMO6bHRpbW9zXCIiLCJkaWFsb2d1ZSI6InBpeC1oYW5kIFNhY2EgdW5hIGNhcnRhIGFsIGF6YXIgZGVsIG1hem8sIHNhbGUgbGEgY2FydGEgZGVsIHBpdG9uaXNvIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC1pbnRyaWd1ZWQgU2FjYSA1IGNhcnRhcyBkZWwgbWF6bywgbGFzIHJlb3JkZW5hIHkgbGFzIGRldnVlbHZlIGEgc3UgbHVnYXIiLCJzeXN0ZW0iOiIiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6IiIsImRpYWxvZ3VlIjoicGl4LXRhcDFkb3duIERldnVlbHZlIGxhIGNhcnRhIGFsIG1hem8gZGUgZGVzY2FydGUiLCJzeXN0ZW0iOiIiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiSW5pY2lvIGRlIHR1cm5vIDYiLCJ1c2VyIjoicGl4LXNtaWxpbmcgSnVnYWRvciAoQykiLCJkaWFsb2d1ZSI6InBpeC1oYW5kIFNhY2EgdW5hIGNhcnRhIGFsIGF6YXIgZGVsIG1hem8sIHNhbGUgbGEgY2FydGEgbW92aW1pZW50byArMyIsInN5c3RlbSI6InBpeC1yaWdodCBNdWV2ZSBzdSBwZcOzbiB0cmVzIGNhc2lsbGFzIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC1zZW5kIENhZSBlbiBsYSBjYXNpbGxhIGRlIHBvem8gZW4gZWwgdGFibGVybyIsInN5c3RlbSI6InBpeC1zZW5kIFNhY2EgdW5hIGZpY2hhIGFsIGF6YXIgeSBzYWxlIGZpY2hhIGRlIHJlc2NhdGUiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6InBpeC1zbWlsaW5nIFwiWW8gdGUgdm95IGEgYXl1ZGFyIGFtaWdvIChCKVwiIiwiZGlhbG9ndWUiOiIiLCJzeXN0ZW0iOiJwaXgtcmlnaHQgTXVldmUgbGEgZmljaGEgZGVsIGp1Z2Fkb3IgKEIpIHPDs2xvIHVuYSBjYXNpbGxhIiwiIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoiIiwiZGlhbG9ndWUiOiJwaXgtdGFwMWRvd24gRGV2dWVsdmUgbGEgY2FydGEgYWwgbWF6byBkZSBkZXNjYXJ0ZSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiJJbmljaW8gdHVybm8gNyIsInVzZXIiOiJwaXgtc21pbGluZyBKdWdhZG9yIChBKSIsImRpYWxvZ3VlIjoicGl4LWhhbmQgU2FjYSB1bmEgY2FydGEgYWwgYXphciBkZWwgbWF6bywgc2FsZSBsYSBjYXJ0YSBtb3ZpbWllbnRvICs0Iiwic3lzdGVtIjoicGl4LXJpZ2h0IE11ZXZlIHN1IHBlw7NuIGN1YXRybyBjYXNpbGxsYXMiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6IiIsImRpYWxvZ3VlIjoicGl4LXNlbmQgQ2FlIGVuIGxhIGNhc2lsbGEgZGUgcG96byBlbiBlbCB0YWJsZXJvIiwic3lzdGVtIjoicGl4LXNlbmQgU2FjYSB1bmEgZmljaGEgYWwgYXphciB5IHNhbGUgbGEgY2FydGEgZGUgY29uZ2VsYWRvIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC1jYW5jZWwgRWwganVnYWRvciAoQSkgY29uZ2VsYSBhbCBqdWdhZG9yIChCKSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoiIiwiZGlhbG9ndWUiOiJwaXgtdGFwMWRvd24gRGV2dWVsdmUgbGEgY2FydGEgYWwgbWF6byBkZSBkZXNjYXJ0ZSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiJJbmljaW8gdHVybm8gOCIsInVzZXIiOiJwaXgtZnVyaW91cyBKdWdhZG9yIChCKSIsImRpYWxvZ3VlIjoicGl4LWNhbmNlbCBbyBqdWVnYSBwb3JxdWUgZXN0w6EgY29uZ2VsYWRvIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IkluaWNpbyB0dXJubyA5IiwidXNlciI6InBpeC1zdXJwcmlzZWQgSnVnYWRvciAoQykiLCJkaWFsb2d1ZSI6InBpeC1oYW5kIFNhY2EgdW5hIGNhcnRhIGFsIGF6YXIgZGVsIG1hem8sIHNhbGUgbGEgY2FydGEgZGUgKzQiLCJzeXN0ZW0iOiJwaXgtcmlnaHQgTXVldmUgc3UgcGXDs24gY3VhdHJvIGNhc2lsbGFzIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6IiIsInN5c3RlbSI6InBpeC1kb3VibGV0YXAgQ2FlIGVuIGxhIGNhc2lsbGEgZGUgQ2F0YXB1bHRhIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC10YXAgTGFuemEgdW5hIG11bmljacOzbiBhbCBqdWdhZG9yIChBKSBwZXJvIG5vIGxvZ3JhIGJvdGFybG8iLCJzeXN0ZW0iOiIjLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6IiIsImRpYWxvZ3VlIjoicGl4LXRhcDFkb3duIERldnVlbHZlIGxhIGNhcnRhIGFsIG1hem8gZGUgZGVzY2FydGUiLCJzeXN0ZW0iOiIiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiSW5pY2lvIGRlIHR1cm5vIDEwIiwidXNlciI6InBpeC1oYXBweSBKdWdhZG9yIChBKSIsImRpYWxvZ3VlIjoicGl4LWhhbmQgU2FjYSB1bmEgY2FydGEgYWwgYXphciBkZWwgbWF6bywgc2FsZSBsYSBjYXJ0YSBkZSArMyIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoiIiwiZGlhbG9ndWUiOiIiLCJzeXN0ZW0iOiJwaXgtcmlnaHQgTXVldmUgc3UgcGXDs24gMyBjYXNpbGxhcyB5IGNhZSBlbiB1bmEgY2FzaWxsYSBkZSBiYXNlIiwibm90ZSI6IkxhIGNhc2lsbGEgZGUgYmFzZSBvdG9yZ2EgcHJvdGVjY2nDs24gYW50ZSBjYcOValidhcyBkZSBjYXRhcHVsdGEifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoiIiwiZGlhbG9ndWUiOiJwaXgtdGFwMWRvd24gRGV2dWVsdmUgbGEgY2FydGEgYWwgbWF6byBkZSBkZXNjYXJ0ZSIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiJJbmljaW8gZGUgdHVybm8gMTEiLCJ1c2VyIjoicGl4LWFuZ3J5IEp1Z2Fkb3IgKEIpIiwiZGlhbG9ndWUiOiJwaXgtaGFuZCBTYWNhIHVuYSBjYXJ0YSBhbCBhemFyIGRlbCBtYXpvLCBzYWxlIGxhIGNhcnRhIGRlIG1vdmltaWVudG8gKzIiLCJzeXN0ZW0iOiIiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6IiIsImRpYWxvZ3VlIjoiIiwic3lzdGVtIjoicGl4LXJpZ2h0IE11ZXZlIHN1IHBlw7NuIDIgY2FzaWxsYXMiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIiwidXNlciI6IiIsImRpYWxvZ3VlIjoicGl4LXRhcDFkb3duIERldnVlbHZlIGxhIGNhcnRhIGFsIG1hem8gZGUgZGVzY2FydGUiLCJzeXN0ZW0iOiIiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiIkluaWNpbyBkZSB0dXJubyAxMiIsInVzZXIiOiJwaXgtc21pbGluZyBKdWdhZG9yIChDKSIsImRpYWxvZ3VlIjoicGl4LWhhbmQgU2FjYSB1bmEgY2FydGEgYWwgYXphciBkZWwgbWF6bywgc2FsZSBsYSBjYXJ0YSArMiIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoiIiwiZGlhbG9ndWUiOiIiLCJzeXN0ZW0iOiJwaXgtcmlnaHQgTXVldmUgc3UgcGXDs24gMiBjYXNpbGxhcyB5IGNhZSBlbiB1bmEgY2FzaWxsYSBkZSBiYXNlIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IiIsInVzZXIiOiIiLCJkaWFsb2d1ZSI6InBpeC10YXAxZG93biBEZXZ1ZWx2ZSBsYSBjYXJ0YSBhbCBtYXpvIGRlIGRlc2NhcnRlIiwic3lzdGVtIjoiIiwibm90ZSI6IiJ9LHsic3RlcF90aXRsZSI6IkluaWNpbyBkZSB0dXJubyAxMyIsInVzZXIiOiJwaXgtc21pbGluZyIsImRpYWxvZ3VlIjoicGl4LWhhbmQgU2FjYSB1bmEgY2FydGEgYWwgYXphciBkZWwgbWF6bywgc2FsZSBsYSBjYXJ0YSArMiIsInN5c3RlbSI6IiIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoiIiwiZGlhbG9ndWUiOiIiLCJzeXN0ZW0iOiJwaXgtcmlnaHQgTXVldmUgc3UgcGXDs24gMiBjYXNpbGxhcyB5IGxsZWdhIGEgbGEgbWV0YSIsIm5vdGUiOiIifSx7InN0ZXBfdGl0bGUiOiIiLCJ1c2VyIjoicGl4LWhhcHB5IFwiU8OtISBHYW7DqVwiIiwiZGlhbG9ndWUiOiIiLCJzeXN0ZW0iOiIiLCJub3RlIjoiIn0seyJzdGVwX3RpdGxlIjoiVMOpcm1pbm8gZGVsIGp1ZWdvIiwidXNlciI6InBpeC10aGluayBcIlPDrSwgZ2Fuw6lcIiBcIk5vIHNlIHZhbGUsIG1lIGNvbmdlbGFzdGVcIiBcIkVzIHBhcnRlIGRlbCBqdWVnb1wiIiwiZGlhbG9ndWUiOiJwaXgtY29sbGFwc2UgR3VhcmRhbiBlbVKdWVnbyBlbiBsYSBjYWphIiwic3lzdGVtIjoiIiwibm90ZSI6IiJdfV1dfQ==" 
+                        title="Partitura PIX interactiva - Flujo de Juego Catapultazo"
+                        class="iframe-pix">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
     
     <section id="marquesina-introduccion" class="marquesina-texto-contenedor">
-              <div class="marquesina-texto-cinta">
-                 <div class="grupo-texto">
-                  <span>Catapultazo es un juego de mesa que combina el azar, la estrategia, la precisión y la competencia * </span>
-                  </div>
-                  <div class="grupo-texto" aria-hidden="true">
-                  <span>Catapultazo es un juego de mesa que combina el azar, la estrategia, la precisión y la competencia * </span>
-                   </div>
-                 </div>
+        <div class="marquesina-texto-cinta">
+            <div class="grupo-texto">
+                <span>Catapultazo es un juego de mesa que combina el azar, la estrategia, la precisión y la competencia * </span>
+            </div>
+            <div class="grupo-texto" aria-hidden="true">
+                <span>Catapultazo es un juego de mesa que combina el azar, la estrategia, la precisión y la competencia * </span>
+            </div>
+        </div>
     </section>
     
     <section id="fundamento" class="seccion-base seccion-clara">
         <div class="bloque-contenedor">
             <h2 class="subtitulo">Fundamento</h2>
-            <p class="parrafo">La interacción de Catapultazo ocurre a través de la curiosidad e indagación, la observación tanto visual como manual, permite que el cuerpo participe en el desarrollo del juego. Las dinámicas internas de Catapultazo, surgen a través diferentes dimensiones: El azar presente en el mazo de cartas, y de las fichas de interacción. La estrategia ocurre en la anticipación de jugadas, por ejemplo con la carta de Pitoniso, o la precisión necesaria ante el cálculo de la distancia y fuerza para derribar los peones de tus contrincantes, pero guardando proteger el propio peón.   </p>
+            <p class="parrafo">
+                La interacción de Catapultazo ocurre a través de la curiosidad e indagación; la observación tanto visual como manual permite que el cuerpo participe en el desarrollo del juego. Las dinámicas internas de Catapultazo surgen a través de diferentes dimensiones: el azar presente en el mazo de cartas y en las fichas de interacción. La estrategia ocurre en la anticipación de jugadas, por ejemplo con la carta de Pitoniso, o la precisión necesaria ante el cálculo de la distancia y fuerza para derribar los peones de tus contrincantes, guardando proteger el propio peón.
+            </p>
             <a href="uipage.html" style="display: inline-block; padding: 12px 24px; background-color: #e71d84; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; margin-top: 15px;">Ir a la experiencia interactiva</a>
         </div>
     </section>
 
-
-<footer class="colofon">
+    <footer class="colofon">
         <div class="colofon-container">
             <div class="colofon-links">
                 <a href="https://wiki.ead.pucv.cl/Taller_de_Dise%C3%B1o_de_Interacci%C3%B3n_2026" target="_blank" rel="noopener">Taller de Diseño de Interacción: WikiCasiopea</a>
@@ -216,12 +228,10 @@
                 <a href="https://wiki.ead.pucv.cl/Fernanda_Moya" target="_blank" rel="noopener">Fernanda Moya: WikiCasiopea</a>
                 <a href="https://www.figma.com/design/nTqEyoacCiUXv7XnHDXtpG/Taller-IxD-26?node-id=0-1&p=f&t=LSjrIlEgZg02zNSD-0" target="_blank" rel="noopener">Figma</a>
             </div>
-
-            </div>
+        </div>
     </footer>
 
-<script src="script.js"></script>
+    <script src="script.js"></script>
 
 </body>
-
 </html>

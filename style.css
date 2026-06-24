@@ -113,6 +113,110 @@ body.preloader-completado { overflow-y: auto; }
     margin-top: 0;
 }
 
+/* ─── SECCIÓN PARALLAX PIEZAS (VERDE) ─── */
+.seccion-parallax-piezas {
+    position: relative;
+    max-width: 1200px; 
+    width: calc(100% - 80px); 
+    margin: 40px auto; 
+    min-height: 80vh; /* Ocupa gran parte de la pantalla */
+    padding: 60px 40px;
+    background-color: var(--verde);
+    border-radius: 24px; 
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+.contenido-parallax {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    width: 100%;
+    max-width: 1200px;
+}
+.parallax-texto {
+    flex: 1;
+    color: var(--negro);
+}
+.parallax-titulo {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 20px;
+    color: var(--negro); /* Resalta bien sobre el fondo verde */
+}
+.parallax-descripcion {
+    font-size: 1.6rem;
+    line-height: 1.6;
+}
+.parallax-visual {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+.placeholder-pieza {
+    background: var(--blanco);
+    color: var(--negro);
+    padding: 40px 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 1.4rem;
+    text-align: center;
+    flex: 1;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+}
+.placeholder-pieza:hover {
+    transform: translateY(-10px); /* Pequeña animación interactiva */
+}
+
+/* ─── TRANSICIÓN DEL CÍRCULO / PARÁBOLA EXPANSIBLE ─── */
+.contenedor-transicion-circular {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* Ocupa toda la ventana de visualización */
+    overflow: hidden;
+    background: var(--blanco); /* Fondo de la pantalla anterior */
+}
+/* El SVG invisible que maneja la máscara matemática */
+.svg-mascara-circulo {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+/* La nueva pestaña que está "escondida" dentro del círculo */
+.nueva-pantalla-revelada {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: var(--fucsia); /* Cambia al color que desees para el nuevo tema */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+/* Contenido dentro de la nueva pestaña */
+.contenido-nueva-pantalla {
+    text-align: center;
+    color: var(--blanco);
+    opacity: 0; /* Empieza invisible para que aparezca al final de la expansión */
+    transform: translateY(40px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+/* Clase auxiliar que activaremos con JS cuando la animación termine */
+.contenido-nueva-pantalla.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* ─── VISOR DE PEONES 3D INTERACTIVOS ────────────────── */
 .seccion-peones-3d {
     width: 100%;
@@ -172,8 +276,9 @@ body.preloader-completado { overflow-y: auto; }
     background:var(--blanco); min-height:80vh;
     padding:30px 40px 40px;
     display:flex; justify-content:center; align-items:center;
-    scroll-margin-top:104px;
+    scroll-margin-top:250px;
     min-height: 80vh;
+    margin-bottom: 60px;
 }
 .presentacion-contenedor {
     width:100%; max-width:1200px;

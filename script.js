@@ -348,3 +348,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     animate();
 });
+
+// ─── 7. ANIMACIÓN EXPANSIÓN DE CÍRCULO (GSAP) ────────────
+document.addEventListener("DOMContentLoaded", () => {
+    // Registramos el plugin de Scroll en GSAP
+    gsap.registerPlugin(ScrollTrigger);
+
+    const contenedor = document.querySelector(".contenedor-transicion-circular");
+    const circulo = document.getElementById("circulo-clip");
+    const textoRevelado = document.querySelector(".contenido-nueva-pantalla");
+
+    if (!contenedor || !circulo) return;
+
+    // Creamos la línea de tiempo atada al scroll
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: contenedor, // Volvemos a usar el contenedor circular como disparador
+            start: "top top",     // Empieza cuando el contenedor toca la parte superior
+            end: "+=600",         // La distancia de scroll reducida que habías configurado
+            scrub: 1,
+            pin: true,            // Clava el contenedor automáticamente al usarlo como trigger
+            anticipatePin: 1
+        }
+    });
+
+    // Animamos el radio del círculo SVG interno
+    tl.to(circulo, {
+        attr: { r: 1 },           // Volvemos al radio original de 1
+        ease: "power2.out"        // Genera la sensación de aceleración elíptica rápida
+    })
+    .to(textoRevelado, {
+        // Al final del tramo, revelamos el texto con un sutil Fade-In
+        onStart: () => textoRevelado.classList.add("visible"),
+        onReverseComplete: () => textoRevelado.classList.remove("visible")
+    }, "-=0.1"); // Se solapa ligeramente con el final de la expansión
+});
