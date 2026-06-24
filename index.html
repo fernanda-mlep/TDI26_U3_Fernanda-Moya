@@ -47,7 +47,97 @@
         </div>
     </section>
 
-    <section id="marquesina-pictos" class="contenedor-marquesina">
+<section class="seccion-editorial-bloques">
+    
+    <div class="editorial-cabecera">
+        <h2 class="editorial-marca-titulo">Partes del juego</h2>
+        <p class="editorial-bajada-texto">
+            Catapultazo contiene un mazo  </p>
+    </div>
+
+    <div class="editorial-grilla-cuatro">
+        
+        <article class="tarjeta-editorial">
+            <div class="contenedor-imagen-tarjeta">
+                <img src="cartas.png" alt="Cartas">
+            </div>
+            <h3 class="tarjeta-titulo">Mazo de cartas</h3>
+            <p class="tarjeta-descripcion">
+                Contiene un total de 60 cartas, de las cuales 18 son de movimiento, 8 de catapulta, 8 de munición, 16 de interacción y 8 de pozo. 
+            </p>
+        </article>
+
+        <article class="tarjeta-editorial">
+            <div class="contenedor-imagen-tarjeta">
+                <img src="catapulta+municion.png" alt="Catapulta+municion">
+            </div>
+            <h3 class="tarjeta-titulo">Catapulta</h3>
+            <p class="tarjeta-descripcion">
+            El juego trae dos catapultas y 2 municiones, ambas impresas en 3D. Éstas se activan a través de casillas, cartas y fichas.</p>
+        </article>
+
+        <article class="tarjeta-editorial">
+            <div class="contenedor-imagen-tarjeta">
+                <img src="tablero.png" alt="Tablero">
+            </div>
+            <h3 class="tarjeta-titulo">Tablero</h3>
+            <p class="tarjeta-descripcion">
+                El tablero se compone de 4 piezas de forma escalonada, que se ordenan de forma ascendente. La intención es generar una carrera vertical, el objetivo es llegar primero a la cima.
+            </p>
+        </article>
+
+        <article class="tarjeta-editorial">
+            <div class="contenedor-imagen-tarjeta">
+                <img src="peones.png" alt="Peones">
+            </div>
+            <h3 class="tarjeta-titulo">Peones</h3>
+            <p class="tarjeta-descripcion">
+            Elige tu peón al inicio de la partida y posiciónalo en el inicio del tablero.  </p>
+        </article>
+
+    </div>
+</section>
+
+<div class="contenedor-transicion-circular" id="como-jugar">
+    
+    <svg class="svg-mascara-circulo" viewBox="0 0 100 100" preserveAspectRatio="none">
+    <defs>
+        <clipPath id="mascara-clip" clipPathUnits="objectBoundingBox">
+            <circle id="circulo-clip" cx="0.5" cy="0.5" r="0"></circle>
+        </clipPath>
+    </defs>
+
+    <circle id="circulo-borde-visible" cx="50" cy="50" r="0" 
+            fill="none" 
+            stroke="#e71d84" 
+            stroke-width="2">
+    </circle>
+</svg>
+
+    <div class="pantallas-wrapper" style="clip-path: url(#mascara-clip);">
+        
+    <section class="nueva-pantalla-revelada paso-visible" id="paso-1">
+        <div class="contenido-nueva-pantalla columnas-piezas-flex">
+            
+            <div class="columna-piezas-texto">
+                <h2>Piezas del juego</h2>
+                <p class="parrafo-columna">
+                    Cada jugador debe elegir un peón al iniciar la partida.
+                </p>
+            </div>
+
+            <div class="columna-piezas-visor">
+                <div id="canvas-peones-3d"></div> 
+            </div>
+
+        </div>
+    </section>
+
+</div>
+
+
+
+<section id="marquesina-pictos" class="contenedor-marquesina">
         <div class="marquesina-ondulante">
             <div class="grupo-pictogramas">
                 <img src="assets/pic1_pozo.png" alt="Pictograma Pozo" class="picto">
@@ -72,39 +162,8 @@
         </div>
     </section>
 
-    <div class="contenedor-transicion-circular" id="como-jugar">
-        <svg class="svg-mascara-circulo" viewBox="0 0 100 100" preserveAspectRatio="none">
-            <defs>
-                <clipPath id="mascara-clip" clipPathUnits="objectBoundingBox">
-                    <circle id="circulo-clip" cx="0.5" cy="0.5" r="0"></circle>
-                </clipPath>
-            </defs>
-        </svg>
 
-        <section class="nueva-pantalla-revelada" style="clip-path: url(#mascara-clip);">
-            <div class="contenido-nueva-pantalla">
-                <h2>¿Cómo jugar?</h2>
-                <br/>
-                <h3>Paso #1: Elige tu peón</h3>
-            </div>
-        </section>
-    </div>
-
-    <section class="seccion-peones-3d">
-        <div class="contenedor-peones-3d">
-            <p class="instruccion-3d">Haz clic y arrastra para rotar las piezas en todas las direcciones</p>
-            <div id="canvas-peones-3d"></div>
-        </div>
-    </section>
-
-    <section class="presentacion-seccion">
-        <div class="presentacion-contenedor container-centrado">
-            <div class="contenido-nueva-pantalla visible" style="opacity: 1; transform: none; text-align: center; margin-bottom: 40px;">
-                <h2>Inicia una partida</h2>
-                <br/>
-                <h3>Paso #2: Saca una carta del mazo</h3>
-            </div>
-            
+           
             <p class="txt-violeta-big" style="text-align: center; max-width: 800px; margin: 0 auto 30px;">       
                 Los jugadores deben sacar una carta al inicio de cada partida, aplicar su movimiento y devolver la carta a un mazo de descarte.
             </p>

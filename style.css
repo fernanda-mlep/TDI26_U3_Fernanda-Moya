@@ -80,7 +80,7 @@ body.preloader-completado { overflow-y: auto; }
 
 /* ─── DOBLE COLUMNA TEXTO ────────────────────────────── */
 .seccion-dos-columnas {
-    padding: 20px 40px 80px;
+    padding: 250px 40px 80px;
     min-height: auto !important;
 }
 .columnas-flex {
@@ -112,6 +112,93 @@ body.preloader-completado { overflow-y: auto; }
     color: var(--negro);
     margin-top: 0;
 }
+
+/* ─── SECCIÓN EDITORIAL ESTILO CUATRO COLUMNAS ─── */
+
+.seccion-editorial-bloques {
+    background-color: #181818;
+    color: #FDFDF8;
+    font-family: system-ui, -apple-system, sans-serif; /* Cambia por la fuente de tu proyecto */
+    padding: 80px 4% 100px 4%; /* Márgenes generosos alrededor del bloque */
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Distribución de la cabecera (Título + Texto superior) */
+.editorial-cabecera {
+    display: flex;
+    justify-content: space-between; /* Empuja un elemento a cada extremo */
+    align-items: flex-start;
+    margin-bottom: 80px; /* Separación amplia antes de las imágenes */
+}
+
+.editorial-marca-titulo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    flex: 0 0 30%; /* Ocupa el extremo izquierdo */
+}
+
+.editorial-bajada-texto {
+    font-size: 1.5rem;
+    line-height: 1.3;
+    margin: 0;
+    max-width: 500px; /* Limita el ancho del párrafo superior derecho */
+    text-align: left;
+}
+
+/* Configuración de la grilla inferior */
+.editorial-grilla-cuatro {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 columnas de igual tamaño */
+    gap: 24px; /* Separación limpia entre casillas */
+}
+
+/* Tarjeta individual interactiva */
+.tarjeta-editorial {
+    display: flex;
+    flex-direction: column;
+    border-radius: 4px;
+    padding: 12px; /* Margen interno para que el resaltado del recuadro luzca bien */
+    background-color: transparent;
+    transition: background-color 0.3s ease, transform 0.3s ease; /* Transición fluida */
+    cursor: pointer;
+}
+
+/* --- EFECTO DE RESALTADO (HOVER) --- */
+.tarjeta-editorial:hover {
+    background-color: #242424; /* Resalta levemente aclarando el fondo gris oscuro */
+    transform: translateY(-4px); /* Sutil levantamiento físico de la casilla */
+}
+
+/* Contenedor de la Imagen */
+.contenedor-imagen-tarjeta {
+    width: 100%;
+    aspect-ratio: 16 / 10; /* Mantiene la proporción horizontal idéntica a la captura */
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.contenedor-imagen-tarjeta img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Recorta la imagen proporcionalmente sin deformarla */
+}
+
+/* Textos internos de la casilla */
+.tarjeta-titulo {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0 0 12px 0;
+}
+
+.tarjeta-descripcion {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #D6D6D2; /* Un tono un poco más suave para jerarquizar la lectura secundaria */
+    margin: 0;
+}
+
 
 /* ─── SECCIÓN PARALLAX PIEZAS (VERDE) ─── */
 .seccion-parallax-piezas {
@@ -180,29 +267,41 @@ body.preloader-completado { overflow-y: auto; }
 /* ─── TRANSICIÓN DEL CÍRCULO / PARÁBOLA EXPANSIBLE ─── */
 .contenedor-transicion-circular {
     position: relative;
-    width: 100%;
+    width: 100vw;
     height: 100vh; /* Ocupa toda la ventana de visualización */
     overflow: hidden;
     background: var(--blanco); /* Fondo de la pantalla anterior */
 }
-/* El SVG invisible que maneja la máscara matemática */
+
 .svg-mascara-circulo {
     position: absolute;
-    width: 0;
-    height: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+.pantallas-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
 }
 /* La nueva pestaña que está "escondida" dentro del círculo */
 .nueva-pantalla-revelada {
-    position: absolute;
-    inset: 0;
     width: 100%;
-    height: 100vh;
-    background-color: var(--fucsia); /* Cambia al color que desees para el nuevo tema */
+    height: 100%;
+    background-color: transparent !important; /* <--- Fondo transparente */
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    z-index: 10;
 }
+
+.nueva-pantalla-revelada.paso-visible {
+    opacity: 1;
+    visibility: visible;
+}
+
 /* Contenido dentro de la nueva pestaña */
 .contenido-nueva-pantalla {
     text-align: center;
@@ -216,6 +315,57 @@ body.preloader-completado { overflow-y: auto; }
     opacity: 1;
     transform: translateY(0);
 }
+
+
+/* Cambiar el color de toda la tipografía interna a Fucsia/Rosado (#e71d84) */
+.contenido-nueva-pantalla h2,
+.contenido-nueva-pantalla h3 {
+    color: var(--fucsia) !important; 
+    text-align: center;
+    z-index: 10; /* Asegura que el texto quede por encima del canvas 3D */
+    position: relative;
+}
+/* Ajustar el contenedor 3D para que se adapte perfectamente al espacio revelado */
+#canvas-peones-3d {
+    width: 100%;              /* Toma todo el ancho de su columna (50%) */
+    height: 450px;            /* Altura controlada para el canvas dentro del recuadro */
+    background-color: rgba(255, 255, 255, 0.05); /* Opcional: un fondo sutil para delimitar el recuadro */
+    border-radius: 12px;       /* Bordes ligeramente suavizados */
+}
+
+/* Contenedor Flex para alinear las columnas de lado a lado */
+.columnas-piezas-flex {
+    display: flex;
+    flex-direction: row;      /* Las alinea en horizontal */
+    justify-content: center;
+    align-items: center;      /* Centra verticalmente ambos bloques */
+    gap: 5%;                 /* Genera un espacio de separación del 5% entre columnas */
+    width: 90%;               /* Evita que se peguen a los bordes de la pantalla */
+    max-width: 1200px;
+    height: 100%;             /* Aprovecha el alto total de la sección fija */
+    margin: 0 auto;
+}
+
+/* Proporciones de la columna izquierda (Texto) */
+.columna-piezas-texto {
+    flex: 0 0 45%;            /* Ocupa el 45% del ancho total */
+    text-align: left;         /* Alinea tus textos a la izquierda */
+}
+
+.columna-piezas-texto h2 {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+/* Proporciones de la columna derecha (Visor 3D) */
+.columna-piezas-visor {
+    flex: 0 0 50%;            /* Ocupa el 50% del ancho restante */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 
 /* ─── VISOR DE PEONES 3D INTERACTIVOS ────────────────── */
 .seccion-peones-3d {
@@ -239,13 +389,13 @@ body.preloader-completado { overflow-y: auto; }
     text-align: center;
 }
 #canvas-peones-3d {
-    width: 100%;
-    height: 500px; /* Altura ideal integrada en el flujo del scroll */
-    background-color: #e5e0d8; /* Color neutro idéntico al render de referencia */
-    border-radius: 12px;
-    overflow: hidden;
-    cursor: grab;
+    width: 100%;              /* Toma todo el ancho de su columna (50%) */
+    height: 450px;            /* Altura controlada para el canvas dentro del recuadro */
+    background-color: rgba(255, 255, 255, 0.05); /* Opcional: un fondo sutil para delimitar el recuadro */
+    border-radius: 12px;       /* Bordes ligeramente suavizados */
 }
+
+
 #canvas-peones-3d:active {
     cursor: grabbing;
 }
@@ -274,9 +424,8 @@ body.preloader-completado { overflow-y: auto; }
 
 .presentacion-seccion {
     background:var(--blanco); min-height:80vh;
-    padding:30px 40px 40px;
+    padding:150px 40px 40px;
     display:flex; justify-content:center; align-items:center;
-    scroll-margin-top:250px;
     min-height: 80vh;
     margin-bottom: 60px;
 }
