@@ -349,7 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
     animate();
 });
 
-// ─── 7. ANIMACIÓN EXPANSIÓN DE CÍRCULO (GSAP) ────────────
+// ─── 8. ANIMACIÓN EXPANSIÓN DE CÍRCULO (GSAP) ────────────
 document.addEventListener("DOMContentLoaded", () => {
     gsap.registerPlugin(ScrollTrigger);
 
@@ -386,4 +386,24 @@ document.addEventListener("DOMContentLoaded", () => {
         onStart: () => textoRevelado.classList.add("visible"),
         onReverseComplete: () => textoRevelado.classList.remove("visible")
     }, "-=0.1"); 
+});
+
+// ─── 9. (Efecto Galería Flotante) ────────────
+const contenedorCarrusel = document.getElementById('carrusel-partes');
+const tiraCarrusel = contenedorCarrusel.querySelector('.tira-carrusel');
+
+contenedorCarrusel.addEventListener('mousemove', (e) => {
+    const dimensiones = contenedorCarrusel.getBoundingClientRect();
+    // Calcula la posición del mouse en porcentaje dentro del contenedor (0 a 1)
+    const porcentajeX = (e.clientX - dimensiones.left) / dimensiones.width;
+    
+    // Calcula cuánto se desborda el carrusel respecto a la pantalla
+    const desbordeMaximo = tiraCarrusel.offsetWidth - dimensiones.width;
+    
+    if (desbordeMaximo > 0) {
+        // Mueve la tira en dirección opuesta al mouse de forma fluida
+        const trasladarX = -porcentajeX * desbordeMaximo;
+        tiraCarrusel.style.transform = `translateX(${trasladarX}px)`;
+        tiraCarrusel.style.transition = "transform 0.2s ease-out"; // Amortiguación suave
+    }
 });

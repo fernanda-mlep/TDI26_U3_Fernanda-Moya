@@ -310,6 +310,8 @@ body {
     color: #555555;
 }
 
+
+
 /* ==========================================================================
    TRANSICIÓN CIRCULAR — expansión fucsia al hacer scroll
    ========================================================================== */
@@ -502,6 +504,40 @@ body {
     height: auto;
     display: block;
     object-fit: contain;
+}
+
+/* ==========================================================================
+   NUEVO: CONTENEDOR DEL CARRUSEL "PARTES DEL JUEGO"
+   ========================================================================== */
+.carrusel-editorial-contenedor {
+    width: 100%;
+    overflow: hidden; /* Oculta las tarjetas que se salen de la pantalla */
+    position: relative;
+    cursor: ew-resize; /* Indica visualmente que se puede mover lateralmente */
+    padding: 20px 0;   /* Espacio para que las sombras de las tarjetas no se corten */
+}
+
+/* Modificamos tu clase original para que alinee todo en un solo horizonte */
+.editorial-grilla-tres {
+    display: flex;       /* Cambiado de grid a flex para mantener el horizonte */
+    gap: 40px;           /* Separación constante entre las 4 categorías */
+    width: max-content;  /* Obliga al contenedor a estirarse horizontalmente todo lo necesario */
+    will-change: transform;
+}
+
+/* Ajustamos las tarjetas individuales dentro del carrusel */
+.tarjeta-editorial {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 320px;        /* Ancho fijo para cada categoría en el horizonte */
+    flex-shrink: 0;      /* Evita que las tarjetas se deformen o achiquen */
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Opcional: Un leve efecto hover para dar volumen al interactuar */
+.tarjeta-editorial:hover {
+    transform: translateY(-8px);
 }
 
 /* ==========================================================================
