@@ -383,6 +383,14 @@ body {
 .columna-piezas-visor {
     grid-column: span 2;
     height: 60vh;
+    border-radius: 20px;       /* Controla el nivel de curvatura (puedes subirlo o bajarlo) */
+    overflow: hidden;          /* Obliga al contenido 3D a respetar las esquinas curvas */
+    isolation: isolate;
+}
+
+#canvas-peones-3d canvas {
+    border-radius: 20px;
+    display: block;
 }
 
 #canvas-peones-3d {
@@ -396,6 +404,44 @@ body {
     line-height: 1.8;
     color: #ffffff;
     max-width: 700px;
+}
+
+/* ==========================================================================
+   ADAPTACIÓN DEL GIF AL ESTILO DE DOS COLUMNAS (60% IZQ / 40% DER)
+   ========================================================================== */
+
+/* Contenedor específico para el GIF que hereda el fondo crema */
+.container-tarjeta-gif {
+    padding: 30px;            /* Margen interno para que el GIF respire */
+    overflow: hidden;         /* Corta las esquinas del GIF para que sigan la curva */
+}
+
+/* Forzar al GIF a comportarse de manera responsiva dentro de la grilla */
+.gif-adaptado-dos-col {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;      /* Mantiene la proporción del GIF sin recortarlo */
+    border-radius: 12px;      /* Curvatura interna armoniosa */
+    display: block;
+}
+
+/* ── CONFIGURACIÓN DE PROPORCIÓN E INVERSIÓN ESPECIAL ────────────────────── */
+
+#demo-gif-seccion {
+    /* Invierte las proporciones de las columnas: ahora la primera mide 3fr (60%) y la segunda 2fr (40%) */
+    grid-template-columns: 3fr 2fr; 
+}
+
+#demo-gif-seccion .dos-col-izq {
+    /* Mueve el recuadro negro original de la izquierda hacia la columna 2 (derecha) */
+    grid-column: 2; 
+}
+
+#demo-gif-seccion .dos-col-der {
+    /* Mueve el contenedor del GIF original de la derecha hacia la columna 1 (izquierda) */
+    grid-column: 1;
+    /* Obliga al navegador a renderizar esta columna antes en el orden visual */
+    grid-row: 1; 
 }
 
 /* ==========================================================================
