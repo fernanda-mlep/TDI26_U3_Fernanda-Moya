@@ -389,21 +389,39 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // ─── 9. (Efecto Galería Flotante) ────────────
-const contenedorCarrusel = document.getElementById('carrusel-partes');
-const tiraCarrusel = contenedorCarrusel.querySelector('.tira-carrusel');
+const carruselContenedor = document.getElementById('carrusel-partes');
+const tarjetas = carruselContenedor.querySelectorAll('.tarjeta-editorial');
 
-contenedorCarrusel.addEventListener('mousemove', (e) => {
-    const dimensiones = contenedorCarrusel.getBoundingClientRect();
-    // Calcula la posición del mouse en porcentaje dentro del contenedor (0 a 1)
-    const porcentajeX = (e.clientX - dimensiones.left) / dimensiones.width;
+function actualizarTarjetaCentral() {
+    // Encuentra el centro horizontal del visor del carrusel
+    const centroCarrusel = carruselContenedor.getBoundingClientRect().left + (carruselContenedor.offsetWidth / 2);
+
+    tarjetas.forEach((tarjeta) => {
+        const limites = tarjeta.getBoundingClientRect();
+        const centroTarjeta = limites.left + (limites.width / 2);
+
+        // Si la tarjeta está cerca del centro del contenedor, se activa
+        if (Math.abs(centroCarrusel - centroTarjeta) < limites.width / 2) {
+            tarjeta.classList.add('activa');
+        } else {
+            tarjeta.classList.remove('activa');
+        }
+    });
+}
+
+// Escucha el evento de movimiento de scroll para refrescar las posiciones
+carruselContenedor.addEventListener('scroll', actualizarTarjetaCentral);
+
+// Al cargar la página, el carrusel se equilibra en el centro sin resaltar ninguna tarjeta
+window.addEventListener('load', () => {
+    const carruselContenedor = document.getElementById('carrusel-partes');
+    const tarjetas = carruselContenedor.querySelectorAll('.tarjeta-editorial');
     
-    // Calcula cuánto se desborda el carrusel respecto a la pantalla
-    const desbordeMaximo = tiraCarrusel.offsetWidth - dimensiones.width;
-    
-    if (desbordeMaximo > 0) {
-        // Mueve la tira en dirección opuesta al mouse de forma fluida
-        const trasladarX = -porcentajeX * desbordeMaximo;
-        tiraCarrusel.style.transform = `translateX(${trasladarX}px)`;
-        tiraCarrusel.style.transition = "transform 0.2s ease-out"; // Amortiguación suave
+    // Apunta a la tarjeta del medio (la 3ra) para centrar la vista inicial
+    const tarjetaCentral = tarjetas[2]; 
+    if (tarjetaCentral) {
+        const posicionX = tarjetaCentral.offsetLeft - (carruselContenedor.offsetWidth / 2) + (tarjetaCentral.offsetWidth / 2);
+        carruselContenedor.scrollLeft = posicionX;
     }
 });
+

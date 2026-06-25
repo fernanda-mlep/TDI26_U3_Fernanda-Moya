@@ -251,12 +251,14 @@ body {
     padding-left: 0;
     padding-right: 0;
     width: 100%;
+    overflow: hidden;
 }
 
 /* Cabecera de la sección: ocupa el ancho completo antes de la grilla */
 .editorial-cabecera {
-    padding-left: max(20px, calc((100% - 1400px) / 2));
-    padding-right: max(20px, calc((100% - 1400px) / 2));
+    /* Mantiene el título "Partes del juego" alineado al bloque general del sitio */
+    padding-left: max(40px, calc((100% - 1200px) / 2));
+    padding-right: max(40px, calc((100% - 1200px) / 2));
     margin-bottom: 48px;
 }
 
@@ -565,20 +567,26 @@ body {
    ========================================================================== */
 .carrusel-editorial-contenedor {
     width: 100%;
-    overflow: hidden; /* Oculta las tarjetas que se salen de la pantalla */
-    position: relative;
-    cursor: ew-resize; /* Indica visualmente que se puede mover lateralmente */
-    padding: 20px 0;   /* Espacio para que las sombras de las tarjetas no se corten */
-    padding-left: max(20px, calc((100% - 1400px) / 2));
-    padding-right: max(20px, calc((100% - 1400px) / 2));
+    overflow-x: auto;              /* Permite el deslizamiento horizontal */
+    scroll-snap-type: x mandatory;   /* Mantiene el frenado magnético centrado */
+    scroll-behavior: smooth;
+    padding-top: 20px;             /* Padding normalizado sin excesos de aire */
+    padding-bottom: 20px;
+    padding-left: calc(50vw - 160px);  /* 160px es exactamente la mitad del ancho de una tarjeta (320px/2) */
+    padding-right: calc(50vw - 160px);
+    scrollbar-width: none; 
+}
+
+.carrusel-editorial-contenedor::-webkit-scrollbar {
+    display: none;
 }
 
 /* Modificamos tu clase original para que alinee todo en un solo horizonte */
 .editorial-grilla-tres {
-    display: flex;       /* Cambiado de grid a flex para mantener el horizonte */
-    gap: 40px;           /* Separación constante entre las 4 categorías */
-    width: max-content;  /* Obliga al contenedor a estirarse horizontalmente todo lo necesario */
-    will-change: transform;
+    display: flex;
+    gap: 40px;                     /* Distancia uniforme entre todas las tarjetas */
+    width: max-content;
+    align-items: flex-start;       /* Alinea todas las tarjetas perfectamente por su borde superior */
 }
 
 /* Ajustamos las tarjetas individuales dentro del carrusel */
@@ -586,11 +594,19 @@ body {
     display: flex;
     flex-direction: column;
     gap: 16px;
-    width: 320px;        /* Ancho fijo para cada categoría en el horizonte */
-    flex-shrink: 0;      /* Evita que las tarjetas se deformen o achiquen */
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 320px;                  /* Ancho idéntico para las 5 tarjetas */
+    flex-shrink: 0;
+    scroll-snap-align: center;     /* Sigue centrando la tarjeta al deslizar */
+    transform: scale(1);
+    opacity: 1;
+    transition: transform 0.3s ease;
 }
 
+/*  EFECTO ACERCAR: Tarjeta que está al centro de la pantalla */
+.tarjeta-editorial.activa {
+    opacity: 1;
+    transform: scale(1.12);      /* Se agranda y se acerca al usuario */
+}
 /* Opcional: Un leve efecto hover para dar volumen al interactuar */
 .tarjeta-editorial:hover {
     transform: translateY(-8px);
@@ -659,31 +675,38 @@ body {
 }
 
 /* ==========================================================================
-   PARTITURA PIX — iframe
+   SOLUCIÓN VISOR PIX INTERACTIVO — COHERENCIA EDITORIAL
    ========================================================================== */
+
+/* Rompe las limitantes de las columnas flex/grid para ocupar todo el ancho disponible */
 .seccion-partitura-iframe {
+    grid-column: 1 / -1; 
     width: 100%;
-    margin: 30px auto;
-    display: flex;
-    justify-content: center;
+    margin-top: 35px;
+    box-sizing: border-box;
 }
 
-.contenedor-tarjeta-iframe {
+/* Encapsula el iframe controlando el fondo crema institucional y bordes uniformes */
+.contenedor-tarjeta-visor {
     width: 100%;
-    max-width: 1200px;
-    background: var(--blanco);
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
+    background-color: #f0ede6;    /* Fondo crema a tono con tus fichas */
+    border-radius: 20px;          /* Misma curvatura de tus bloques visuales */
+    padding: 24px;                /* Aire periférico para enmarcar la partitura */
+    box-sizing: border-box;
+    overflow: hidden;             /* Recorta bordes toscos */
 }
 
-.iframe-pix {
-    width: 100%;
-    height: 650px;
-    border: none;
+/* El elemento iframe en su máxima extensión */
+.iframe-pix-dinamico {
     display: block;
-    background: var(--blanco);
+    width: 100%;
+    height: 80vh;                 /* Ocupa el 80% de la pantalla para evitar scroll vertical doble */
+    border: none;                 /* Limpia el contorno gris por defecto de HTML */
+    border-radius: 12px;          /* Redondeado interno fino */
+    background-color: var(--blanco); /* Fondo nítido para leer los pasos del juego */
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.04); /* Profundidad elegante */
 }
+
 
 /* ==========================================================================
    SUBRAYADO ANIMADO POR SCROLL
