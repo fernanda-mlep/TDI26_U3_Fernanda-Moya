@@ -199,6 +199,21 @@ body.preloader-completado { overflow-y: auto; }
     margin: 0;
 }
 
+/* Corrección de color para el párrafo del fundamento */
+.parrafo-columna-fundamento {
+    font-size: 1.15rem;
+    line-height: 1.6;
+    color: #FDFDF8 !important; /* Fuerza tipografía clara sobre fondo oscuro */
+    margin-top: 15px;
+    text-align: left;
+}
+
+/* Forzar que el título de fundamento sea visible */
+.columna-piezas-texto h2 {
+    color: #e71d84 !important; /* Rosado/Fucsia */
+    text-align: left;
+    font-size: 3rem;
+}
 
 /* ─── SECCIÓN PARALLAX PIEZAS (VERDE) ─── */
 .seccion-parallax-piezas {

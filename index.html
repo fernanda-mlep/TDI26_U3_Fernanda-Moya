@@ -51,8 +51,7 @@
     
     <div class="editorial-cabecera">
         <h2 class="editorial-marca-titulo">Partes del juego</h2>
-        <p class="editorial-bajada-texto">
-            Catapultazo contiene un mazo  </p>
+        <p class="editorial-bajada-texto"></p>
     </div>
 
     <div class="editorial-grilla-cuatro">
@@ -268,16 +267,43 @@
             </div>
         </div>
     </section>
+
+
+<div class="contenedor-transicion-circular" id="fundamento">
     
-    <section id="fundamento" class="seccion-base seccion-clara">
-        <div class="bloque-contenedor">
-            <h2 class="subtitulo">Fundamento</h2>
-            <p class="parrafo">
-                La interacción de Catapultazo ocurre a través de la curiosidad e indagación; la observación tanto visual como manual permite que el cuerpo participe en el desarrollo del juego. Las dinámicas internas de Catapultazo surgen a través de diferentes dimensiones: el azar presente en el mazo de cartas y en las fichas de interacción. La estrategia ocurre en la anticipación de jugadas, por ejemplo con la carta de Pitoniso, o la precisión necesaria ante el cálculo de la distancia y fuerza para derribar los peones de tus contrincantes, guardando proteger el propio peón.
-            </p>
-            <a href="uipage.html" style="display: inline-block; padding: 12px 24px; background-color: #e71d84; color: white; text-decoration: none; border-radius: 30px; font-weight: bold; margin-top: 15px;">Ir a la experiencia interactiva</a>
-        </div>
-    </section>
+    <svg class="svg-mascara-circulo" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <defs>
+            <clipPath id="mascara-clip" clipPathUnits="objectBoundingBox">
+                <circle id="circulo-clip" cx="0.5" cy="0.5" r="0"></circle>
+            </clipPath>
+        </defs>
+        <circle id="circulo-borde-visible" cx="50" cy="50" r="0" 
+                fill="none" 
+                stroke="#e71d84" 
+                stroke-width="2">
+        </circle>
+    </svg>
+
+    <div class="pantallas-wrapper" style="clip-path: url(#mascara-clip);">
+        <section class="nueva-pantalla-revelada" id="seccion-contenido-fundamento">
+            <div class="contenido-nueva-pantalla columnas-piezas-flex">
+                <div class="columna-piezas-texto">
+                    <h2>Fundamento</h2>
+                    <p class="parrafo-columna-fundamento">
+                        La interacción de Catapultazo ocurre a través de la curiosidad e indagación; 
+                        la observación tanto visual como manual permite que el cuerpo participe en el
+                        desarrollo del juego. Las dinámicas internas de Catapultazo surgen a través 
+                        de diferentes dimensiones: el azar presente en el mazo de cartas y en las 
+                        fichas de interacción. La estrategia ocurre en la anticipación de jugadas, 
+                        por ejemplo con la carta de Pitoniso, o la precisión necesaria ante el cálculo 
+                        de la distancia y fuerza para derribar los peones de tus contrincantes, 
+                        guardando proteger el propio peón.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
 
     <footer class="colofon">
         <div class="colofon-container">
