@@ -45,34 +45,60 @@ if (logoNav) {
     });
 }
 
-// ─── 3. MOTOR DE SCROLL ──────────────────────────────
+// ─── 3. MOTOR DE SCROLL (LÓGICA DE SECCIONES) ──────────────────────
 window.addEventListener("scroll", () => {
     if (!navegacionPermitida) return;
 
     const pos = window.scrollY;
+    
+    // 1. Capturamos los elementos de referencia para el comportamiento
+    const seccionHero       = document.getElementById("preloader-container");
+    const seccionComoJugar  = document.getElementById("como-jugar");
+    const seccionDemoGif    = document.getElementById("demo-gif-seccion");
 
-    // Navbar hide/show según dirección
     if (navbar) {
-        if (pos <= 80) {
-            navbar.classList.remove("scroll-abajo", "scroll-arriba");
-        } else if (pos > ultimaPosicionScroll) {
+        // Por defecto, asumimos que debe estar visible si pasó el Hero
+        let debaSerVisible = false;
+
+        // A. Verificar si ya pasamos completamente la sección Hero
+        if (seccionHero) {
+            const alturaHero = seccionHero.offsetHeight;
+            if (pos > alturaHero - 64) { // 64px es el alto de tu navbar
+                debaSerVisible = true;
+            }
+        }
+
+        // B. Excepción: Si está activa la transición circular ("como-jugar") se retira
+        if (seccionComoJugar && seccionDemoGif) {
+            const inicioComoJugar = seccionComoJugar.offsetTop;
+            const inicioDemoGif   = seccionDemoGif.offsetTop;
+
+            // Si el scroll está atrapado entre el inicio de "como-jugar" y el inicio de "demo-gif-seccion"
+            if (pos >= inicioComoJugar - 5 && pos < inicioDemoGif - 64) {
+                debaSerVisible = false;
+            }
+        }
+
+        // 2. Aplicar las clases CSS según las condiciones anteriores
+        if (debaSerVisible) {
+            navbar.classList.remove("scroll-abajo");
+            navbar.classList.add("scroll-arriba", "activada");
+        } else {
+            // Si está en el Hero o dentro de la transición circular, se esconde limpiamente hacia arriba
             navbar.classList.remove("scroll-arriba");
             navbar.classList.add("scroll-abajo");
-        } else {
-            navbar.classList.remove("scroll-abajo");
-            navbar.classList.add("scroll-arriba");
         }
     }
 
-    // Encoger título hero al hacer scroll
-    if (heroSection && navbar && pos > 50) {
+    // 3. Control de reducción del título Hero (Mantiene tu animación original)
+    if (heroSection && pos > 50) {
         heroSection.classList.add("encoger-titulo");
-        navbar.classList.add("activada");
+        if (navbar) navbar.classList.add("activada");
     } else if (heroSection && pos <= 50) {
         heroSection.classList.remove("encoger-titulo");
     }
 
-    // Subrayados animados
+    // 4. Subrayados animados por Scroll (Mantiene tu animación original)
     const subrayados   = document.querySelectorAll(".subrayado-animado");
     const h            = window.innerHeight;
     const puntoInicio  = h * 0.85;
