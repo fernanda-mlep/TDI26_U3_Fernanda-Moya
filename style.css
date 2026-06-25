@@ -2,15 +2,16 @@
    PALETA DE COLORES OFICIAL - CATAPULTAZO (Variables globales)
    ========================================================================== */
 :root {
-    --verde: #c3d208;   /* Verde oliva para textos destacados y hover de jugar */
-    --violeta: #b8b1d8; /* Violeta suave para textos destacados y sombras */
-    --fucsia: #e71d84;  /* Fucsia de acento principal para botones y logos */
-    --blanco: #FDFDF8;  /* Blanco marfil de fondo oficial */
-    --negro: #181818;   /* Negro carbón para fondos oscuros como pie de página */
+    --verde:   #c3d208;  /* Verde oliva para textos destacados y hover */
+    --violeta: #b8b1d8;  /* Violeta suave para sombras y acentos */
+    --fucsia:  #e71d84;  /* Fucsia de acento principal */
+    --blanco:  #FDFDF8;  /* Blanco marfil de fondo oficial */
+    --negro:   #181818;  /* Negro carbón para footer */
 }
 
-/* CONFIGURACIÓN GENERAL DE CAJAS
-   Reset universal para asegurar consistencia en anchos, altos y espaciados */
+/* ==========================================================================
+   RESET Y BASE
+   ========================================================================== */
 * {
     margin: 0;
     padding: 0;
@@ -22,23 +23,119 @@ html {
 }
 
 body {
-    font-family: "poppins", sans-serif; 
-    background: var(--blanco); /* 🚨 Corregido: Usa tu blanco marfil oficial */
-    color: var(--negro);        /* 🚨 Corregido: Usa tu negro oficial */
+    font-family: "poppins", sans-serif;
+    background: var(--blanco);
+    color: var(--negro);
     cursor: auto;
 }
 
-/* PORTADA (HERO) - CATAPULTAZO */
-.hero {
-    height: 100vh;
-    width: 100%;    
-    margin: 0; 
+/* ==========================================================================
+   CABECERA (NAVBAR) — ancho total, se muestra al hacer scroll hacia arriba
+   ========================================================================== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;            /* Ocupa el ancho total de la página */
+    height: 64px;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--fucsia); /* 🚨 Cambiado a variable */
-    background-size: cover;
-    background-position: center;
+    background-color: var(--fucsia);
+    z-index: 1000;
+    padding: 0 40px;
+    border-radius: 0;       /* Sin forma de píldora: borde recto */
+    transform: translateY(-110%);   /* Oculta hacia arriba al inicio */
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.4s ease;
+}
+
+/* Alineación interna del contenido de la navbar */
+.navbar-content {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Aparece cuando se activa (después del preloader) */
+.navbar.activada {
+    opacity: 1;
+}
+
+/* Se desliza hacia abajo al hacer scroll hacia ARRIBA */
+.navbar.scroll-arriba.activada {
+    transform: translateY(0);
+}
+
+/* Se oculta al hacer scroll hacia ABAJO */
+.navbar.scroll-abajo {
+    transform: translateY(-110%) !important;
+}
+
+/* Forzado visible (uso programático) */
+.navbar.forced-visible {
+    transform: translateY(0) !important;
+    opacity: 1 !important;
+}
+
+.navbar-logo {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: #ffffff;
+    text-decoration: none;
+    letter-spacing: -0.5px;
+    cursor: pointer;
+}
+
+.navbar-menu {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-item {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--verde);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-item:hover {
+    color: var(--violeta);
+}
+
+/* Botón "Jugar" dentro de la navbar */
+.btn-nav-jugar {
+    background-color: #ffffff;
+    color: var(--fucsia) !important;
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-weight: 700;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-nav-jugar:hover {
+    background-color: var(--verde);
+    color: var(--negro) !important;
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   HERO — portada fucsia con título animado
+   ========================================================================== */
+.hero {
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--fucsia);
     padding: 0 80px;
 }
 
@@ -48,35 +145,10 @@ body {
     text-align: center;
 }
 
-/* 🚨 NUEVO: Estilos para la precarga secuencial de 4 pictogramas */
-.secuencia-pictos {
-    position: relative;
-    width: 140px;
-    height: 140px;
-    margin: 0 auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.picto-animado {
-    position: absolute;
-    width: 140px;
-    height: auto;
-    opacity: 0;
-    transform: scale(0.8);
-    transition: opacity 0.1s ease, transform 0.1s ease;
-}
-
-.picto-animado.activo {
-    opacity: 1;
-    transform: scale(1.1);
-}
-
-/* 🚨 AJUSTADO: El título inicia oculto y se activa desde JS */
+/* Título principal: inicia oculto, se revela por JS */
 .hero h1 {
     font-size: 12rem;
-    color: rgb(255, 255, 255);
+    color: #ffffff;
     display: inline-block;
     transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
     will-change: transform, opacity;
@@ -92,55 +164,28 @@ body {
     transform: scale(1);
 }
 
+/* El hero encoge el título cuando se hace scroll — espacio fucsia se mantiene */
 .hero.encoger-titulo h1 {
     transform: scale(0.3);
     opacity: 0;
 }
 
-.btn {  
-    display: inline-block;
-    font-size: 10rem;
-    color: var(--verde); /* 🚨 Cambiado a variable */
-    text-decoration: none;
-    line-height: 1;
-    margin-left: 30px;
-    cursor: pointer;
-    opacity: 0;
-    transform: scale(0.8);
-    transition: transform 0.5s, color 0.5s, opacity 0.8s;
-    pointer-events: none;
-}
-
-.btn.mostrar {
-    opacity: 1;
-    transform: scale(1);
-    pointer-events: auto;
-}
-
-.btn:hover {
-    color: var(--violeta); /* 🚨 Cambiado a variable */
-    transform: scale(1.1);
-}
-
-/* SOBRE EL JUEGO - TRES COLUMNAS EDITORIAL */
+/* ==========================================================================
+   SECCIÓN PRESENTACIÓN — 3 columnas base
+   El primer bloque usa 2 columnas: título vertical + párrafo
+   ========================================================================== */
 .presentacion-seccion {
     background-color: var(--blanco);
-    min-height: 80vh; 
-    scroll-margin-top: 80px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    column-gap: 40px;
-    row-gap: 40px;
-    padding-top: 60px;
-    padding-bottom: 60px;
+    scroll-margin-top: 64px;    /* Compensa la altura de la navbar */
+    padding-top: 80px;
+    padding-bottom: 80px;
     padding-left: max(40px, calc((100% - 1200px) / 2));
     padding-right: max(40px, calc((100% - 1200px) / 2));
     width: 100%;
-}  
+}
 
+/* Contenedor interno en grilla de 3 columnas */
 .presentacion-contenedor {
-    grid-column: 1 / -1;
-    width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     column-gap: 40px;
@@ -148,181 +193,204 @@ body {
     align-items: start;
 }
 
-/* Asegura que si hay una sola columna de texto, ocupe el ancho completo de la cuadrícula */
-.presentacion-contenedor > .columna-texto:only-child {
-    grid-column: 1 / -1;
+/* Columna izquierda: ocupa 1 columna con palabras clave apiladas */
+.columna-titulo-izq {
+    grid-column: span 1;
 }
 
-/* Ajuste automático de textos destacados en modo 3 columnas */
-.presentacion-contenedor > *:not(:only-child) .texto-verde,
-.presentacion-contenedor > *:not(:only-child) .texto-rosa,
-.presentacion-contenedor > *:not(:only-child) .txt-violeta-big {
-    font-size: 1.85rem;
-}
-
-.columna-texto {
-    width: 100%; 
-    display: flex;
-    flex-direction: column;
-    align-items: center; 
-}
-
-.subtitulo {
+.subtitulo-columna {
     font-size: 3rem;
-    font-weight: 800;
-    color: var(--fucsia); /* 🚨 Cambiado a variable */
-    margin-bottom: 24px;
+    font-weight: 900;
+    line-height: 1.2;
+    color: var(--fucsia);
 }
 
-.parrafo {
-    font-size: 1.85rem;
-    line-height: 1.6;
-    color: #444444;
-    margin-bottom: 20px;
-}
-
-.parrafo_presentacion {
-    font-size: 1.85rem;
-    line-height: 1.5;
-    color: #444444;
-    margin-bottom: 20px;
-    max-width: 780px;
-}
-
-/* ==========================================
-   ESTILOS DESTACADOS: TEXTOS EN COLORES (3rem)
-   ========================================== */
-
-/* 1. Base tipográfica común para los tres textos destacados */
-.texto-verde,
-.texto-rosa,
-.txt-violeta-big {
-    font-size: 3rem;          
-    line-height: 1.5;         
-    font-weight: bold;        
-    max-width: 780px;         
-}
-
-/* 2. Especificaciones de color */
-.texto-verde {
-    color: var(--verde); /* 🚨 Cambiado a variable */
-}
-
-.texto-rosa {
-    color: var(--fucsia); /* 🚨 Cambiado a variable */
-}
-
-.txt-violeta-big {
-    color: var(--violeta); /* 🚨 Cambiado a variable */
-    text-align: center;       
-    margin-top: 25px;         
-}
-
-.img-tablero {
-    width: 100%;
-    max-width: 780px; 
-    margin: 32px 0;   
-    border-radius: 20px;
-    overflow: hidden; 
+/* Columna derecha: ocupa las 2 columnas restantes */
+.columna-parrafo-der {
+    grid-column: span 2;
     display: flex;
-    justify-content: center;
+    align-items: flex-start;
+    padding-top: 8px;
 }
 
-.img-tablero img {
-    width: 100%;
-    height: auto;        
-    display: block;      
-    object-fit: contain; 
-}
-
-#typer {
-    transition: all 0.1s ease-out; 
+.parrafo-columna {
+    font-size: 1.4rem;
+    line-height: 1.7;
+    color: #444444;
+    max-width: 680px;
 }
 
 /* ==========================================================================
-   CABECERA INTELIGENTE (SMART NAVBAR)
-   Barra de navegación flotante redondeada que aparece o desaparece según la dirección del scroll.
+   SECCIÓN EDITORIAL — grilla de 3 columnas para "Partes del juego"
    ========================================================================== */
-.navbar {
-    position: fixed;
-    top: 24px;
-    left: 50%;
-    width: 90%;
-    max-width: 960px; 
-    height: 64px; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--fucsia); /* Color de fondo fucsia oficial */
-    box-shadow: none;
-    z-index: 1000; /* Asegura flotar sobre todos los elementos del landing */
-    padding: 0 32px;
-    border-radius: 100px; /* Diseño tipo píldora */
-    transform: translate(-50%, -140%); /* Se oculta por defecto al inicio */
-    cursor: pointer;
-    opacity: 0;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.4s ease, opacity 0.4s ease;
-}
-
-/* ESTADOS DE INTERACCIÓN CONTROLADOS POR JS */
-.navbar.activada {
-    opacity: 1;
-}
-
-.navbar.scroll-arriba.activada {
-    transform: translate(-50%, 0);
-}
-
-.navbar.scroll-abajo {
-    transform: translate(-50%, -140%) !important;
-}
-
-.navbar.forced-visible {
-    transform: translate(-50%, 0) !important;
-    opacity: 1 !important;
-}
-
-.navbar-content {
+.seccion-editorial-bloques {
+    background-color: var(--blanco);
+    padding-top: 80px;
+    padding-bottom: 80px;
+    padding-left: max(40px, calc((100% - 1200px) / 2));
+    padding-right: max(40px, calc((100% - 1200px) / 2));
     width: 100%;
-    max-width: 1440px;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
 }
 
-.navbar-logo {
-    font-size: 1.8rem; 
+/* Cabecera de la sección: ocupa el ancho completo antes de la grilla */
+.editorial-cabecera {
+    margin-bottom: 48px;
+}
+
+.editorial-marca-titulo {
+    font-size: 3rem;
     font-weight: 900;
-    color: rgb(255, 255, 255);
-    text-decoration: none;
-    letter-spacing: -0.5px;
+    color: var(--negro);
+    letter-spacing: -1px;
 }
 
-.navbar-menu {
+/* Grilla de 3 columnas para las tarjetas */
+.editorial-grilla-tres {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 40px;
+    row-gap: 48px;
+}
+
+/* Tarjeta individual */
+.tarjeta-editorial {
     display: flex;
-    gap: 30px;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.contenedor-imagen-tarjeta {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border-radius: 16px;
+    overflow: hidden;
+    background-color: #f0ede6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contenedor-imagen-tarjeta img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.tarjeta-titulo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--negro);
+}
+
+.tarjeta-descripcion {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #555555;
+}
+
+/* ==========================================================================
+   TRANSICIÓN CIRCULAR — expansión fucsia al hacer scroll
+   ========================================================================== */
+.contenedor-transicion-circular {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--blanco);
+}
+
+.svg-mascara-circulo {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    pointer-events: none;
+}
+
+.pantallas-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--fucsia);
+    z-index: 1;
+}
+
+.nueva-pantalla-revelada {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px max(40px, calc((100% - 1200px) / 2));
+}
+
+.contenido-nueva-pantalla {
+    width: 100%;
+}
+
+.columnas-piezas-flex {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 60px;
     align-items: center;
 }
 
-.nav-item {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--verde); /* 🚨 Cambiado a variable */
-    text-decoration: none;
-    transition: color 0.3s ease;
-    position: relative;
+.columna-piezas-texto {
+    grid-column: span 1;
 }
 
-.nav-item:hover {
-    color: var(--violeta); /* 🚨 Cambiado a variable */
+.columna-piezas-texto h2 {
+    font-size: 3rem;
+    font-weight: 900;
+    color: #ffffff;
+    margin-bottom: 20px;
 }
 
-/* SECCIONES BASE - 3 COLUMNAS */
+.columna-piezas-visor {
+    grid-column: span 2;
+    height: 60vh;
+}
+
+#canvas-peones-3d {
+    width: 100%;
+    height: 100%;
+}
+
+/* Texto del fundamento */
+.parrafo-columna-fundamento {
+    font-size: 1.3rem;
+    line-height: 1.8;
+    color: #ffffff;
+    max-width: 700px;
+}
+
+/* ==========================================================================
+   GIF DEMOSTRATIVO
+   ========================================================================== */
+.contenedor-gif {
+    width: 100%;
+    max-width: 800px;
+    margin: 60px auto;
+}
+
+.gif-landing {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    display: block;
+}
+
+/* ==========================================================================
+   SECCIONES BASE — 3 columnas para PIX y otras secciones
+   ========================================================================== */
 .seccion-base {
-    min-height: 60vh; 
-    scroll-margin-top: 75px;
+    min-height: 60vh;
+    scroll-margin-top: 64px;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     column-gap: 40px;
@@ -344,7 +412,6 @@ body {
     align-items: start;
 }
 
-/* Alineación de elementos internos de secciones base en la grilla */
 .bloque-contenedor > .subtitulo,
 .bloque-contenedor > .seccion-partitura-iframe {
     grid-column: 1 / -1;
@@ -359,35 +426,231 @@ body {
     justify-self: start;
 }
 
-.seccion-clara {
-    background-color: var(--blanco); /* 🚨 Cambiado a variable */
-}
-.seccion-oscura {
-    background-color: #f5f5f5;
+.seccion-clara { background-color: var(--blanco); }
+.seccion-oscura { background-color: #f5f5f5; }
+
+/* ==========================================================================
+   TIPOGRAFÍAS DESTACADAS
+   ========================================================================== */
+.subtitulo {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--fucsia);
+    margin-bottom: 24px;
 }
 
-/* BOTÓN NAV JUGAR */
-.btn-nav-jugar {
-    background-color: var(--fucsia); /* 🚨 Cambiado a variable */
-    color: white !important;
-    padding: 6px 16px;
+.parrafo {
+    font-size: 1.85rem;
+    line-height: 1.6;
+    color: #444444;
+    margin-bottom: 20px;
+}
+
+.texto-verde,
+.texto-rosa,
+.txt-violeta-big {
+    font-size: 3rem;
+    line-height: 1.5;
+    font-weight: bold;
+    max-width: 780px;
+}
+
+.texto-verde   { color: var(--verde); }
+.texto-rosa    { color: var(--fucsia); }
+.txt-violeta-big {
+    color: var(--violeta);
+    text-align: center;
+    margin-top: 25px;
+}
+
+/* ==========================================================================
+   IMÁGENES DE TABLERO
+   ========================================================================== */
+.img-tablero {
+    width: 100%;
+    max-width: 780px;
+    margin: 32px 0;
     border-radius: 20px;
-    font-weight: 700;
-    transition: transform 0.3s ease, background-color 0.3s ease !important;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
 }
 
-.btn-nav-jugar:hover {
-    background-color: var(--verde); /* 🚨 Cambiado a variable */
-    color: #333 !important;
-    transform: scale(1.05);
+.img-tablero img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
 }
 
-/* COLOFÓN (FOOTER) */
+/* ==========================================================================
+   GALERÍA INTERACTIVA DE CARTAS
+   ========================================================================== */
+.galeria-interactiva-contenedor {
+    width: 100%;
+    height: 60vh;
+    overflow: hidden;
+    background-color: var(--blanco);
+    position: relative;
+    display: flex;
+    align-items: center;
+    cursor: ew-resize;
+}
+
+.carrusel-tira-imagenes {
+    display: flex;
+    gap: 40px;
+    width: max-content;
+    will-change: transform;
+}
+
+.tarjeta-flotante {
+    width: 320px;
+    height: 420px;
+    background-color: var(--blanco);
+    border-radius: 24px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.tarjeta-flotante img {
+    max-width: 90%;
+    max-height: 90%;
+    object-fit: contain;
+    display: block;
+    border-radius: 12px;
+}
+
+.tarjeta-flotante:hover {
+    transform: translateY(-15px) scale(1.02);
+    box-shadow: 0 20px 40px var(--violeta);
+}
+
+/* Versión centrada con 3 imágenes fijas */
+.galeria-interactiva-contenedor.version-centrada {
+    justify-content: center;
+    cursor: default;
+    height: auto;
+    padding: 60px 0;
+}
+
+.version-centrada .carrusel-tira-imagenes {
+    justify-content: center;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
+}
+
+/* ==========================================================================
+   PARTITURA PIX — iframe
+   ========================================================================== */
+.seccion-partitura-iframe {
+    width: 100%;
+    margin: 30px auto;
+    display: flex;
+    justify-content: center;
+}
+
+.contenedor-tarjeta-iframe {
+    width: 100%;
+    max-width: 1200px;
+    background: var(--blanco);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.iframe-pix {
+    width: 100%;
+    height: 650px;
+    border: none;
+    display: block;
+    background: var(--blanco);
+}
+
+/* ==========================================================================
+   SUBRAYADO ANIMADO POR SCROLL
+   ========================================================================== */
+.subrayado-animado {
+    background-image: linear-gradient(var(--verde), var(--verde));
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0% 100%;
+    padding: 0 4px;
+    border-radius: 4px;
+    transition: color 0.3s ease, font-weight 0.3s ease;
+    will-change: background-size;
+}
+
+.subrayado-animado.texto-contrastado {
+    color: var(--fucsia);
+    font-weight: bold;
+}
+
+/* ==========================================================================
+   MODAL / LIGHTBOX
+   ========================================================================== */
+#modal-visor {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 60px;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: rgba(24, 24, 24, 0.95);
+    align-items: center;
+    justify-content: center;
+}
+
+#modal-visor.activo {
+    display: flex !important;
+}
+
+.imagen-ampliada {
+    margin: auto;
+    display: block;
+    max-width: 85%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 16px;
+    animation: zoomEfecto 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes zoomEfecto {
+    from { transform: scale(0.9); opacity: 0; }
+    to   { transform: scale(1);   opacity: 1; }
+}
+
+.btn-cerrar-modal {
+    position: absolute;
+    top: 30px;
+    right: 45px;
+    color: #f5f5f5;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.btn-cerrar-modal:hover {
+    color: var(--fucsia);
+}
+
+/* ==========================================================================
+   COLOFÓN (FOOTER)
+   ========================================================================== */
 .colofon {
-    background-color: var(--negro); /* 🚨 Cambiado a variable */
+    background-color: var(--negro);
     padding: 6rem 2rem 4rem 2rem;
     position: relative;
-    z-index: 5; 
+    z-index: 5;
 }
 
 .colofon-container {
@@ -408,7 +671,7 @@ body {
 
 .colofon-links a {
     color: #ffffff;
-    font-family: monospace; 
+    font-family: monospace;
     font-size: 0.9rem;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -417,161 +680,124 @@ body {
 }
 
 .colofon-links a:hover {
-    color: var(--fucsia); /* 🚨 Cambiado a variable */
-    transform: translateY(-2px); 
+    color: var(--fucsia);
+    transform: translateY(-2px);
 }
-
-.colofon-accent {
-    width: 40px;
-    height: 2px;
-    background-color: var(--violeta); /* 🚨 Cambiado a variable */
-    margin-top: 1rem;
-    opacity: 0.5;
-}
-
-
-.grupo-texto {
-    display: flex;
-    align-items: center;
-}
-
-.grupo-texto span {
-    font-size: 6rem;
-    font-weight: 400; 
-    text-transform: lowercase; 
-    color: var(--fucsia); /* 🚨 Cambiado a variable */
-    white-space: nowrap; 
-    padding-right: 100px; 
-    letter-spacing: -2px; 
-    line-height: 1; 
-}
-
-
-
-
-/* GALERÍA INTERACTIVA DE CARTAS
-   Contenedor del carrusel de cartas que reacciona a la posición del cursor y permite deslizamiento por inercia */
-.galeria-interactiva-contenedor {
-    width: 100%;
-    height: 60vh;
-    overflow: hidden;
-    background-color: var(--blanco); 
-    position: relative;
-    display: flex;
-    align-items: center;
-    cursor: ew-resize; /* Cursor interactivo horizontal */
-}
-
-/* TIRA DE CARTAS
-   Organiza las cartas en una fila horizontal continua; will-change optimiza la aceleración gráfica */
-.carrusel-tira-imagenes {
-    display: flex;
-    gap: 40px;
-    padding: 0px;
-    width: max-content;
-    will-change: transform; 
-}
-
-.tarjeta-flotante {
-    width: 320px;
-    height: 420px;
-    background-color: var(--blanco); /* 🚨 Cambiado a variable */
-    border-radius: 24px;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transform: translateY(0);
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-}
-
-.tarjeta-flotante img {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-    display: block;
-    border-radius: 12px;
-}
-
-.tarjeta-flotante:hover {
-    transform: translateY(-15px) scale(1.02);
-    box-shadow: 0 20px 40px var(--violeta); /* 🚨 Cambiado a variable */
-}
-
-
-.btn-cerrar-modal {
-    position: absolute;
-    top: 30px;
-    right: 45px;
-    color: #f5f5f5;
-    font-size: 40px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.2s ease;
-}
-
-.btn-cerrar-modal:hover {
-    color: var(--fucsia); /* 🚨 Cambiado a variable */
-}
-
-
-/* ESTILOS PARA EL GIF DE LA LANDING */
-.contenedor-gif {
-    width: 100%;
-    max-width: 800px;
-    margin: 40px auto;
-    padding: 0px !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
-}
-
-.gif-landing {
-    width: 100%;
-    height: auto;
-    border: none !important;
-    border-radius: 16px;
-    background-color: transparent !important;
-}
-
-/* ==========================================
-   3 IMÁGENES CENTRADAS (SECCIÓN FIJA)
-   ========================================== */
-.galeria-interactiva-contenedor.version-centrada {
-    justify-content: center;   
-    cursor: default;           
-    height: auto;              
-    padding: 60px 0;           
-}
-
-.version-centrada .carrusel-tira-imagenes {
-    display: flex;
-    justify-content: center;   
-    flex-wrap: wrap;           
-    gap: 40px;                 
-    width: 100%;               
-    max-width: 1200px;         
-    padding: 0 20px;
-}
-
-
 
 /* ==========================================================================
-   NUEVO: SECCION EDITORIAL BLOQUES (GRILLA DE 3 COLUMNAS Y RESPONSIVA)
+   SECCIÓN DOS COLUMNAS — 40 / 60 sobre la base de 3 columnas
    ========================================================================== */
-.seccion-editorial-bloques {
+.seccion-dos-col {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    /* 3 columnas base: col-izq ocupa 1 unidad (≈40%), col-der ocupa 2 (≈60%) */
+    grid-template-columns: 2fr 3fr;
     column-gap: 40px;
-    row-gap: 40px;
     padding-top: 80px;
     padding-bottom: 80px;
     padding-left: max(40px, calc((100% - 1200px) / 2));
     padding-right: max(40px, calc((100% - 1200px) / 2));
     width: 100%;
     background-color: var(--blanco);
+    align-items: stretch;
 }
 
-.seccion-editorial-bloques > * {
-    grid-column: span 1;
+/* ── Columna izquierda (40%) ────────────────────────────── */
+.dos-col-izq {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Recuadro que contiene texto + botón en borde inferior */
+.recuadro-texto-izq {
+    flex: 1;
+    background-color: var(--negro);
+    border-radius: 20px;
+    padding: 48px 40px 40px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 440px;
+}
+
+.recuadro-texto-cuerpo {
+    font-size: 1.55rem;
+    font-weight: 500;
+    line-height: 1.65;
+    color: var(--blanco);
+    max-width: 380px;
+}
+
+/* Botón flecha: se asienta en el borde inferior del recuadro */
+.btn-flecha {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;       /* Alineado a la izquierda */
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background-color: var(--fucsia);
+    color: #ffffff;
+    text-decoration: none;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.btn-flecha:hover {
+    background-color: var(--verde);
+    color: var(--negro);
+    transform: translateY(4px);   /* Empuja hacia abajo en hover, refuerza la flecha */
+}
+
+.flecha-svg {
+    width: 24px;
+    height: 24px;
+}
+
+/* ── Columna derecha (60%) ──────────────────────────────── */
+.dos-col-der {
+    display: flex;
+    flex-direction: column;
+}
+
+.recuadro-pictos {
+    flex: 1;
+    background-color: #f0ede6;    /* Tono crema consistente con tarjetas editoriales */
+    border-radius: 20px;
+    padding: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Grilla 4 columnas × 3 filas */
+.grilla-pictos {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    gap: 24px;
+    width: 100%;
+}
+
+/* Celda individual: centra el pictograma */
+.picto-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+}
+
+.picto-item img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    display: block;
+    /* Transición de rotación: velocidad intermedia ~600ms */
+    transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform-origin: center center;
+}
+
+/* Rotación al hover sobre el RECUADRO completo — cada picto gira al pasar encima */
+.picto-item:hover img {
+    transform: rotate(90deg);
 }
