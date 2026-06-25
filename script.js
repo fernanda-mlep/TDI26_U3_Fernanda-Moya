@@ -26,7 +26,7 @@ function manejarPreloader() {
         navegacionPermitida = true;
 
         if (navbar) {
-            navbar.classList.add("activada", "scroll-arriba");
+            navbar.classList.add("activada");
         }
     }, 1600);
 }
@@ -39,78 +39,58 @@ if (logoNav) {
         e.preventDefault();
         window.scrollTo({ top: 0, behavior: "smooth" });
         if (navbar) {
-            navbar.classList.remove("scroll-arriba", "activada", "forced-visible");
-            navbar.classList.add("scroll-abajo");
+            navbar.classList.remove("ocultar-por-seccion");
+            navbar.classList.add("activada");
         }
     });
 }
 
-// ─── 3. MOTOR DE SCROLL (LÓGICA DE SECCIONES) ──────────────────────
+// ─── 3. MOTOR DE SCROLL (PRESENCIA FIJA CON EXCEPCIÓN GEOMÉTRICA) ───
 window.addEventListener("scroll", () => {
     if (!navegacionPermitida) return;
 
     const pos = window.scrollY;
     
-    // 1. Capturamos los elementos de referencia para el comportamiento
-    const seccionHero       = document.getElementById("preloader-container");
-    const seccionComoJugar  = document.getElementById("como-jugar");
-    const seccionDemoGif    = document.getElementById("demo-gif-seccion");
+    // Capturamos las secciones clave para controlar la excepción de ocultamiento permanente
+    const seccionComoJugar = document.getElementById("como-jugar");
+    const seccionDemoGif   = document.getElementById("demo-gif-seccion");
 
     if (navbar) {
-        // Por defecto, asumimos que debe estar visible si pasó el Hero
-        let debaSerVisible = false;
+        let ocultarCabecera = false;
 
-        // A. Verificar si ya pasamos completamente la sección Hero
-        if (seccionHero) {
-            const alturaHero = seccionHero.offsetHeight;
-            if (pos > alturaHero - 64) { // 64px es el alto de tu navbar
-                debaSerVisible = true;
-            }
-        }
-
-        // B. Excepción: Si está activa la transición circular ("como-jugar") se retira
+        // Validamos si la sección de transición circular existe en el DOM
         if (seccionComoJugar && seccionDemoGif) {
             const inicioComoJugar = seccionComoJugar.offsetTop;
             const inicioDemoGif   = seccionDemoGif.offsetTop;
 
-            // Si el scroll está atrapado entre el inicio de "como-jugar" y el inicio de "demo-gif-seccion"
-            if (pos >= inicioComoJugar - 5 && pos < inicioDemoGif - 64) {
-                debaSerVisible = false;
+            // La cabecera SE OCULTA únicamente si el scroll entra a la sección de la animación (menos el alto de barra)
+            // y vuelve a aparecer de forma estricta al tocar la sección del GIF demo
+            if (pos >= (inicioComoJugar - 80) && pos < (inicioDemoGif - 80)) {
+                ocultarCabecera = true;
             }
         }
 
-        // 2. Aplicar las clases CSS según las condiciones anteriores
-        if (debaSerVisible) {
-            navbar.classList.remove("scroll-abajo");
-            navbar.classList.add("scroll-arriba", "activada");
+        // Aplicamos la clase de ocultamiento absoluto según la sección geométrica
+        if (ocultarCabecera) {
+            navbar.classList.add("ocultar-por-seccion");
         } else {
-            // Si está en el Hero o dentro de la transición circular, se esconde limpiamente hacia arriba
-            navbar.classList.remove("scroll-arriba");
-            navbar.classList.add("scroll-abajo");
+            navbar.classList.remove("ocultar-por-seccion");
+        }
+
+        // Efecto estético: fondo translúcido/sombra si se despegó del inicio del sitio
+        if (pos > 50) {
+            navbar.classList.add("activada");
+        } else {
+            navbar.classList.remove("activada");
         }
     }
 
-    // 3. Control de reducción del título Hero (Mantiene tu animación original)
+    // Control de reducción del título Hero (Mantiene tu animación original)
     if (heroSection && pos > 50) {
         heroSection.classList.add("encoger-titulo");
-        if (navbar) navbar.classList.add("activada");
     } else if (heroSection && pos <= 50) {
         heroSection.classList.remove("encoger-titulo");
     }
-
-    // 4. Subrayados animados por Scroll (Mantiene tu animación original)
-    const subrayados   = document.querySelectorAll(".subrayado-animado");
-    const h            = window.innerHeight;
-    const puntoInicio  = h * 0.85;
-    const puntoFin     = h * 0.35;
-
-    subrayados.forEach(span => {
-        const rect     = span.getBoundingClientRect();
-        let progreso   = (puntoInicio - rect.top) / (puntoInicio - puntoFin);
-        progreso       = Math.max(0, Math.min(1, progreso));
-        span.style.backgroundSize = `${progreso * 100}% 100%`;
-        span.classList.toggle("texto-contrastado", progreso > 0.5);
-    });
 
     ultimaPosicionScroll = pos;
 });
@@ -208,15 +188,13 @@ document.addEventListener("DOMContentLoaded", () => {
 // ─── 7. VISOR TRIDIMENSIONAL DE PEONES INTERACTIVOS ───
 document.addEventListener("DOMContentLoaded", () => {
     const container = document.getElementById('canvas-peones-3d');
-    if (!container) return; // Si no encuentra el elemento, no ejecuta para evitar errores
+    if (!container) return; 
 
-    // Configuración inicial de la escena
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color('#e5e0d8'); // Tono idéntico al fondo de la imagen de referencia
+    scene.background = new THREE.Color('#e5e0d8'); 
 
-    // Cámara en perspectiva ajustada al contenedor
     const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 1000);
-    camera.position.set(0, 1.3, 9.5); // Encuadre frontal de las 4 piezas
+    camera.position.set(0, 1.3, 9.5); 
 
     const renderer = new THREE.WebGLRenderer({ antialias: true });
     renderer.setSize(container.clientWidth, container.clientHeight);
@@ -225,15 +203,13 @@ document.addEventListener("DOMContentLoaded", () => {
     renderer.shadowMap.type = THREE.PCFSoftShadowMap;
     container.appendChild(renderer.domElement);
 
-    // Controles de órbita restringidos para interactuar solo dentro del Canvas
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
-    controls.maxPolarAngle = Math.PI / 2 + 0.05; // Impide que la cámara pase por debajo del plano base
+    controls.maxPolarAngle = Math.PI / 2 + 0.05; 
     controls.minDistance = 4;
     controls.maxDistance = 14;
 
-    // Sistema de Iluminación de Estudio para suavizar sombras y dar volumen
     const ambientLight = new THREE.AmbientLight('#ffffff', 0.65);
     scene.add(ambientLight);
 
@@ -249,7 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
     fillLight.position.set(-6, 4, -4);
     scene.add(fillLight);
 
-    // Suelo invisible para proyectar y recibir sombras arrojadas
     const floorGeo = new THREE.PlaneGeometry(30, 30);
     const floorMat = new THREE.ShadowMaterial({ opacity: 0.12 });
     const floor = new THREE.Mesh(floorGeo, floorMat);
@@ -258,7 +233,6 @@ document.addEventListener("DOMContentLoaded", () => {
     floor.receiveShadow = true;
     scene.add(floor);
 
-    // Generación de un mapa de normales procedural (Simula micro-rugosidad mate sin cargar archivos externos)
     function createNoiseNormalTexture() {
         const size = 128;
         const canvasNoise = document.createElement('canvas');
@@ -285,7 +259,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const normalMapNoise = createNoiseNormalTexture();
 
-    // Material plástico/resina mate unificado
     const peonMaterial = new THREE.MeshStandardMaterial({
         color: new THREE.Color('#8a8c8a'),
         roughness: 0.8,
@@ -294,17 +267,14 @@ document.addEventListener("DOMContentLoaded", () => {
         normalScale: new THREE.Vector2(0.06, 0.06)
     });
 
-    // Construcción de la base exacta unificada para los 4 peones
     const baseGroupMaster = new THREE.Group();
 
-    // Cono truncado de la base
     const baseGeo = new THREE.CylinderGeometry(0.18, 0.55, 2.4, 40);
     const baseMesh = new THREE.Mesh(baseGeo, peonMaterial);
     baseMesh.castShadow = true;
     baseMesh.receiveShadow = true;
     baseGroupMaster.add(baseMesh);
 
-    // Cuello cilíndrico de unión
     const neckGeo = new THREE.CylinderGeometry(0.13, 0.13, 0.25, 40);
     const neckMesh = new THREE.Mesh(neckGeo, peonMaterial);
     neckMesh.position.y = 1.25;
@@ -313,7 +283,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const peonesGroup = new THREE.Group();
 
-    // PEÓN 1: Cabeza de Diamante Truncado (Polígono facetado angular)
     const peon1 = baseGroupMaster.clone();
     const head1Geo = new THREE.CylinderGeometry(0.38, 0.38, 0.7, 6);
     const head1 = new THREE.Mesh(head1Geo, peonMaterial);
@@ -323,7 +292,6 @@ document.addEventListener("DOMContentLoaded", () => {
     peon1.position.x = -2.4;
     peonesGroup.add(peon1);
 
-    // PEÓN 2: Cabeza de Esfera Perfecta
     const peon2 = baseGroupMaster.clone();
     const head2Geo = new THREE.SphereGeometry(0.44, 40, 40);
     const head2 = new THREE.Mesh(head2Geo, peonMaterial);
@@ -333,7 +301,6 @@ document.addEventListener("DOMContentLoaded", () => {
     peon2.position.x = -0.8;
     peonesGroup.add(peon2);
 
-    // PEÓN 3: Modificado con la misma base y Cabeza de Cono (Pirámide de base circular con punta redondeada)
     const peon3 = baseGroupMaster.clone();
     const head3Geo = new THREE.CylinderGeometry(0.01, 0.58, 0.95, 40);
     const head3 = new THREE.Mesh(head3Geo, peonMaterial);
@@ -343,7 +310,6 @@ document.addEventListener("DOMContentLoaded", () => {
     peon3.position.x = 0.8;
     peonesGroup.add(peon3);
 
-    // PEÓN 4: Cabeza de Cilindro Ancho con Superficie Plana
     const peon4 = baseGroupMaster.clone();
     const head4Geo = new THREE.CylinderGeometry(0.46, 0.46, 0.85, 40);
     const head4 = new THREE.Mesh(head4Geo, peonMaterial);
@@ -353,18 +319,15 @@ document.addEventListener("DOMContentLoaded", () => {
     peon4.position.x = 2.4;
     peonesGroup.add(peon4);
 
-    // Ajustar el grupo en el eje Y del canvas
     peonesGroup.position.y = -0.3;
     scene.add(peonesGroup);
 
-    // Ciclo de renderizado interactivo continuo
     function animate() {
         requestAnimationFrame(animate);
         controls.update();
         renderer.render(scene, camera);
     }
 
-    // Adaptación responsive dinámica en función de la redimensión de la pantalla
     window.addEventListener('resize', () => {
         if (!container) return;
         camera.aspect = container.clientWidth / container.clientHeight;
@@ -381,7 +344,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const contenedor = document.querySelector(".contenedor-transicion-circular");
     const circuloMascara = document.getElementById("circulo-clip");
-    const circuloBorde = document.getElementById("circulo-borde-visible"); // <--- Capturamos el nuevo borde
+    const circuloBorde = document.getElementById("circulo-borde-visible"); 
     const textoRevelado = document.querySelector(".contenido-nueva-pantalla");
 
     if (!contenedor || !circuloMascara || !circuloBorde) return;
@@ -397,16 +360,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // Animamos ambos elementos al mismo tiempo usando un "label" o posición sincronizada
     tl.to(circuloMascara, {
-        attr: { r: 1.2 }, // Crece la máscara invisible (un poco más de 1 para las esquinas)
+        attr: { r: 1.2 }, 
         ease: "power2.out"
-    }, "expandir") // <--- "expandir" une las animaciones en el mismo tiempo
+    }, "expandir") 
     
     .to(circuloBorde, {
-        attr: { r: 75 },  // Crece el borde fucsia visible hasta desbordar la pantalla
+        attr: { r: 75 },  
         ease: "power2.out"
-    }, "expandir") // <--- Se ejecuta en paralelo a la máscara
+    }, "expandir") 
     
     .to(textoRevelado, {
         onStart: () => textoRevelado.classList.add("visible"),
@@ -419,14 +381,12 @@ const carruselContenedor = document.getElementById('carrusel-partes');
 const tarjetas = carruselContenedor.querySelectorAll('.tarjeta-editorial');
 
 function actualizarTarjetaCentral() {
-    // Encuentra el centro horizontal del visor del carrusel
     const centroCarrusel = carruselContenedor.getBoundingClientRect().left + (carruselContenedor.offsetWidth / 2);
 
     tarjetas.forEach((tarjeta) => {
         const limites = tarjeta.getBoundingClientRect();
         const centroTarjeta = limites.left + (limites.width / 2);
 
-        // Si la tarjeta está cerca del centro del contenedor, se activa
         if (Math.abs(centroCarrusel - centroTarjeta) < limites.width / 2) {
             tarjeta.classList.add('activa');
         } else {
@@ -435,19 +395,15 @@ function actualizarTarjetaCentral() {
     });
 }
 
-// Escucha el evento de movimiento de scroll para refrescar las posiciones
 carruselContenedor.addEventListener('scroll', actualizarTarjetaCentral);
 
-// Al cargar la página, el carrusel se equilibra en el centro sin resaltar ninguna tarjeta
 window.addEventListener('load', () => {
     const carruselContenedor = document.getElementById('carrusel-partes');
     const tarjetas = carruselContenedor.querySelectorAll('.tarjeta-editorial');
     
-    // Apunta a la tarjeta del medio (la 3ra) para centrar la vista inicial
     const tarjetaCentral = tarjetas[2]; 
     if (tarjetaCentral) {
         const posicionX = tarjetaCentral.offsetLeft - (carruselContenedor.offsetWidth / 2) + (tarjetaCentral.offsetWidth / 2);
         carruselContenedor.scrollLeft = posicionX;
     }
 });
-
