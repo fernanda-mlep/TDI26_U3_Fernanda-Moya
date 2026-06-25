@@ -940,3 +940,9 @@ body {
 .picto-item:hover img {
     transform: rotate(90deg);
 }
+
+.m-bottom-cabecera {
+    margin-bottom: 40px;
+    width: 100%;
+}
+
