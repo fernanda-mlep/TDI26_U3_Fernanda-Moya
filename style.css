@@ -429,31 +429,6 @@ body {
     opacity: 0.5;
 }
 
-/* MARQUESINA DE TEXTO GIGANTE INTERACTIVA
-   Contenedor verde que oculta el desbordamiento de texto y cambia de cursor para denotar interactividad */
-.marquesina-texto-contenedor {
-    width: 100%;
-    min-height: 20vh;
-    overflow: hidden;
-    background-color: var(--verde); 
-    display: flex;
-    align-items: center;
-    scroll-margin-top: 100px;
-    justify-content: center;
-    padding-top: 20px;    
-    padding-bottom: 20px; 
-    margin-bottom: 0px; 
-    cursor: ew-resize; /* Cursor que indica deslizamiento horizontal al pasar el mouse */
-}
-
-/* 🚨 MODIFICADO: Quitamos la animación fija de CSS para heredar el motor de JS */
-.marquesina-texto-cinta {
-    display: flex;
-    width: max-content;
-    margin-bottom: 0px;
-    will-change: transform;
-    transform: translateX(0);
-}
 
 .grupo-texto {
     display: flex;
@@ -471,73 +446,8 @@ body {
     line-height: 1; 
 }
 
-/* MARQUESINA DE PICTOGRAMAS */
-.contenedor-marquesina {
-    width: 100%;
-    overflow: hidden;
-    background-color: var(--blanco); /* 🚨 Cambiado a variable */
-    padding: 80px 0; 
-    display: flex;
-}
 
-.marquesina-ondulante {
-    display: flex;
-    width: max-content;
-    animation: marquesina-horizontal 25s linear infinite; 
-}
 
-.grupo-pictogramas {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    gap: 120px; 
-    padding-right: 120px;
-}
-
-.picto {
-    width: 140px;
-    height: auto;
-    display: block;
-    animation: onda-vertical 3s ease-in-out infinite alternate;
-}
-
-.picto:nth-child(1) { animation-delay: 0s; }
-.picto:nth-child(2) { animation-delay: 0.3s; }
-.picto:nth-child(3) { animation-delay: 0.6s; }
-.picto:nth-child(4) { animation-delay: 0.9s; }
-.picto:nth-child(5) { animation-delay: 1.2s; }
-.picto:nth-child(6) { animation-delay: 1.5s; }
-.picto:nth-child(7) { animation-delay: 1.8s; }
-.picto:nth-child(8) { animation-delay: 2.1s; }
-.picto:nth-child(9) { animation-delay: 2.4s; }
-
-@keyframes marquesina-horizontal {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-
-@keyframes onda-vertical {
-    0% { transform: translateY(-40px); }
-    100% { transform: translateY(40px); }
-}
-
-/* ANIMACIÓN DE SUBRAYADO POR SCROLL */
-.subrayado-animado {
-    background-image: linear-gradient(var(--verde), var(--verde)); /* 🚨 Cambiado a variable */
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    background-size: 0% 100%; 
-    color: inherit; 
-    padding: 0 4px; 
-    border-radius: 4px;
-    transition: color 0.3s ease, font-weight 0.3s ease;
-    will-change: background-size;
-}
-
-.subrayado-animado.texto-contrastado {
-    color: var(--fucsia); /* 🚨 Cambiado a variable */
-    font-weight: bold;
-}
 
 /* GALERÍA INTERACTIVA DE CARTAS
    Contenedor del carrusel de cartas que reacciona a la posición del cursor y permite deslizamiento por inercia */
@@ -588,40 +498,6 @@ body {
     box-shadow: 0 20px 40px var(--violeta); /* 🚨 Cambiado a variable */
 }
 
-/* VISOR MODAL / LIGHTBOX */
-#modal-visor {
-    display: none; 
-    position: fixed;
-    z-index: 9999;
-    padding-top: 60px;
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    background-color: rgba(24, 24, 24, 0.95); 
-    align-items: center;
-    justify-content: center;
-}
-
-#modal-visor.activo {
-    display: flex !important;
-}
-
-.imagen-ampliada {
-    margin: auto;
-    display: block;
-    max-width: 85%;
-    max-height: 80vh;
-    object-fit: contain;
-    border-radius: 16px;
-    animation: zoomEfecto 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes zoomEfecto {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
-}
 
 .btn-cerrar-modal {
     position: absolute;
@@ -638,31 +514,6 @@ body {
     color: var(--fucsia); /* 🚨 Cambiado a variable */
 }
 
-/* CONFIGURACIÓN DE TAMAÑO PARA LA PARTITURA PIX */
-.seccion-partitura-iframe {
-    width: 100%;
-    margin: 30px auto;
-    display: flex;
-    justify-content: center;
-}
-
-.contenedor-tarjeta-iframe {
-    width: 100%;
-    max-width: 1200px;
-    background: var(--blanco); /* 🚨 Cambiado a variable */
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
-    overflow: hidden;
-    padding: 0;
-}
-
-.iframe-pix {
-    width: 100%;
-    height: 650px;
-    border: none;
-    display: block;
-    background: var(--blanco); /* 🚨 Cambiado a variable */
-}
 
 /* ESTILOS PARA EL GIF DE LA LANDING */
 .contenedor-gif {
@@ -703,91 +554,7 @@ body {
     padding: 0 20px;
 }
 
-/* VENTANA EMERGENTE DE CUESTIONARIO (POP-UP INTERACTIVO)
-   Capa de fondo gris semitransparente que se posiciona de forma fija sobre todo el landing */
-.modal-emergente-wrap {
-    display: none; 
-    position: fixed;
-    z-index: 10005; /* Prioridad máxima por sobre la navbar */
-    left: 0;
-    top: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(24, 24, 24, 0.4); 
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-}
 
-.tarjeta-cuestionario {
-    background-color: #ffffff;
-    width: 100%;
-    max-width: 540px;
-    border-radius: 28px;
-    padding: 32px 40px;
-    position: relative;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
-    animation: entradaModal 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-@keyframes entradaModal {
-    from { transform: translateY(20px); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-
-.texto-cuestionario {
-    font-size: 1.35rem;
-    font-weight: 500;
-    color: #000000;
-    line-height: 1.4;
-    margin-bottom: 28px;
-    padding-right: 24px;
-    text-align: left;
-}
-
-.cerrar-cuestionario {
-    position: absolute;
-    top: 24px;
-    right: 28px;
-    color: #000000;
-    font-size: 28px;
-    font-weight: 400;
-    cursor: pointer;
-    transition: transform 0.2s ease, color 0.2s ease;
-    line-height: 1;
-}
-
-.cerrar-cuestionario:hover {
-    color: var(--fucsia);
-    transform: scale(1.1);
-}
-
-.grupo-botones-cuestionario {
-    display: flex;
-    gap: 16px;
-    width: 100%;
-}
-
-.btn-pildora {
-    flex: 1;
-    background-color: #ffffff;
-    color: #000000;
-    border: 1px solid #cccccc;
-    border-radius: 100px;
-    padding: 14px 20px;
-    font-family: monospace;
-    font-size: 1rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: background-color 0.2s, border-color 0.2s, color 0.2s;
-}
-
-.btn-pildora:hover {
-    border-color: var(--fucsia);
-    color: var(--fucsia);
-    background-color: #fef4f8;
-}
 
 /* ==========================================================================
    NUEVO: SECCION EDITORIAL BLOQUES (GRILLA DE 3 COLUMNAS Y RESPONSIVA)
