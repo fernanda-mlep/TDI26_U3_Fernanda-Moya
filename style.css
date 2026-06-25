@@ -946,3 +946,35 @@ body {
     width: 100%;
 }
 
+/* ==========================================================================
+   NUEVA SECCIÓN DE TEXTO EN DOS COLUMNAS (PROPORCIÓN DIRECTA 40% / 60%)
+   ========================================================================== */
+
+/* Contenedor flexible para alinear los bloques horizontalmente */
+.bloque-contenedor-editorial {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    width: 100%;
+    max-width: 1200px;     /* Alineado con la grilla general del sitio web */
+    margin: 0 auto;
+    gap: 64px;             /* Espacio de separación elegante entre columnas */
+    padding: 0 40px;
+}
+
+/* Columna Izquierda (Título) fijada en el 40% */
+.dos-col-texto-izq {
+    flex: 0 0 40%;
+    min-width: 0;
+}
+
+/* Columna Derecha (Párrafos) fijada en el 60% */
+.dos-col-texto-der {
+    flex: 0 0 60%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;             /* Separación entre un párrafo y otro */
+}
+
