@@ -361,6 +361,12 @@ body {
     grid-template-columns: repeat(3, 1fr);
     column-gap: 60px;
     align-items: center;
+    width: 100%;
+}
+
+.contenido-nueva-pantalla.columnas-piezas-flex .parrafo-columna {
+    color: var(--blanco);
+    opacity: 0.9;
 }
 
 .columna-piezas-texto {
