@@ -248,8 +248,8 @@ body {
     background-color: var(--blanco);
     padding-top: 80px;
     padding-bottom: 80px;
-    padding-left: max(40px, calc((100% - 1200px) / 2));
-    padding-right: max(40px, calc((100% - 1200px) / 2));
+    padding-left: max(20px, calc((100% - 1400px) / 2));
+    padding-right: max(20px, calc((100% - 1400px) / 2));
     width: 100%;
 }
 
