@@ -245,6 +245,9 @@ window.addEventListener('mouseleave', () => {
 
 // Click izquierdo → Pentágonos + Idiófono
 window.addEventListener('click', e => {
+    // Si el elemento clickeado tiene la clase de nuestro botón, no hagas nada
+    if (e.target.classList.contains('btn-volver')) return;
+    
     spawnPentagon(e.clientX, e.clientY);
 });
 

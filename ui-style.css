@@ -15,3 +15,42 @@ canvas {
   display: block;
   cursor: none;
 }
+
+/* --- Estilos para el Botón Flotante Pastilla Izquierdo --- */
+.btn-volver {
+  position: fixed;
+  top: 28px;        /* Un poco más de espacio superior por el aumento de tamaño */
+  left: 24px;       /* Cambiado de 'right' a 'left' para situarlo a la izquierda */
+  z-index: 10; 
+  
+  /* Tipografía Poppins (Aumentada de tamaño) */
+  font-family: 'Poppins', sans-serif;
+  font-size: 1.05rem;       /* Aumentado de 0.85rem a 1.05rem */
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  
+  /* Colores solicitados */
+  background-color: #ffffff; /* Fondo blanco sólido */
+  border: 2px solid #c3d208; /* Contorno verde (usando el verde de tu paleta COLORS) */
+  color: #e71d84;            /* Letra de color rosado (usando el rosado de tu paleta COLORS) */
+  
+  /* Caja con tamaño aumentado */
+  padding: 10px 26px;        /* Aumentado el espacio interno (relleno) de la pastilla */
+  border-radius: 50px;       /* Mantiene la forma de pastilla redondeada */
+  
+  /* Transición suave e interactividad */
+  transition: all 0.25s ease;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Sombra muy sutil de base */
+}
+
+/* Efecto Hover (Al pasar el cursor sobre el botón izquierdo) */
+.btn-volver:hover {
+  /* Inversión sutil o acentuación al interactuar */
+  background-color: #e71d84; /* El fondo se vuelve rosado */
+  border-color: #e71d84;     /* El contorno se vuelve rosado */
+  color: #ffffff;            /* La letra pasa a ser blanca */
+  box-shadow: 0 6px 16px rgba(231, 29, 132, 0.25); /* Destello rosado texturado */
+  transform: translateY(-2px); /* Se eleva un milímetro más al interactuar */
+}
