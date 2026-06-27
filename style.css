@@ -37,7 +37,7 @@ body {
     top: 0;
     left: 0;
     width: 100%;            /* Ocupa el ancho total de la página */
-    height: 64px;
+    height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -45,10 +45,23 @@ body {
     z-index: 1000;
     padding: 0 40px;
     border-radius: 0;       /* Sin forma de píldora: borde recto */
-    transform: translateY(-110%);   /* Oculta hacia arriba al inicio */
+    transform: translateY(-110%);   
     opacity: 0;
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
-                opacity 0.4s ease;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease;
+}
+
+.navbar.activada {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Mantén estas que ya tenías para cuando el usuario empiece a mover el scroll */
+.navbar.scroll-abajo {
+    transform: translateY(-110%);
+}
+
+.navbar.scroll-arriba {
+    transform: translateY(0);
 }
 
 /* Alineación interna del contenido de la navbar */
@@ -315,7 +328,6 @@ body {
 }
 
 
-
 /* ==========================================================================
    TRANSICIÓN CIRCULAR — expansión fucsia al hacer scroll
    ========================================================================== */
@@ -408,6 +420,45 @@ body {
     line-height: 1.8;
     color: #ffffff;
     max-width: 700px;
+}
+
+/* Contenedor general de esta vista interactiva */
+.contenido-nueva-pantalla.columnas-piezas-flex {
+    display: flex;
+    flex-direction: column;   /* Fuerza a que el título y el párrafo se ordenen en una sola columna vertical */
+    width: 100%;
+    max-width: 1400px;        /* Respeta el ancho máximo oficial del sitio web */
+    margin: 0 auto;           /* Centra el contenedor en pantallas ultra anchas */
+    padding: 0 40px;          /* Mantiene el mismo margen lateral que el resto de las secciones */
+    text-align: left;
+}
+
+/* Clase para el bloque del título */
+.columnatitulo {
+    width: 100%;
+    margin-bottom: 24px;      /* Espacio de separación con el párrafo */
+}
+
+/* Mantiene la consistencia del tamaño tipográfico con las secciones importantes (como Jugar de 4rem) */
+.columnatitulo h2 {
+    font-size: 4rem;
+    font-weight: 900;
+    color: #ffffff;           /* Ajusta a var(--negro) si el fondo de esta sección es claro */
+    line-height: 1.2;
+}
+
+/* Clase para el bloque del párrafo de ancho completo */
+.columnaparrafo {
+    width: 100%;              /* Ocupa el 100% de los 1400px disponibles */
+}
+
+/* Estilos de lectura para el texto interno */
+.columnaparrafo p {
+    font-size: 1.3rem;        /* Misma escala que los textos de .parrafo-columna */
+    line-height: 1.8;
+    color: #ffffff;           /* Ajusta a var(--negro) o #333333 si el fondo de la sección es claro */
+    margin-bottom: 20px;      /* Espacio de separación entre párrafos de un mismo bloque */
+    max-width: 100%;          /* Asegura el ancho completo de la columna */
 }
 
 /* ==========================================================================
