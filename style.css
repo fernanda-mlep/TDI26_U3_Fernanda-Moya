@@ -425,12 +425,29 @@ body {
 /* Contenedor general de esta vista interactiva */
 .contenido-nueva-pantalla.columnas-piezas-flex {
     display: flex;
-    flex-direction: column;   /* Fuerza a que el título y el párrafo se ordenen en una sola columna vertical */
+    flex-direction: row;       /* Cambiado de 'column' a 'row' para hacer dos columnas */
+    justify-content: space-between; /* Separa los dos bloques a los extremos */
+    align-items: center;       /* Centra verticalmente el botón con respecto al texto */
     width: 100%;
-    max-width: 1400px;        /* Respeta el ancho máximo oficial del sitio web */
-    margin: 0 auto;           /* Centra el contenedor en pantallas ultra anchas */
-    padding: 0 40px;          /* Mantiene el mismo margen lateral que el resto de las secciones */
+    max-width: 1400px;         /* Mantiene estrictamente el ancho total del sitio */
+    margin: 0 auto;            /* Centra el bloque en la pantalla */
+    padding: 0 40px;           /* Márgenes laterales consistentes */
+    gap: 40px;                 /* Espacio de separación entre la columna izquierda y derecha */
+}
+
+.columna-info-izq {
+    width: 80%;
+    display: flex;
+    flex-direction: column;    /* Mantiene el título sobre el párrafo verticalmente */
     text-align: left;
+}
+
+/* NUEVA CLASE: Columna Derecha (40% del ancho) */
+.columna-boton-der {
+    width: 20%;
+    display: flex;
+    justify-content: center;   /* Centra horizontalmente el botón dentro de su 40% */
+    align-items: center;
 }
 
 /* Clase para el bloque del título */
@@ -443,8 +460,9 @@ body {
 .columnatitulo h2 {
     font-size: 4rem;
     font-weight: 900;
-    color: #ffffff;           /* Ajusta a var(--negro) si el fondo de esta sección es claro */
     line-height: 1.2;
+    margin-bottom: 20px;
+    color: #ffffff;           /* Ajusta a var(--negro) si el fondo de esta sección es claro */
 }
 
 /* Clase para el bloque del párrafo de ancho completo */
@@ -457,8 +475,29 @@ body {
     font-size: 1.3rem;        /* Misma escala que los textos de .parrafo-columna */
     line-height: 1.8;
     color: #ffffff;           /* Ajusta a var(--negro) o #333333 si el fondo de la sección es claro */
-    margin-bottom: 20px;      /* Espacio de separación entre párrafos de un mismo bloque */
+    margin-bottom: 16px;      /* Espacio de separación entre párrafos de un mismo bloque */
     max-width: 100%;          /* Asegura el ancho completo de la columna */
+}
+
+.btn-ir-interfaz {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    background-color: #ffffff;  /* Botón blanco si el fondo es fucsia */
+    color: var(--fucsia);       /* Texto fucsia */
+    font-weight: 700;
+    font-size: 1.1rem;
+    text-decoration: none;
+    border-radius: 30px;
+    transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.btn-ir-interfaz:hover {
+    background-color: var(--verde); /* Cambia a verde en hover */
+    color: var(--negro);
+    transform: translateY(-3px);    /* Pequeño salto interactivo */
 }
 
 /* ==========================================================================
@@ -814,6 +853,7 @@ body {
    COLOFÓN (FOOTER)
    ========================================================================== */
 .colofon {
+    font-family: "poppins", sans-serif;
     background-color: var(--negro);
     padding: 6rem 2rem 4rem 2rem;
     position: relative;
@@ -830,6 +870,7 @@ body {
 }
 
 .colofon-links {
+    text-transform: lowercase;
     display: flex;
     gap: 3rem;
     flex-wrap: wrap;
