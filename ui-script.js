@@ -278,6 +278,7 @@ window.addEventListener('wheel', e => {
         const maxScroll = window.innerHeight;
         const scrollActual = Math.abs(e.clientY) % maxScroll; 
         const progresoScroll = scrollActual / maxScroll; 
+        const progresoInvertido = 1 - progresoScroll;
 
         // 4. Obtener la nota correspondiente
         const notaBurbuja = obtenerNotaBurbuja(progresoScroll);

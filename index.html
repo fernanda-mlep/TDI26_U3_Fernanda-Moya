@@ -22,9 +22,8 @@
         <div class="navbar-content">
             <span class="navbar-logo" id="logo-nav">Catapultazo</span>
             <nav class="navbar-menu" aria-label="Navegación principal">
-                <a href="#sobre-el-juego" class="nav-item">Sobre el juego</a>
-                <a href="#como-jugar" class="nav-item">¿Cómo jugar?</a>
-                <a href="#pix" class="nav-item">Pix</a>
+                <a href="#sobre-el-juego" class="nav-item">Inicio</a>
+                <a href="#como-jugar" class="nav-item">Partes</a>
                 <a href="#fundamento" class="nav-item">Fundamento</a>
                 <a href="uipage.html" class="nav-item btn-nav-jugar">Jugar</a>
             </nav>
@@ -42,13 +41,13 @@
     <section class="seccion-dos-col">
 
         <!-- Columna izquierda (40%): recuadro con texto y botón flecha -->
-        <div class="dos-col-izq">
+        <div class="dos-col-izq" id="sobre-el-juego">
             <div class="recuadro-texto-izq">
                 <p class="recuadro-texto-cuerpo">
                     Este sitio web es la presentación de Catapultazo, un proyecto perteneciente
                     a la U2 del Taller de Diseño de Interacción 2026, de la Pontificia Universidad Católica de Valparaíso.
                 </p>
-                <a href="#como-jugar" class="btn-flecha" aria-label="Ir a cómo jugar">
+                <a href="#como-jugar" class="btn-flecha" aria-label="sobre-el-juego">
                     <svg class="flecha-svg" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                         <path d="M20 6 L20 34 M10 24 L20 34 L30 24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
@@ -80,7 +79,7 @@
 
 
     <!-- PRESENTACIÓN: dos columnas con palabras clave + párrafo de descripción -->
-    <section class="presentacion-seccion" id="sobre-el-juego">
+    <section class="presentacion-seccion"  >
         <div class="presentacion-contenedor">
             <div class="columna-titulo-izq">
                 <h2 class="subtitulo-columna">Competencia<br/>Estrategia<br/>Precisión<br/>Azar</h2>
@@ -94,7 +93,7 @@
     </section>
 
     <!-- PARTES DEL JUEGO: grilla editorial de 3 columnas -->
-    <section class="seccion-editorial-bloques">
+    <section class="seccion-editorial-bloques" id="como-jugar">
     
     <div class="editorial-cabecera">
         <h2 class="editorial-marca-titulo">Partes del juego</h2>
@@ -218,7 +217,7 @@
 
             <div class="contenido-nueva-pantalla columnas-piezas-flex">
             
-            <div class="columna-info-izq">
+            <div class="columna-info-izq" id="fundamento">
                 <div class="columnatitulo">
                     <h2>Fundamento de Interfaz Interactiva</h2>
                 </div>
@@ -257,7 +256,7 @@
             </div>
         </div>
     </footer>
-
+    
     <script src="script.js"></script>
 
 </body>

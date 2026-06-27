@@ -265,6 +265,7 @@ body {
     padding-right: 0;
     width: 100%;
     overflow: hidden;
+    margin-left: 0px;
 }
 
 /* Cabecera de la sección: ocupa el ancho completo antes de la grilla */
@@ -963,6 +964,8 @@ body {
 }
 
 /* ── Columna derecha (60%) ──────────────────────────────── */
+
+
 .dos-col-der {
     display: flex;
     flex-direction: column;
