@@ -276,12 +276,14 @@ body {
     margin-left: 0px;
 }
 
-/* Cabecera de la sección: ocupa el ancho completo antes de la grilla */
 .editorial-cabecera {
-    /* Mantiene el título "Partes del juego" alineado al bloque general del sitio */
-    padding-left: max(40px, calc((100% - 1200px) / 2));
-    padding-right: max(40px, calc((100% - 1200px) / 2));
-    margin-bottom: 48px;
+    width: 100%;
+    max-width: 1400px;         /* ◄ Limita al mismo ancho máximo de todo el sitio */
+    margin: 0 auto;            /* ◄ Centra el bloque horizontalmente en pantallas anchas */
+    padding-left: 0px;        /* ◄ ALINEACIÓN EXACTA con el borde izquierdo de la columna de abajo */
+    padding-right: 40px;
+    margin-bottom: 30px;       /* Espacio de separación con el carrusel de abajo */
+    box-sizing: border-box;
 }
 
 .editorial-marca-titulo {
@@ -289,6 +291,7 @@ body {
     font-weight: 900;
     color: var(--negro);
     letter-spacing: -1px;
+    text-align: left;
 }
 
 /* Grilla de 3 columnas para las tarjetas */
@@ -666,14 +669,12 @@ body {
    ========================================================================== */
 .carrusel-editorial-contenedor {
     width: 100%;
-    overflow-x: auto;              /* Permite el deslizamiento horizontal */
-    scroll-snap-type: x mandatory;   /* Mantiene el frenado magnético centrado */
-    scroll-behavior: smooth;
-    padding-top: 20px;             /* Padding normalizado sin excesos de aire */
-    padding-bottom: 20px;
-    padding-left: calc(50vw - 160px);  /* 160px es exactamente la mitad del ancho de una tarjeta (320px/2) */
-    padding-right: calc(50vw - 160px);
-    scrollbar-width: none; 
+    max-width: 1400px;           /* ◄ Restringe al mismo ancho máximo de .seccion-dos-col */
+    margin: 0 auto;              /* ◄ Centra el contenedor exactamente igual en la pantalla */
+    padding-left: 0px;          /* ◄ Mismo resguardo lateral izquierdo que tus otras secciones */
+    padding-right: 0px;         /* ◄ Mismo resguardo lateral derecho */
+    overflow: visible;           /* Mantiene las tarjetas visibles al elevarse en hover */
+    box-sizing: border-box;      /* Asegura que los paddings no estiren los 1400px */
 }
 
 .carrusel-editorial-contenedor::-webkit-scrollbar {
@@ -688,17 +689,33 @@ body {
     align-items: flex-start;       /* Alinea todas las tarjetas perfectamente por su borde superior */
 }
 
+.editorial-grilla-tres.tira-carrusel {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* 5 columnas iguales */
+    gap: 24px;                             /* Espacio entre tarjetas */
+    width: 100%;                           /* ◄ Se expande exactamente al ancho disponible (1400px menos paddings) */
+    padding: 40px 0;                       /* Colchón térmico vertical para el efecto :hover */
+}
+.tarjeta-editorial:hover {
+    transform: translateY(-15px);          /* ◄ Eleva la caja hacia arriba 15 píxeles */
+    box-shadow: 0 12px 30px rgba(24, 24, 24, 0.12); /* Añade una sombra suave abajo para dar sensación de flotado */
+}
+
 /* Ajustamos las tarjetas individuales dentro del carrusel */
 .tarjeta-editorial {
     display: flex;
     flex-direction: column;
+    background-color: #f0ede6;   
     gap: 16px;
-    width: 320px;                  /* Ancho idéntico para las 5 tarjetas */
+    width: 100%;                  /* Ancho idéntico para las 5 tarjetas */
     flex-shrink: 0;
     scroll-snap-align: center;     /* Sigue centrando la tarjeta al deslizar */
     transform: scale(1);
     opacity: 1;
-    transition: transform 0.3s ease;
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease; 
 }
 
 /*  EFECTO ACERCAR: Tarjeta que está al centro de la pantalla */

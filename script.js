@@ -376,37 +376,4 @@ document.addEventListener("DOMContentLoaded", () => {
     }, "-=0.1"); 
 });
 
-// ─── 9. (Efecto Galería Flotante) ────────────
-document.addEventListener("DOMContentLoaded", () => {
-    const carruselContenedor = document.getElementById('carrusel-partes');
-    if (!carruselContenedor) return;
-    
-    const tarjetas = carruselContenedor.querySelectorAll('.tarjeta-editorial');
-
-    function actualizarTarjetaCentral() {
-        const centroCarrusel = carruselContenedor.getBoundingClientRect().left + (carruselContenedor.offsetWidth / 2);
-
-        tarjetas.forEach((tarjeta) => {
-            const limites = tarjeta.getBoundingClientRect();
-            const centroTarjeta = limites.left + (limites.width / 2);
-
-            if (Math.abs(centroCarrusel - centroTarjeta) < limites.width / 2) {
-                tarjeta.classList.add('activa');
-            } else {
-                tarjeta.classList.remove('activa');
-            }
-        });
-    }
-
-    carruselContenedor.addEventListener('scroll', actualizarTarjetaCentral);
-
-    // Centrado inicial de la tarjeta
-    const tarjetaCentral = tarjetas[2]; 
-    if (tarjetaCentral) {
-        const posicionX = tarjetaCentral.offsetLeft - (carruselContenedor.offsetWidth / 2) + (tarjetaCentral.offsetWidth / 2);
-        carruselContenedor.scrollLeft = posicionX;
-    }
-    
-    // Ejecutar una vez al inicio para activar la tarjeta central por defecto
-    actualizarTarjetaCentral();
-});
+// El bloque anterior número 9 se eliminó con éxito para evitar conflictos con la nueva grilla CSS.
