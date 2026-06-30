@@ -215,16 +215,24 @@ body {
     width: 100%;
 }
 
-
-
-
 /* Contenedor interno en grilla de 3 columnas */
 .presentacion-contenedor {
-    display: grid;
+    display: flex;
+    width: 100%;
+    max-width: 1400px;
     grid-template-columns: repeat(3, 1fr);
     column-gap: 40px;
     row-gap: 40px;
     align-items: start;
+    margin: 0 auto;
+}
+
+.columna-titulo-izq {
+    width: 40%;                     /* ◄ Ocupa exactamente el mismo 40% que .dos-col-izq */
+}
+
+.columna-parrafo-der {
+    width: 60%;                     /* ◄ Ocupa exactamente el mismo 60% que .dos-col-der */
 }
 
 /* Columna izquierda: ocupa 1 columna con palabras clave apiladas */
